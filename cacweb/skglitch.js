@@ -1,5 +1,6 @@
 /*Debug flag*/
 let DEBUG = false;
+let LIVE = false; //When this goes live, mainly this influences whether setup() uses real or fake date
 
 
 
@@ -20,12 +21,15 @@ class App {
     this.days_elapsed = 0.0; //days elapsed since code started, incorporates fractional days from time
     this.show_start; //JS date object
     this.show_end; //JS date object
+    this.current_date;
     this.max_days; //Total run of the code
+    this.day_ms = 86400000; //milliseconds in a day, useful for incrementing & testing 
     this.breakpoint1;
     this.breakpoint2; //Two breakpoints around which behaviour of glitches/images changes
     this.breakpoint_ease; //The easing windows around breakpoints to have alpha change smoothly and not have dark time
     this.ts; //Timestamp for when the ofApp::update() last changed days_elapsed
     this.timeshift; //This is for testing, the shift of hour relative to actual time
+    this.interval_current_start; //This is the date/time (in ms), in the non-LIVE case, between the date the sim is starting and t_0 in JS (1 Jan 1970)
     this.grab; //Screengrab image
 
     this.start_ts = new Date(); //Get starting time, in Javascript format (Wed Aug 12 2020 08:07:39 GMT-0400 (Eastern Daylight Time))
@@ -41,18 +45,22 @@ class App {
       /*Below is a testing loop to quickly see how things change over entire 30 days*/
 
     //Increment days_elapsed ever z seconds
-    var z = 10.0;
+    var z = 300; //Expressed in milliseconds
 
     if(this.days_elapsed >= 1.0 && this.days_elapsed <= this.max_days)
     {
-      if(this.days_elapsed != this.ts && this.days_elapsed%z == 0)
+      if(frameCount != this.ts && frameCount%z == 0)
       {
-        this.days_elapsed++;
-        if(this.days_elapsed >= this.max_days)
+        //this.current_date = this.incr_date(this.current_date,1);
+        this.interval_current_start = this.interval_current_start + 1 * this.day_ms; //Kind of weird way of forcing an increment, but this interval param what is used in update() method
+        this.days_elapsed = this.get_dayselapsed(this.show_start,this.current_date);
+        console.log("Incrementing date ",this.current_date);
+
+        if(this.current_date >= this.show_end)
         {
-          this.days_elapsed = 1.0;
+          this.current_date = this.show_start;
         }
-        this.ts = this.days_elapsed;
+        this.ts = frameCount;
            
             if(DEBUG) {console.log("ofApp::test_loop() "+this.ts+" "+this.days_elapsed)};
 
@@ -66,9 +74,26 @@ class App {
       //Function to replace ofGetElapsedTime from openframeworks, return milliseconds
       var curr_ts;
       curr_ts = new Date();
-      console.log("GetElapsedTimef ",curr_ts - this.start_ts);
+      if(DEBUG) {console.log("GetElapsedTimef ",curr_ts - this.start_ts)};
       return (curr_ts - this.start_ts); 
 
+    }
+
+    incr_date(date1,incr)
+    {
+      /*Increment date1 (in JS Date() format) by incr (in days)*/
+
+      return new Date(Date.parse(date1) + incr * this.day_ms);
+    }
+
+    get_dayselapsed(date1,date2)
+    {
+      /*Works out days + fraction of days between current and start Date() objects.  
+       *Assume date2>date1.  Also, seems simply subtracting Date() objects doesn't work
+       *that well if the dates are both the same (i.e. the difference is just one of time),
+       *whereas parsing into milliseconds and then going back is more robust.*/
+      var days_diff = (Date.parse(date2) - Date.parse(date1))/this.day_ms; //Diff in ms converted to fractional days
+      return days_diff;
     }
 
     propagate_dayselapsed()
@@ -119,15 +144,33 @@ class App {
 
     update_JSmodel()
     {
+      if(LIVE)
+      {
+        /* If LIVE then current_date is just the actual current Date(). Note sure how to handle
+         * end of show.
+         */
+         tmp = new Date();
+        this.current_date = tmp;
+      } else {
+        /*In non-LIVE case where we are simulating behaviour a certain interval after start date (say 5 days into the sim)*/
+        var tmp = new Date(this.interval_current_start + Date.parse(new Date()));
+        this.current_date = tmp;
+      }
 
-
-
+      this.days_elapsed = this.get_dayselapsed(this.show_start,this.current_date);
+      //console.log("update_JSmodel ",this.days_elapsed,this.interval_current_start,this.current_date);
+      this.propagate_dayselapsed();
     }
 
     update() 
     {
       /*Switcher function, directs to the old update() before JS version is written*/
-      this.update_OFmodel();
+      //this.update_OFmodel();
+      this.update_JSmodel();
+
+      /*Remove this when testing is done*/
+      console.log("update() ",this.days_elapsed,this.current_date);
+      this.test_loop();
     }
 
 
@@ -480,26 +523,45 @@ function setup() {
 
 
   //console.log("Setup() images should be loaded: width "+" "+imgs.images[4].width +" "+imgs.images[10].height);
-   
-  /* Set days from start default, but eventually this can be set at command-line or automatically
-  * through system date calls*/
-  if(myApp.days_elapsed==0.0)
-  {
-    myApp.days_elapsed = 12;
-      /* If days_elapsed haven't been defined through the
-      * main() argv passing then it is 12 noon on such day*/
+  
+
+
+  /* When in LIVE mode, this uses actual start date of the show, otherwise uses today() 
+   * as start and increments by fixed amount 
+   * which can be changed in testing */
+
+  if(LIVE) {
+      myApp.show_start = new Date(2020,8,18, 18,0,0,0); //REMEMBER: MONTHS START AT ZERO SO 8 IS SEP
+      myApp.current_date = new Date(); //Can play with this      
+    } else {
+      /*If not running LIVE, this is essentially a testing branch, because current_date is set relative to some arbitrary current_start*/
+      myApp.interval_current_start = 2 * myApp.day_ms; //Days between date assumed for testing and (testing) current date, expressed in ms (in order to work with JS code)
+      myApp.show_start = new Date();
+      myApp.current_date = new Date(Date.parse(myApp.show_start) + myApp.interval_current_start);     
     }
 
-
-    //myApp.show_start = new Date(); //For testing purposes, but when the show starts this is changed to below
-    myApp.show_start = new Date(9,18,2020, 18,00,00);
-    myApp.show_end = myApp.show_start + myApp.max_days;
     myApp.max_days = 30;
+    myApp.show_end = new Date(Date.parse(myApp.show_start) + myApp.max_days * myApp.day_ms);
+    
+    
+    /*Assign days_elapsed which is now a dependent parameter on show_start, current_date, max_days*/
+    myApp.days_elapsed = myApp.get_dayselapsed(myApp.show_start,myApp.current_date);
+    console.log("setup() : LIVE status, days_elapsed>>>  ", LIVE, myApp.current_date, myApp.show_start, myApp.days_elapsed);
+
+
+    if(myApp.current_date > myApp.show_end || myApp.current_date < myApp.show_start)
+    {
+      /*Current date is before or after the show bounds, throw an exception*/
+      console.log("ERROR in setup()  myapp.current_date out of bounds ",myApp.current_date,
+        myApp.show_start,myApp.show_end,"*****************************");
+      console.log("EXITING********************************");
+      remove();
+    }
+
     myApp.breakpoint_ease = 1; //Number of days around breakpoints to ease in/out
     myApp.breakpoint1 = 10;
     myApp.breakpoint2 = 20;
     myApp.timeshift = 0.0;
-    myApp.days_elapsed = min(myApp.days_elapsed,myApp.max_days); //Can't be more than max_days
     myApp.propagate_dayselapsed();
 
     /*Stuff to setup glitch shaders (constructor calls automatically)*/
@@ -517,7 +579,7 @@ function setup() {
 function draw() {
   myApp.update();
   
-  myApp.debug_shite();
+  if(DEBUG) {myApp.debug_shite();}
     
   /* Note this is probably somewhat inefficient, all 3 (images, simplex glitch, protean
    * glitch) are being rendered, even though current plan is that only one would be
