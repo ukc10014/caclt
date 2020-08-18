@@ -31,12 +31,16 @@ class App {
     this.timeshift; //This is for testing, the shift of hour relative to actual time
     this.interval_current_start; //This is the date/time (in ms), in the non-LIVE case, between the date the sim is starting and t_0 in JS (1 Jan 1970)
     this.grab; //Screengrab image
-
+    this.bTestLoop = false; //Should the test_loop be run, this is changed in setup()
     this.start_ts = new Date(); //Get starting time, in Javascript format (Wed Aug 12 2020 08:07:39 GMT-0400 (Eastern Daylight Time))
 
     this.path = 'data/'; //Lets us use a single path everywhere, in case the filestructure changes, only one change hopefully
 
     this.myFont;
+
+    this.masterBuf = createGraphics(windowWidth,windowHeight,WEBGL);
+    //this.masterBuf.show();
+    //this.grabimg_mBuf; //Need a second (image type object) to hold get() of masterBuf because tint() doesn't affect createGraphics objects but does affect image objects
 
     }
 
@@ -169,8 +173,8 @@ class App {
       this.update_JSmodel();
 
       /*Remove this when testing is done*/
-      console.log("update() ",this.days_elapsed,this.current_date);
-      this.test_loop();
+      //console.log("update() ",this.days_elapsed,this.current_date);
+      if(this.bTestLoop) {this.test_loop();}
     }
 
 
@@ -223,6 +227,29 @@ class App {
        */
       //this.test_loop();
     }
+
+
+    /*These fetch params from the URL line*/    
+    getUrlVars() {
+      var vars = {};
+      var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+      });
+      return vars;
+    }
+
+    getUrlParam(parameter, defaultvalue){
+      var urlparameter = defaultvalue;
+      if(window.location.href.indexOf(parameter) > -1){
+        urlparameter = this.getUrlVars()[parameter];
+      }
+      return urlparameter;
+    }
+
+
+
+
+
 }
 
 /*Note: in OF, this was the content.h/content.cpp class*/
@@ -244,7 +271,7 @@ class  Content {
   this.breakpoint_ease; //Ditto above
 
   this.images = [];
-  this.buffer = createGraphics(windowWidth,windowHeight); //framebuffer
+  //this.buffer = createGraphics(windowWidth,windowHeight); //framebuffer
 
   }
 
@@ -271,8 +298,13 @@ class  Content {
        * sigmoid implementation is there, to only have to implement that once.  Probably belongs
        * in a utility package that the entire codebase can share */
       //ofSetColor(255,255,255,255);
-      var alpha_sigmoid = (1.0 - (myApp.smootherstep(0.0,this.breakpoint1+this.breakpoint_ease,this.days_elapsed)));
-      tint(255,255,255,255*alpha_sigmoid);
+      //var alpha_sigmoid = (1.0 - (myApp.smootherstep(0.0,this.breakpoint1+this.breakpoint_ease,this.days_elapsed)));
+      //tint(255,255,255,255*alpha_sigmoid);
+
+
+      if(frameCount%1 != 0) {return;}
+
+
       if(this.img_type == 0)
       {
           for(let j=0;j<this.images.length;j++)
@@ -284,16 +316,19 @@ class  Content {
           }
       } else if(this.img_type == 1)
       {
+        /*
           var imgWidth = this.images[this.curr_img].width*0.25;
           var imgHeight = this.images[this.curr_img].height*0.25;
           var xpos = (windowWidth - imgWidth)/2;
           var ypos = (windowHeight - imgHeight)/2;
-          //console.log("Img data " + this.curr_img +" "+this.images[this.curr_img]);
-          this.buffer.image(this.images[this.curr_img],0,0,imgWidth,imgHeight);
-          
+          */
+
+          myApp.masterBuf.image(this.images[this.curr_img],-800,-1800);
+          //myApp.grabimg_mBuf = myApp.masterBuf.get(); //Need to do this so tint(), which doesn't change createGraphics objects, can work
+          image(myApp.masterBuf,-700,-500);
           //So as to have some randomness in how the current image is incremented
-          //if(random(0,1) < (exp(pow(this.days_elapsed/this.breakpoint1,2.0)) - 1.0)) {this.curr_img = (this.curr_img + 1)%this.images.length;}
-      this.curr_img = (this.curr_img + 1)%this.images.length;
+          if(random(0,1) < (exp(pow(this.days_elapsed/this.breakpoint1,2.0)) - 1.0)) {this.curr_img = (this.curr_img + 1)%this.images.length;}
+      //this.curr_img = (this.curr_img + 1)%this.images.length;
 
       } else if(this.img_type == 2)
       {
@@ -364,12 +399,19 @@ class Glitch {
       /*Cloud tunnel shader*/
       this.sProtean = loadShader(myApp.path + 'shadersGL3/protean.vert',myApp.path + 'shadersGL3/protean.frag'); //Protean shader taken from Shadertoy, MIT 3.0 License
       //this.proteanFbo = createGraphics(windowWidth,windowHeight,WEBGL); //FBOs for combining shaders implemented as createGraphics buffer
+      //this.proteanFbo.show();
 
      /*Simplex shader from Ashima - MIT License*/
       this.sSimplex = loadShader(myApp.path + 'shadersGL3/simplex.vert',myApp.path + 'shadersGL3/simplex.frag'); //Simplex noise shader
-      //this.sSimplex = loadShader('data/TMP_mosaic/effect.vert','data/TMP_mosaic/effect.frag');
       //this.simplexFbo = createGraphics(windowWidth,windowHeight,WEBGL); //As above, OF FBO buffer is implemented as createGraphics
-    
+      //this.simplexFbo.show();
+
+      /*Create an FBO into which all glitch shaders will go.  Don't need separate FBOs as we are stacking the glitches*/
+      /* Using the masterBuf in myApp instead so everything writes to that
+      this.glitchFbo = createGraphics(windowWidth,windowHeight,WEBGL);
+      this.glitchFbo.show();
+      */
+
 
       /*Awkward hardwire of number of Moruroa images, note this is set through preload()*/
       this.sSimplex_n_imgs; 
@@ -415,26 +457,38 @@ class Glitch {
         }
 
         //Bring image up around breakpoint1 and down by breakpoint2
+        /*
         var alpha_sigmoid_1 = (myApp.smootherstep(max(0.0,this.breakpoint1-1.0),this.breakpoint2+1.0,this.days_elapsed));
         var alpha_sigmoid_2 = 1.0 - (myApp.smootherstep(0.0,this.breakpoint2+1.0,this.days_elapsed));
-        //image(this.img_array[this.current_img],0,0);
-        //this.simplexFbo.shader(this.sSimplex);
-        stroke(255,0,0);
-       tint(255,255,255,255*(alpha_sigmoid_1+alpha_sigmoid_2));
+        */
+        
 
         //See above draw for general comments (this was shabbily ported from Shadertoy)
-        shader(this.sSimplex);
-        
+        //this.simplexFbo.shader(this.sSimplex); //Using glitch.fbo to stack glitches
+        //this.glitchFbo.shader(this.sSimplex); //First do the simplex shader
+        myApp.masterBuf.shader(this.sSimplex); //Using the masterBuf, instead of the local buffers above
+
+
         //this.sSimplex.setUniform("iResolution",[width,height]);
         this.sSimplex.setUniform("iResolution",[width,height]);
         this.sSimplex.setUniform("iTime", second());
         this.sSimplex.setUniform("tex0",this.img_array[this.current_img]); //Explicit binding is good if multiple textures
 
-        rect(0,0,width,height);
+        /*
+        this.simplexFbo.rect(0,0,width,height);
+        image(this.simplexFbo,0,0,width,height);
+        */
 
-        //texture(this.simplexFbo);
+        /*Using masterBuf instead of glitchFbo (which replaces simplexFbo)
+        this.glitchFbo.rect(0,0,width,height);
+        image(this.glitchFbo,-800,-200,width,height);
+        */
 
-        //img.getTexture().unbind();
+        myApp.masterBuf.rect(0,0,width,height);
+        //myApp.grabimg_mBuf = myApp.masterBuf.get(); //Need to do this so tint(), which doesn't change createGraphics objects, can work
+        //tint(255,255,255,255*(alpha_sigmoid_1+alpha_sigmoid_2));
+        //image(myApp.grabimg_mBuf,-800,-200,windowWidth,windowHeight);
+        image(myApp.masterBuf,-800,-200,windowWidth,windowHeight);
     }
 
     pass_time(days,  maxd,  b1,  b2)
@@ -458,7 +512,7 @@ class Glitch {
         var alpha_sigmoid_2 = (myApp.smootherstep(this.breakpoint2-1.0,this.max_days,this.days_elapsed));
 
 
-        tint(255,255,255,255);
+        //tint(255,255,255,255);
         
         // center screen.
         var cx = width / 2.0;
@@ -469,17 +523,28 @@ class Glitch {
         var x = mouseX - cx;
         var y = mouseY - cy;
 
-        shader(this.sProtean);
-      
+        //this.proteanFbo.shader(this.sProtean); //Comment out for now, using glitchFbo
+        //this.glitchFbo.shader(this.sProtean); //First do the simplex shader
+        myApp.masterBuf.shader(this.sProtean);
+
         // we can pass in two values into the shader at the same time by using the setUniform2 function.
         // inside the shader these two values are set inside a vec2 object.
         this.sProtean.setUniform("iMouse", [x, y]);  // SET A UNIFORM
         this.sProtean.setUniform("iResolution",[width,height]);
         this.sProtean.setUniform("iTime", second());
         
-        rect(0,0,windowWidth,windowHeight);
-    
-        //texture(this.proteanFbo);    
+        /*
+        this.glitchFbo.rect(0,0,width,height);
+        image(this.glitchFbo,-400,-400,width,height);
+        */
+
+        /* Using a common glitchFbo for both simplex and protean shaders
+        this.proteanFbo.rect(0,0,width,height);
+        image(this.proteanFbo,0,0,width,height);
+        */
+
+        myApp.masterBuf.rect(0,0,width,height);
+        image(myApp.masterBuf,-400,-400,width,height);
     }
 
   }
@@ -517,6 +582,26 @@ function preload() {
 function setup() {
   /*Note that preload() automatically goes first, hence images aren't explicitly loaded*/
 
+  //URL fetchers
+  var cd_y,cd_m,cd_d,cd_h,cd_u,cd_s,bTestLoop;
+
+  console.log("Test URL stuff");
+  var queryString = window.location.href;
+  var urlParams = new URLSearchParams(queryString);
+  console.log(queryString," Params ",urlParams,urlParams.get('h'),urlParams.get('test_loop'));
+
+
+  /*Validate if URL contains this stuff and otherwise set defaults*/
+  if(urlParams.has('yr')) {cd_y = urlParams.get('yr');} else {cd_y = 2020;}
+  if(urlParams.has('mo')) {cd_m = urlParams.get('mo');} else {cd_m = 8;}
+  if(urlParams.has('dt')) {cd_d = urlParams.get('dt');} else {cd_d = 26;}
+  if(urlParams.has('ho')) {cd_h = urlParams.get('ho');} else {cd_h = 13;}
+  if(urlParams.has('mi')) {cd_u = urlParams.get('mi');} else {cd_u = 1;}
+  if(urlParams.has('se')) {cd_s = urlParams.get('se');} else {cd_s = 1;}
+  if(urlParams.has('test_loop')) {bTestLoop = urlParams.get('test_loop');} else {bTestLoop = false;}
+
+  console.log("current_date ",cd_y,cd_m,cd_d,cd_h,cd_u,cd_s,bTestLoop);
+
   // put setup code here
   //createCanvas(1024,768,WEBGL);
   createCanvas(windowWidth,windowHeight,WEBGL);
@@ -535,9 +620,12 @@ function setup() {
       myApp.current_date = new Date(); //Can play with this      
     } else {
       /*If not running LIVE, this is essentially a testing branch, because current_date is set relative to some arbitrary current_start*/
-      myApp.interval_current_start = 2 * myApp.day_ms; //Days between date assumed for testing and (testing) current date, expressed in ms (in order to work with JS code)
+      //myApp.interval_current_start = 5 * myApp.day_ms; //Days between date assumed for testing and (testing) current date, expressed in ms (in order to work with JS code)
       myApp.show_start = new Date();
-      myApp.current_date = new Date(Date.parse(myApp.show_start) + myApp.interval_current_start);     
+      //myApp.current_date = new Date(Date.parse(myApp.show_start) + myApp.interval_current_start);     
+      myApp.current_date = new Date(cd_y,cd_m,cd_d,cd_h,cd_u,cd_s); //This is being set based on URL above, with defaults set there
+      myApp.interval_current_start = myApp.get_dayselapsed(myApp.show_start,myApp.current_date);
+      myApp.bTestLoop = bTestLoop;
     }
 
     myApp.max_days = 30;
@@ -564,12 +652,9 @@ function setup() {
     myApp.timeshift = 0.0;
     myApp.propagate_dayselapsed();
 
-    /*Stuff to setup glitch shaders (constructor calls automatically)*/
-    //glitch.sProtean_setup();
-
-    /*Use one of these, _setup() just loads a single image, while _setup_array() loads array.
-     *The latter currently requires that the Content image array loading happens first*/
-    //glitch.sSimplex_setup_array();
+    /*Stuff to setup glitch shaders (constructor calls automatically hence these are commented out)*/
+    //glitch.sProtean_setup(); //Unnecessary call as constructor calls this automatically 
+    //glitch.sSimplex_setup_array(); //This would be needed, except its called in preload() owing to file loading
 
 
     /*Some debugging shit in case we want to draw on screen*/
@@ -585,26 +670,21 @@ function draw() {
    * glitch) are being rendered, even though current plan is that only one would be
    * really visible at one time, albeit with zones of transition where multiples might
    * shew up. Need some sort of exponential mixing routine */
-   //myApp.days_elapsed = 2.0;
-   //console.log("draw() days_elapsed, breakpoints 1 & 2): "+myApp.days_elapsed+" "+myApp.breakpoint1+" "+myApp.breakpoint2);
+   
   if(myApp.days_elapsed<=myApp.breakpoint1+myApp.breakpoint_ease && myApp.days_elapsed > 0)
   {
-      //imgs.buffer.image(0,0);
-    
+    console.log("I'm here ",myApp.days_elapsed); 
     imgs.makeimgbuf();
-    //image(imgs.images[4],0,0);
-
-    image(imgs.buffer,-400,-400);
-  } else { 
-    //console.log("draw() failure");
-  }
+   
+    //image(imgs.buffer,-400,-400);
+    //image(myApp.masterBuf,-400,-400);
+  } 
   
   
   if(myApp.days_elapsed>=myApp.breakpoint1-myApp.breakpoint_ease && myApp.days_elapsed<=myApp.breakpoint2+myApp.breakpoint_ease)
   {
+      if(DEBUG) {console.log("simplex draw")};
       glich.sSimplex_draw_array();
-      //myApp.propagate_dayselapsed();
-      //image(glich.simplexFbo,0,0);
       
   }
 
@@ -613,7 +693,6 @@ function draw() {
   {
       if(DEBUG) {console.log("protean draw")};
       glich.sProtean_draw();
-      //glich.proteanFbo.draw(0,0);
   }
   
 
