@@ -6,37 +6,124 @@
   <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
   <style> 
   	body {
-  		background-color: lightblue;
-  		padding: 40;margin: 40;
+  		/*background-color: #a3a3a8;*/
+      color: white;
+      background-image: url('metsamor.jpg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
   	}
 
   	h1 {
-  		color: white;
-  		text-align: center;
+      color: white;
+      font-family: Futura, Helvetica, Arial, sans-serif;
+      font-size: 1em;
+      text-align: left;
   	}
 
-  	p {
-  		color: red;
-  		font-family: verdana;
-  		font-size: 12px;
+    .output {
+      color: #cc3300;
+      font-family: Futura, Helvetica, Arial, sans-serif;
+      font-size: 1.5em;
+      text-align: center;
+
+    }
+
+  	p, label {
+  		/*color: #332900;*/
+      color: white;
+  		font-family: Futura, Helvetica, Arial, sans-serif;
+      font-style: italic;
+  		font-size: 1em;
   		text-align: left;
   	}
 
+    select, input {
+      background-color: #ffb31a;
+
+    }
+
 </style>
+
+<script>
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  //$(document).ready(function showDate() {
+  function showDate() {
+  var outstr = '';
+  outstr = outstr.concat($("#fhour").val() + "h:"); 
+  outstr = outstr.concat($("#fminute").val() + "m:");
+  outstr = outstr.concat($("#fsecond").val() + "s    ");
+  outstr = outstr.concat($("#fday").val() +" "+ months[Number($("#fmon").val())] +" "+ $("#fyear").val());
+  
+  var dt_start = new Date();
+
+  document.getElementById("Output").innerHTML = `Simulation date:    ${outstr} .<br><br><br>  Exhibition start date: ${dt_start}`;
+}
+//});
+</script>
+
+<script>
+  /*This builds the page*/
+  function builder() {
+    make_yr();
+    make_mon();
+    make_dat();
+    showDate();
+  }
+
+  function make_yr() {
+    var h = document.getElementById("form_date");
+    var str_year = "<label for=\"fyear\">Year    </label><select id=\"fyear\" name=\"Year\"><option value=\"2020\">2020</option></select>";
+    h.insertAdjacentHTML("afterend",str_year);
+    //h.innerHTML = str_year;
+    //console.log(str_year);
+  }
+
+
+  function make_mon() {
+    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+    var h = document.getElementById("form_date");
+    var str = `<label for=\"fmon\">Month    </label><select id=\"fmon\" name=\"Month\" onClick=\"showDate()\">`;
+    var d = new Date();
+
+    for(i=0;i<months.length;i++) {
+      if(d.getMonth() == i) {
+        str = str.concat(`<option value=\"${i}\" selected>${months[i]}</option>`);
+      } else {
+        str = str.concat(`<option value=\"${i}\">${months[i]}</option>`);
+      }
+    }
+    str = str.concat(`</select>`)
+    h.insertAdjacentHTML("afterend",str);
+    //h.innerHTML = str_year;
+  }
+
+function make_dat() {
+    var h = document.getElementById("form_date");
+    var str = `<label for=\"fday\">Date    </label><select id=\"fday\" name=\"Date\" onClick=\"showDate()\">`;
+    var d = new Date();
+
+    for(i=1;i<=31;i++) {
+      if(d.getDate() == i) {
+        str = str.concat(`<option value=\"${i}\" selected>${i}</option>`);
+      } else {
+        str = str.concat(`<option value=\"${i}\">${i}</option>`);
+      }
+    }
+    str = str.concat(`</select>`)
+    h.insertAdjacentHTML("afterend",str);
+    //h.innerHTML = str_year;
+}
+
+</script> 
+
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
-  	/*
-  	function validateForm() {
-  		var x = document.forms["myForm"]["fyear"].value
-  		if(x == "") {
-  			alert("Date must be filled out");
-  			return false;
-  		} else {
-  			alert("Success!",x);
-  			return;
-  		}
-  	}
-  	*/
+    /*This reads the form and produces an URL to send to the cacweb software proper*/  
   	$(document).ready(function() {
 	  	$("#submit").click(function() {
 	  		var string = "?";
@@ -47,12 +134,20 @@
 	  		if($("#fminute").val() != null) {string = string.concat("mi=" + $("#fminute").val() + "&");}
 	  		if($("#fsecond").val() != null) {string = string.concat("se=" + $("#fsecond").val() + "&");}
 	  		var x = document.getElementById("myCheck").checked;
-	  		string = string.concat("test_loop=" + x + "&");
-	  		alert(string);
+	  		string = string.concat("test_loop=" + x);
+	  		//alert(string);
 
-	  		var url = "./cacweb/index.html" + string;
+        var dt_valid = new Date($("#fyear").val(),$("#fmon").val(),$("#fday").val(),$("#fhour").val(),$("#fminute").val(),$("#fsecond").val());
+        console.log(" Date entered",dt_valid);
+        if(Date.parse(dt_valid) - Date.now() < 0) {
+          window.alert("Simulator error - simulation date is before exhibition start date.  See developer console for details.");
+          console.log("Simulator error - simulation date is before exhibition start date",dt_valid,Date());
+          return;
+        } else {
+  	  		var url = "./cacweb/index.html" + string;
+          window.open(url);
+        }
 
-	  		window.open(url);
 	  	});
   });
 
@@ -66,24 +161,42 @@
 
   </script>
 
+
+
  </head>
 
 <title>CAC Web Version</title>
-<body><h>Setup page for CAC Vilnius software</h>
+<body onload="builder()"><p>Use this page to simulate the ESTHER code as of a specific date<br> after the hypothetical exhibition start date (for testing purposes, <br>assumed to be the current date (i.e. today). Defaults are <br> already set below, just hit 'Launch'. <br><br>
+'Test Loop' simulates the output screen every remaining day of the <br> exhibition run (at the same time each day), starting
+on the date displayed below.</p>
 
-<!-- <form name="myForm" onsubmit="return validateForm()" method="post"> -->
-	<p>Year:<input type="number" id="fyear" name="fyear" min="2020" max="2030" value="2020"/></p>
-	<p>Month:<input type="number" id="fmon" name="fmon" min="0" max="11" value="8"/></p>
-	<p>Day:<input type="number" id="fday" name="fday" min="1" max="31" value="24"/></p>
-	<p>Hour:<input type="number" id="fhour" name="fhour" min="0" max="23" value="18"/></p>
-	<p>Minute:<input type="number" id="fminute" name="fminute" min="1" max="60" value="1"/></p>
-	<p>Second:<input type="number" id="fsecond" name="fsecond" min="1" max="60" value="1"/></p>
-	<p>Test Loop?: <input type="checkbox" id="myCheck"></p>
+<p id="form_date"></p>
+<!--
+<p  id="form_yr"></p>
 
-	<button onclick="check()">Enable test_loop()</button>
-	<button onclick="uncheck()">Disable test_loop()</button>
+<p id="form_mon"></p>
 
-	<input type="button" id="submit" value="Submit"/>
+<p id="form_dat"></p> -->
+
+
+
+
+  <label for="fhour">Hour  </label><input type="number" id="fhour" name="fhour" min="0" max="23" value="18"/ onClick="showDate()">
+  <label for="fminute">Minute  </label><input type="number" id="fminute" name="fminute" min="1" max="60" value="1"/ onClick="showDate()">
+  <label for="fsecond">Second  </label><input type="number" id="fsecond" name="fsecond" min="1" max="60" value="1"/ onClick="showDate()">
+  
+  <label for="myCheck">Test Loop?   </label><input type="checkbox" id="myCheck">
+
+<br><br><input type="button" id="submit" value="Launch Simulator"/>
+
+</p>
+<p class="output" id="Output"></p>
+
+
+
+<h1>Notes</h1>
+<p></p>
+<p>Dates aren't validated for 28/29/30/31 day months.</p>
 
 </body>
 
