@@ -13,21 +13,26 @@ precision mediump float;
 //               https://github.com/stegu/webgl-noise
 //
 
+//UKC: Stuff to do tiling, taken from githum.com/aferris/p5jsShaderExamples repos, taken mid-August 2020
+
+
 
 /*UKC: ADDING IN UNIFORMS, ETC*/
 uniform vec2 iResolution;
 uniform float iTime;
+
+uniform float uDayFrac; //days_elapsed as a fraction of the run (for this particular glitch)
+
 
 //texture stuff
 
 uniform sampler2D tex0;
 varying vec2 varyingtexcoord;
 
-
-//Stuff to do tiling, taken from githum.com/aferris/p5jsShaderExamples repos
-float amt = 0.1; // the amount of displacement, higher is more
-float squares = 20.0; // the number of squares to render vertically
-
+// the amount of displacement, higher is more (20/8: tried up to 0.9, really cool micro-tiles)
+float amt = mix(0.1,1.0,uDayFrac); 
+float squares = mix(20.0,0.,uDayFrac); 
+// the number of squares to render vertically (20/8: originally 20., at 0. it is orig img)
 
 
 /*END UKC*/
@@ -108,14 +113,17 @@ void main()
  
     //vec2 uv = gl_FragCoord.xy / iResolution.xy;
     vec2 uv = varyingtexcoord;
+
+    uv.y = 1. - uv.y; //flipping vertical
   
     float time = iTime * 1.0;
 
     // Create large, incidental noise waves
-    float noise = max(0.0, snoise(vec2(time, uv.y * 0.3)) - 0.3) * (1.0 / 0.7);
+    /*UKC 20/8: obvs, this and (smol waves) below zeroed give more wavey, less recognisable images, maybe time-link them?*/
+    float noise = max(0.0, snoise(vec2(time, uv.y * 0.3)) - 0.3) * (1.0 / 0.7) * mix(0.,1.0,uDayFrac); 
 
     // Offset by smaller, constant noise waves
-    noise = (noise + (snoise(vec2(time*10.0, uv.y * 2.4)) - 0.5) * 0.15);
+    noise = (noise + (snoise(vec2(time*10.0, uv.y * 2.4)) - 0.5) * 0.15) * mix(0.,1.0,uDayFrac);
 
 
     /*github.com/aferris tiling code*/
@@ -123,10 +131,12 @@ void main()
     vec2 tc = uv;
 
     // move into a range of -0.5 - 0.5
-    uv -= 0.5;
+    //UKC: 20/8 comment this out leads to a nicer more visible, albeit aspect ratio bunged image
+    uv -= 0.5 * mix(0.,1.0,uDayFrac); 
 
     // correct for window aspect to make squares
-    uv.x *= aspect;
+    uv.x *= aspect; 
+    /*UKC: 20/8, again, commenting this out this stretches things, but image more visible, but uncommented (i.e. with tiling) this and line 130 give wavey tapestry-like designs */
 
     // tile will be used to offset the texture coordinates
     // taking the fract will give us repeating patterns
@@ -138,7 +148,6 @@ void main()
     // Apply the noise as x displacement for every line
     float xpos = uv.x - noise * noise * 0.25 * 100.0;
     gl_FragColor = texture2D(tex0, vec2(xpos, uv.y) + tile - offset);
-    //gl_FragColor = vec4(0.0); //Testing code to see if this .frag is being refreshed in browser
 
     // Mix in some random interference for lines
     gl_FragColor.rgb = mix(gl_FragColor.rgb, vec3(rand(vec2(uv.y * time))), noise * 0.3).rgb;
@@ -150,12 +159,11 @@ void main()
     }
 
     // Shift green/blue channels (using the red channel)
-    /*UKC shadertoy uses iChannel0, we use texture0*/
-
+   
     //gl_FragColor.g = mix(gl_FragColor.r, texture2D(tex0, vec2(xpos + noise * 0.05, uv.y)).g, 0.25);
     gl_FragColor.b = mix(gl_FragColor.r, texture2D(tex0, vec2(xpos - noise * 0.05, uv.y)).b, 0.25);
 
     /*UKC: Couple choices on alpha to get the underlying images*/
-    //gl_FragColor.a = sin(iTime);
+    gl_FragColor.a = mix(0.2,1.0,uDayFrac);
       
 }

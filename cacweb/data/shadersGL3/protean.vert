@@ -1,8 +1,4 @@
-#ifdef GL_ES
-
 precision mediump float;
-
-#endif
 
 
 uniform vec2 iResolution;
@@ -18,6 +14,10 @@ void main(){
     
     vec4 positio = vec4(aPosition,1.0); 
 	//gl_Position = modelViewProjectionMatrix * position;
+	
+	//Uncomment this to have the clouds cover the screen
+    //positio.xy = positio.xy * 2.0 - 1.0;
+
 	gl_Position = positio;
     
 

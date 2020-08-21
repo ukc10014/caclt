@@ -7,7 +7,7 @@ let LIVE = false; //When this goes live, mainly this influences whether setup() 
 /*These must be declared/promised globally, and then defined in setup(), so that they can be accessed in draw()*/
 let myApp;
 let imgs;
-
+//let glich;
 
 
 class App {
@@ -49,17 +49,15 @@ class App {
       /*Below is a testing loop to quickly see how things change over entire 30 days*/
 
     //Increment days_elapsed ever z seconds
-    var z = 300; //Expressed in milliseconds
-
+    var z = 300; //Expressed in frames
     if(this.days_elapsed >= 1.0 && this.days_elapsed <= this.max_days)
     {
       if(frameCount != this.ts && frameCount%z == 0)
       {
         //this.current_date = this.incr_date(this.current_date,1);
-        this.interval_current_start = this.interval_current_start + 1 * this.day_ms; //Kind of weird way of forcing an increment, but this interval param what is used in update() method
+        this.interval_current_start = this.interval_current_start + 1; //Kind of weird way of forcing an increment, but this interval param what is used in update() method
         this.days_elapsed = this.get_dayselapsed(this.show_start,this.current_date);
-        console.log("Incrementing date ",this.current_date);
-
+        
         if(this.current_date >= this.show_end)
         {
           this.current_date = this.show_start;
@@ -104,7 +102,6 @@ class App {
     {
       /*Propagate updated day/time to various places that need it*/
       //Note: pass_time in Content.h has two implementations, one includes the breakpoint ease
-      //console.log("propagation ",this.days_elapsed,this.max_days,this.breakpoint1,this.breakpoint2,this.breakpoint_ease);
       imgs.pass_time(this.days_elapsed,this.max_days,this.breakpoint1,this.breakpoint2,this.breakpoint_ease);
     }
 
@@ -157,12 +154,11 @@ class App {
         this.current_date = tmp;
       } else {
         /*In non-LIVE case where we are simulating behaviour a certain interval after start date (say 5 days into the sim)*/
-        var tmp = new Date(this.interval_current_start + Date.parse(new Date()));
+        var tmp = new Date(this.interval_current_start * this.day_ms + Date.parse(new Date()));
         this.current_date = tmp;
       }
 
       this.days_elapsed = this.get_dayselapsed(this.show_start,this.current_date);
-      //console.log("update_JSmodel ",this.days_elapsed,this.interval_current_start,this.current_date);
       this.propagate_dayselapsed();
     }
 
@@ -172,9 +168,8 @@ class App {
       //this.update_OFmodel();
       this.update_JSmodel();
 
-      /*Remove this when testing is done*/
-      //console.log("update() ",this.days_elapsed,this.current_date);
-      if(this.bTestLoop) {this.test_loop();}
+      /*TEST CODE Remove this when testing is done*/
+      if(Boolean(this.bTestLoop)) {this.test_loop();}
     }
 
 
@@ -247,7 +242,17 @@ class App {
     }
 
 
+    isNight() {
+      /*Work out whether it is night (timezone issue is open)*/
+      /*Note also that this returns true if time is outside of museum opening hours*/
 
+      if(this.current_date.getHours() >= this.gallery_shut_h | this.current_date.getHours() < this.gallery_open_h)
+      {
+        return true;
+      } else {
+        return false;
+      }
+    }
 
 
 }
@@ -262,13 +267,14 @@ class  Content {
     console.log("Content class 'imgs' constructor");
 
   this.img_type; //Type of image (mosaic, serial, etc.). Initialise in constructor
-  this.curr_img; //When showing images serially, where we are in the sequence
+  this.curr_img = 0; //When showing images serially, where we are in the sequence
   this.num_imgs; //How many array images are there, at some point this should be calculated from directory operations
   this.days_elapsed; //In original C++ this was private to Content object, it is a little confusing here but is distinct from App.days_elapsed
   this.max_days; //Ditto above 
   this.breakpoint1; //Ditto above
   this.breakpoint2; //Ditto above
   this.breakpoint_ease; //Ditto above
+  this.nextimg = 0; //Counter for when images are held on the screen rather than incrementing
 
   this.images = [];
   //this.buffer = createGraphics(windowWidth,windowHeight); //framebuffer
@@ -297,38 +303,28 @@ class  Content {
       /* The ofApp* gubbins is getting pointer to the ofApp object, because the Perlin smootherstep
        * sigmoid implementation is there, to only have to implement that once.  Probably belongs
        * in a utility package that the entire codebase can share */
-      //ofSetColor(255,255,255,255);
-      //var alpha_sigmoid = (1.0 - (myApp.smootherstep(0.0,this.breakpoint1+this.breakpoint_ease,this.days_elapsed)));
-      //tint(255,255,255,255*alpha_sigmoid);
-
-
-      if(frameCount%1 != 0) {return;}
-
+      
 
       if(this.img_type == 0)
       {
-          for(let j=0;j<this.images.length;j++)
-          {
-              var imgWidth = this.images[j].width;
-              var imgHeight = this.images[j].height;
-              this.buffer.image(images[j]);
-              //images[j].draw(100,100,imgWidth,imgHeight);
-          }
+        console.log("makeimgbuf():  UNIMPLEMENTED CONDITION '0' ");
       } else if(this.img_type == 1)
       {
-        /*
+        
           var imgWidth = this.images[this.curr_img].width*0.25;
           var imgHeight = this.images[this.curr_img].height*0.25;
+          /*
           var xpos = (windowWidth - imgWidth)/2;
           var ypos = (windowHeight - imgHeight)/2;
           */
-
-          myApp.masterBuf.image(this.images[this.curr_img],-800,-1800);
-          //myApp.grabimg_mBuf = myApp.masterBuf.get(); //Need to do this so tint(), which doesn't change createGraphics objects, can work
-          image(myApp.masterBuf,-700,-500);
+          console.log("                           Image size",imgWidth,imgHeight,this.curr_img);
+          myApp.masterBuf.clear();
+          myApp.masterBuf.image(this.images[this.curr_img],-50,-250,imgWidth,imgHeight);
+          
+          image(myApp.masterBuf,-windowWidth*0.7,-windowHeight*0.6,windowWidth,windowHeight);
           //So as to have some randomness in how the current image is incremented
-          if(random(0,1) < (exp(pow(this.days_elapsed/this.breakpoint1,2.0)) - 1.0)) {this.curr_img = (this.curr_img + 1)%this.images.length;}
-      //this.curr_img = (this.curr_img + 1)%this.images.length;
+          //if(random(0,1) < (exp(pow(this.days_elapsed/this.breakpoint1,2.0)) - 1.0)) {this.curr_img = (this.curr_img + 1)%this.images.length;}
+          this.curr_img = (this.curr_img + 1)%this.images.length;
 
       } else if(this.img_type == 2)
       {
@@ -337,6 +333,49 @@ class  Content {
           console.log("content.cpp: Wrong value for img_type");
           return;
       }
+
+    }
+
+
+    makeimgbuf_noisy()
+    {
+
+      /*19/8/20: Shah images but with lots of glitching, warping, noise*/      
+
+      /*Stuff to get images to stutter and randomly hold rather than incrementing*/
+      if(this.nextimg == 0 && random()<0.05) {this.nextimg = int(random() * 30);} 
+
+
+      var imgWidth = this.images[this.curr_img].width;
+      var imgHeight = this.images[this.curr_img].height;
+      var imgshow = this.images[this.curr_img];
+  
+      //myApp.masterBuf.clear();
+      
+      myApp.masterBuf.shader(glich.sCine);
+      glich.sCine.setUniform("iResolution",[width,height]);
+      glich.sCine.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
+      glich.sCine.setUniform("iTime",second());
+      myApp.masterBuf.rect(0,0,imgWidth*0.25,imgHeight*0.25);
+      image(myApp.masterBuf,-myApp.offsetw/2,-myApp.offseth/2-150,imgWidth*0.25,imgHeight*0.25);
+
+/*
+      myApp.masterBuf.shader(glich.sWarp);
+      glich.sWarp.setUniform("iResolution",[width,height]);
+      glich.sWarp.setUniform("iTime", frameCount*0.1);
+      glich.sWarp.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
+      myApp.masterBuf.rect(0,0,imgWidth*0.25,imgHeight*0.25);
+      image(myApp.masterBuf,-myApp.offsetw/2,-myApp.offseth/2,imgWidth*0.25,imgHeight*0.25);
+*/
+
+
+      if(this.nextimg == 0)
+      {
+        this.curr_img = (this.curr_img + 1)%this.images.length;
+      } else {
+        this.nextimg = max(0,this.nextimg - 1);
+      }
+
 
     }
 
@@ -395,11 +434,20 @@ class Glitch {
       this.counter; //Number of passes through draw
       this.current_img; //The image that we are currently on (in case of _draw_array()
       this.imgx,this.imgy;
+      this.simplex_df; //Time elapsed as a proportion of the simplex period uniform for simplex.frag
 
       /*Cloud tunnel shader*/
       this.sProtean = loadShader(myApp.path + 'shadersGL3/protean.vert',myApp.path + 'shadersGL3/protean.frag'); //Protean shader taken from Shadertoy, MIT 3.0 License
       //this.proteanFbo = createGraphics(windowWidth,windowHeight,WEBGL); //FBOs for combining shaders implemented as createGraphics buffer
       //this.proteanFbo.show();
+
+      /*Warp/noise shader*/
+      this.sWarp = loadShader(myApp.path + 'shadersGL3/warp.vert',myApp.path + 'shadersGL3/warp.frag');
+
+      /*Cinematic vignette/scratch shader*/
+      this.sCine = loadShader(myApp.path + 'shadersGL3/cinematic.vert',myApp.path + 'shadersGL3/cinematic.frag');
+
+
 
      /*Simplex shader from Ashima - MIT License*/
       this.sSimplex = loadShader(myApp.path + 'shadersGL3/simplex.vert',myApp.path + 'shadersGL3/simplex.frag'); //Simplex noise shader
@@ -413,10 +461,47 @@ class Glitch {
       */
 
 
+      /*Fire shader from Javier Garcia Carpio's repo @ webgl-shaders.com/fire-example.html*/
+      this.sFire = loadShader(myApp.path + 'shadersGL3/fireshader.vert',myApp.path + 'shadersGL3/fireshader.frag');
+      
+      console.log("             fire shader loaded");
+
+      /*Noise shader from github/aferris shader repository*/
+      this.sNoisy = loadShader(myApp.path + 'shadersGL3/texcoord.vert',myApp.path + 'shadersGL3/texcoord.frag');
+
       /*Awkward hardwire of number of Moruroa images, note this is set through preload()*/
       this.sSimplex_n_imgs; 
     }
 
+    sNoisy_setup()
+    {
+      /*Shader loaded in constructor*/
+    }
+
+    sNoisy_draw()
+    {
+      shader(this.sNoisy);
+      this.sNoisy.setUniform("iTime",myApp.days_elapsed/myApp.max_days);
+      myApp.masterBuf.rect(0,0,width,height);
+    }
+
+    sFire_setup()
+    {
+      /*Shader loaded in constructor*/
+    }
+
+    sFire_draw()
+    {
+      var d = new Date();
+      myApp.masterBuf.shader(this.sFire);
+      //this.sFire.setUniform("iTime",d.getMilliseconds()*.0001);
+      this.sFire.setUniform("iTime",frameCount/60); 
+      /*Using time elapsed since sketch start seems to work better than millis() or second() 
+      which are fast-periodic or lumpy respectively*/
+   
+      this.sFire.setUniform("iResolution",[width,height]);
+      myApp.masterBuf.rect(0,0,width,height);
+    }
 
     sSimplex_setup()
     {
@@ -456,6 +541,9 @@ class Glitch {
             this.counter++;
         }
 
+        //Time elapsed as a proportion of the simplex period uniform for simplex.frag 
+        this.simplex_df = (myApp.days_elapsed - myApp.breakpoint1)/(myApp.breakpoint2 - myApp.breakpoint1);
+        
         //Bring image up around breakpoint1 and down by breakpoint2
         /*
         var alpha_sigmoid_1 = (myApp.smootherstep(max(0.0,this.breakpoint1-1.0),this.breakpoint2+1.0,this.days_elapsed));
@@ -473,7 +561,7 @@ class Glitch {
         this.sSimplex.setUniform("iResolution",[width,height]);
         this.sSimplex.setUniform("iTime", second());
         this.sSimplex.setUniform("tex0",this.img_array[this.current_img]); //Explicit binding is good if multiple textures
-
+        this.sSimplex.setUniform("uDayFrac",this.simplex_df); //Pass the fraction of interval (bp1-ease,bp2+ease)
         /*
         this.simplexFbo.rect(0,0,width,height);
         image(this.simplexFbo,0,0,width,height);
@@ -485,10 +573,8 @@ class Glitch {
         */
 
         myApp.masterBuf.rect(0,0,width,height);
-        //myApp.grabimg_mBuf = myApp.masterBuf.get(); //Need to do this so tint(), which doesn't change createGraphics objects, can work
-        //tint(255,255,255,255*(alpha_sigmoid_1+alpha_sigmoid_2));
-        //image(myApp.grabimg_mBuf,-800,-200,windowWidth,windowHeight);
-        image(myApp.masterBuf,-800,-200,windowWidth,windowHeight);
+    
+        image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,windowWidth,windowHeight);
     }
 
     pass_time(days,  maxd,  b1,  b2)
@@ -511,6 +597,8 @@ class Glitch {
         //Bring image up around breakpoint2
         var alpha_sigmoid_2 = (myApp.smootherstep(this.breakpoint2-1.0,this.max_days,this.days_elapsed));
 
+        //Time elapsed as a proportion of the simplex period uniform for simplex.frag. NB: for no good reason this is a local, while simplex_df is class member 
+        var protean_df = (myApp.days_elapsed - myApp.breakpoint2)/(myApp.show_end - myApp.breakpoint2);
 
         //tint(255,255,255,255);
         
@@ -522,7 +610,6 @@ class Glitch {
         // so we have to apply the same offset to the mouse coordinates before passing into the sProtean.
         var x = mouseX - cx;
         var y = mouseY - cy;
-
         //this.proteanFbo.shader(this.sProtean); //Comment out for now, using glitchFbo
         //this.glitchFbo.shader(this.sProtean); //First do the simplex shader
         myApp.masterBuf.shader(this.sProtean);
@@ -531,7 +618,10 @@ class Glitch {
         // inside the shader these two values are set inside a vec2 object.
         this.sProtean.setUniform("iMouse", [x, y]);  // SET A UNIFORM
         this.sProtean.setUniform("iResolution",[width,height]);
-        this.sProtean.setUniform("iTime", second());
+        /*Need this iTime scaled in range (0.1,1), affects speed/violence, but also colours,
+         *so orders of magnitude less result in monochrome.  Maybe vary this factor based on a market seed 
+         *(i.e. URA ETF price or vol)*/
+        this.sProtean.setUniform("iTime", (new Date()).getMilliseconds()*(0.1 * (1 - protean_df) + 0.9 * protean_df)); 
         
         /*
         this.glitchFbo.rect(0,0,width,height);
@@ -544,7 +634,7 @@ class Glitch {
         */
 
         myApp.masterBuf.rect(0,0,width,height);
-        image(myApp.masterBuf,-400,-400,width,height);
+        image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth*0.75,width,height);
     }
 
   }
@@ -588,8 +678,7 @@ function setup() {
   console.log("Test URL stuff");
   var queryString = window.location.href;
   var urlParams = new URLSearchParams(queryString);
-  console.log(queryString," Params ",urlParams,urlParams.get('h'),urlParams.get('test_loop'));
-
+  
 
   /*Validate if URL contains this stuff and otherwise set defaults*/
   if(urlParams.has('yr')) {cd_y = urlParams.get('yr');} else {cd_y = 2020;}
@@ -598,17 +687,15 @@ function setup() {
   if(urlParams.has('ho')) {cd_h = urlParams.get('ho');} else {cd_h = 13;}
   if(urlParams.has('mi')) {cd_u = urlParams.get('mi');} else {cd_u = 1;}
   if(urlParams.has('se')) {cd_s = urlParams.get('se');} else {cd_s = 1;}
-  if(urlParams.has('test_loop')) {bTestLoop = urlParams.get('test_loop');} else {bTestLoop = false;}
+  if(urlParams.get('test_loop') == 'true' ) {bTestLoop = true;} else {bTestLoop = "";}
 
   console.log("current_date ",cd_y,cd_m,cd_d,cd_h,cd_u,cd_s,bTestLoop);
 
   // put setup code here
   //createCanvas(1024,768,WEBGL);
   createCanvas(windowWidth,windowHeight,WEBGL);
-
-
-  //console.log("Setup() images should be loaded: width "+" "+imgs.images[4].width +" "+imgs.images[10].height);
-  
+  myApp.offsetw = windowWidth/2; myApp.offseth = windowHeight/2; //Offset to get images to cover window, handle resize, etc.
+  console.log("Setup width/height windowWidth/windowHeight  ",width,height,windowWidth,windowHeight);  
 
 
   /* When in LIVE mode, this uses actual start date of the show, otherwise uses today() 
@@ -628,9 +715,12 @@ function setup() {
       myApp.bTestLoop = bTestLoop;
     }
 
-    myApp.max_days = 30;
+    myApp.max_days = 31;
     myApp.show_end = new Date(Date.parse(myApp.show_start) + myApp.max_days * myApp.day_ms);
-    
+    console.log("                           show_end before adjustment",myApp.show_end);
+    myApp.show_end.setHours(23);myApp.show_end.setMinutes(59);myApp.show_end.setSeconds(59);
+    console.log("                           show_end after adjustment",myApp.show_end);
+
     
     /*Assign days_elapsed which is now a dependent parameter on show_start, current_date, max_days*/
     myApp.days_elapsed = myApp.get_dayselapsed(myApp.show_start,myApp.current_date);
@@ -650,7 +740,12 @@ function setup() {
     myApp.breakpoint1 = 10;
     myApp.breakpoint2 = 20;
     myApp.timeshift = 0.0;
+
     myApp.propagate_dayselapsed();
+
+    /*Specs of when gallery opens/shuts, determines whether on night or day cycle. Just uses hours.*/
+    myApp.gallery_open_h = 11;
+    myApp.gallery_shut_h = 19;
 
     /*Stuff to setup glitch shaders (constructor calls automatically hence these are commented out)*/
     //glitch.sProtean_setup(); //Unnecessary call as constructor calls this automatically 
@@ -664,38 +759,46 @@ function setup() {
 function draw() {
   myApp.update();
   
+
+
   if(DEBUG) {myApp.debug_shite();}
     
   /* Note this is probably somewhat inefficient, all 3 (images, simplex glitch, protean
    * glitch) are being rendered, even though current plan is that only one would be
    * really visible at one time, albeit with zones of transition where multiples might
    * shew up. Need some sort of exponential mixing routine */
-   
-  if(myApp.days_elapsed<=myApp.breakpoint1+myApp.breakpoint_ease && myApp.days_elapsed > 0)
-  {
-    console.log("I'm here ",myApp.days_elapsed); 
-    imgs.makeimgbuf();
-   
-    //image(imgs.buffer,-400,-400);
-    //image(myApp.masterBuf,-400,-400);
-  } 
+    
+   if(myApp.isNight() == true) {
+    /*Stuff to do if the exhibition is shut*/
+    //background(frameCount%4 == 0 ? 0 : 255); //flashing screen placeholder
+    if(DEBUG) {console.log("Night is here draw")};
+    frameCount%int(120*(random()+5)) == 0 ? glich.sNoisy_draw() : glich.sFire_draw();
+    image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,width,height);
+    //glich.sNoisy_draw();
+   } else {
+
+    if(myApp.days_elapsed<=myApp.breakpoint1+myApp.breakpoint_ease && myApp.days_elapsed > 0)
+    {
+      if(DEBUG) {console.log("shah imgs draw")};
+      imgs.makeimgbuf_noisy();
+    } 
   
   
-  if(myApp.days_elapsed>=myApp.breakpoint1-myApp.breakpoint_ease && myApp.days_elapsed<=myApp.breakpoint2+myApp.breakpoint_ease)
-  {
+    if(myApp.days_elapsed>=myApp.breakpoint1-myApp.breakpoint_ease && myApp.days_elapsed<=myApp.breakpoint2+myApp.breakpoint_ease)
+    {
       if(DEBUG) {console.log("simplex draw")};
       glich.sSimplex_draw_array();
-      
-  }
+
+    }
 
 
-  if(myApp.days_elapsed>=myApp.breakpoint2-myApp.breakpoint_ease && myApp.days_elapsed<=myApp.max_days)
-  {
+    if(myApp.days_elapsed>=myApp.breakpoint2-myApp.breakpoint_ease && myApp.days_elapsed<=myApp.max_days)
+    {
       if(DEBUG) {console.log("protean draw")};
       glich.sProtean_draw();
-  }
+    }
   
-
+}
     
   
 
@@ -703,4 +806,7 @@ function draw() {
 
 function windowResized(){
   resizeCanvas(windowWidth, windowHeight);
+  //So that images draw in correct place
+  myApp.offsetw = windowWidth/2;
+  myApp.offseth = windowHeight/2;
 }
