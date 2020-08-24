@@ -279,6 +279,9 @@ class  Content {
   this.images = [];
   //this.buffer = createGraphics(windowWidth,windowHeight); //framebuffer
 
+
+  /*First time through?*/
+  this.firsttime = true;
   }
 
    makeimgs()
@@ -466,11 +469,22 @@ class Glitch {
       
       console.log("             fire shader loaded");
 
+      /*Fireball shader from Duke/Ashima repo @ https://www.shadertoy.com/view/MtXSzS  accessed 24/8/20*/
+      this.sFireball = loadShader(myApp.path + 'shadersGL3/fireball.vert',myApp.path + 'shadersGL3/fireball.frag');
+      
+      console.log("             fireball shader loaded");
+
+
       /*Noise shader from github/aferris shader repository*/
       this.sNoisy = loadShader(myApp.path + 'shadersGL3/texcoord.vert',myApp.path + 'shadersGL3/texcoord.frag');
 
       /*Awkward hardwire of number of Moruroa images, note this is set through preload()*/
       this.sSimplex_n_imgs; 
+
+      /*Stuxnet code*/
+      this.stuxtxt; //Unparsed
+      this.stuxtoks; //Tokenised
+      this.firsttime = true; //Utility var for resetting buffer to desired colour or other one-time draw things
     }
 
     sNoisy_setup()
@@ -480,7 +494,8 @@ class Glitch {
 
     sNoisy_draw()
     {
-      shader(this.sNoisy);
+      myApp.masterBuf.shader(this.sNoisy);
+
       this.sNoisy.setUniform("iTime",myApp.days_elapsed/myApp.max_days);
       myApp.masterBuf.rect(0,0,width,height);
     }
@@ -493,13 +508,20 @@ class Glitch {
     sFire_draw()
     {
       var d = new Date();
+      /*This is all the stuff for the fireshader, remove it and the shader*/
+      /*
       myApp.masterBuf.shader(this.sFire);
-      //this.sFire.setUniform("iTime",d.getMilliseconds()*.0001);
       this.sFire.setUniform("iTime",frameCount/60); 
+      this.sFire.setUniform("iResolution",[width,height]);
+      
+      */
       /*Using time elapsed since sketch start seems to work better than millis() or second() 
       which are fast-periodic or lumpy respectively*/
    
-      this.sFire.setUniform("iResolution",[width,height]);
+      myApp.masterBuf.shader(this.sFireball);
+      this.sFireball.setUniform("iTime",float(millis()/1000)); 
+      this.sFireball.setUniform("iResolution",[width,height]);
+      this.sFireball.setUniform("iMouse",[mouseX,mouseY]); 
       myApp.masterBuf.rect(0,0,width,height);
     }
 
@@ -612,8 +634,10 @@ class Glitch {
         var y = mouseY - cy;
         //this.proteanFbo.shader(this.sProtean); //Comment out for now, using glitchFbo
         //this.glitchFbo.shader(this.sProtean); //First do the simplex shader
+        fill(255,0,0);
+        
         myApp.masterBuf.shader(this.sProtean);
-
+        
         // we can pass in two values into the shader at the same time by using the setUniform2 function.
         // inside the shader these two values are set inside a vec2 object.
         this.sProtean.setUniform("iMouse", [x, y]);  // SET A UNIFORM
@@ -633,12 +657,54 @@ class Glitch {
         image(this.proteanFbo,0,0,width,height);
         */
 
-        myApp.masterBuf.rect(0,0,width,height);
-        image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth*0.75,width,height);
+        /*Layer a noise shader*/
+        /*
+        myApp.masterBuf.shader(this.sCine);
+        this.sCine.setUniform("iResolution",[width,height]);
+        var scrimg = myApp.masterBuf;
+        this.sCine.setUniform("tex0",scrimg); //Explicit binding is good if multiple textures
+        this.sCine.setUniform("iTime",second());
+        myApp.masterBuf.rect(0,0,width/4,height/4);
+        */
+
+        myApp.masterBuf.rect(0,0,);
+        image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,width,height);
+
+        if(frameCount%10 == 0) {
+           //Display stux text on top of buffer so it stays
+          text(this.stuxtoks[int(random(this.stuxtoks.length))],-myApp.offsetw,-myApp.offseth*0.1);
+        }
+
     }
 
-  }
 
+    loadcode() 
+    {
+      /*Loads up Stux code file into memory*/
+      this.stuxtxt = this.readTextFile(myApp.path + "stuxcode/code.txt");
+      this.stuxtoks = splitTokens(this.stuxtxt,[`\n`,`\r`]); 
+    }
+
+    readTextFile(file)
+    {
+      var rawFile = new XMLHttpRequest();
+      var txt;
+      rawFile.open("GET", file, false);
+      rawFile.onreadystatechange = function ()
+      {
+        if(rawFile.readyState === 4)
+        {
+          if(rawFile.status === 200 || rawFile.status == 0)
+          {
+            txt = rawFile.responseText;
+            //alert(this.stuxtxt);
+          }
+        }
+      }
+      rawFile.send(null);
+      return txt;
+    }
+}
 
 /*These are the preload(), setup() and draw() that p5js mandates.  Must live outside class contexts etc.*/
 
@@ -665,6 +731,9 @@ function preload() {
   /*Awkward hardwire on number of glitch images, is also done in the constructor()*/
   glich.sSimplex_n_imgs = 34;
   glich.sSimplex_setup_array();
+
+  /*Load up stux file*/
+  glich.loadcode();
 
 }
 
@@ -753,7 +822,10 @@ function setup() {
 
 
     /*Some debugging shit in case we want to draw on screen*/
-    textFont(myApp.myFont,18); //Font was loaded in preload()
+    textFont(myApp.myFont,48); //Font was loaded in preload()
+
+    //console.log("stuxnet code ",glich.stuxtoks[422],glich.stuxtoks.length);
+
 }
 
 function draw() {
@@ -768,41 +840,83 @@ function draw() {
    * really visible at one time, albeit with zones of transition where multiples might
    * shew up. Need some sort of exponential mixing routine */
     
+   /*If we are in night then run the fire sim, otherwise move on to daytime stuff*/ 
    if(myApp.isNight() == true) {
     /*Stuff to do if the exhibition is shut*/
     //background(frameCount%4 == 0 ? 0 : 255); //flashing screen placeholder
     if(DEBUG) {console.log("Night is here draw")};
-    frameCount%int(120*(random()+5)) == 0 ? glich.sNoisy_draw() : glich.sFire_draw();
+    frameCount%int(random(120)) == 0 ? glich.sNoisy_draw() : glich.sFire_draw();
+    //glich.sNoisy_draw();
     image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,width,height);
     //glich.sNoisy_draw();
    } else {
 
     if(myApp.days_elapsed<=myApp.breakpoint1+myApp.breakpoint_ease && myApp.days_elapsed > 0)
     {
+      if(imgs.firsttime == true) {
+          var c1 = color(28,57,187); //Persian blue
+          var c2 = color(50,18,122); //Persian indigo
+          // Background
+          setGradient(-myApp.offsetw, -myApp.offseth, windowWidth, windowHeight, c1, c2, 2);
+          //setGradient(width / 2, 0, width / 2, height, c2, c1, 1);
+
+          //background(28,57,187); //Persian blue/lapis
+          //background(50,18,122); //Persian indigo aka 'regimental'
+          imgs.firsttime = false; 
+          }
       if(DEBUG) {console.log("shah imgs draw")};
       imgs.makeimgbuf_noisy();
     } 
   
   
-    if(myApp.days_elapsed>=myApp.breakpoint1-myApp.breakpoint_ease && myApp.days_elapsed<=myApp.breakpoint2+myApp.breakpoint_ease)
-    {
-      if(DEBUG) {console.log("simplex draw")};
-      glich.sSimplex_draw_array();
+      if(myApp.days_elapsed>=myApp.breakpoint1-myApp.breakpoint_ease && myApp.days_elapsed<=myApp.breakpoint2+myApp.breakpoint_ease)
+      {
+        if(DEBUG) {console.log("simplex draw")};
+        glich.sSimplex_draw_array();
 
-    }
+      }
+
+     
 
 
-    if(myApp.days_elapsed>=myApp.breakpoint2-myApp.breakpoint_ease && myApp.days_elapsed<=myApp.max_days)
-    {
-      if(DEBUG) {console.log("protean draw")};
-      glich.sProtean_draw();
-    }
+      if(myApp.days_elapsed>=myApp.breakpoint2-myApp.breakpoint_ease && myApp.days_elapsed<=myApp.max_days)
+      {
+        if(glich.firsttime == true) {
+          background(15,15,15);
+          glich.firsttime = false;
+        }
+        if(DEBUG) {console.log("protean draw")};
+        glich.sProtean_draw();
+      }
+
+    } 
   
-}
-    
+}    
   
-
+//Uitility function to do a gradient colour
+function setGradient(x, y, w, h, c1, c2, axis) {
+  noFill();
+  //let rnd = random(2.5);
+  if (axis === 2) {
+    // Top to bottom gradient
+    for (let i = y; i <= y + h; i++) {
+      let inter = map(i, y, y + h, 0, 1);
+      let c = lerpColor(c1, c2, inter*3.5);
+      stroke(c);
+      line(x, i, x + w, i);
+    }
+  } else if (axis === 1) {
+    // Left to right gradient
+    for (let i = x; i <= x + w; i++) {
+      let inter = map(i, x, x + w, 0, 1);
+      let c = lerpColor(c1, c2, inter);
+      stroke(c);
+      line(i, y, i, y + h);
+    }
+  }
 }
+
+
 
 function windowResized(){
   resizeCanvas(windowWidth, windowHeight);

