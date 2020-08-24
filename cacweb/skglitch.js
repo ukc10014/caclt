@@ -277,7 +277,6 @@ class  Content {
   this.nextimg = 0; //Counter for when images are held on the screen rather than incrementing
 
   this.images = [];
-  //this.buffer = createGraphics(windowWidth,windowHeight); //framebuffer
 
 
   /*First time through?*/
@@ -324,7 +323,7 @@ class  Content {
           myApp.masterBuf.clear();
           myApp.masterBuf.image(this.images[this.curr_img],-50,-250,imgWidth,imgHeight);
           
-          image(myApp.masterBuf,-windowWidth*0.7,-windowHeight*0.6,windowWidth,windowHeight);
+          image(myApp.masterBuf,-width*0.7,-height*0.6,windowWidth,windowHeight);
           //So as to have some randomness in how the current image is incremented
           //if(random(0,1) < (exp(pow(this.days_elapsed/this.breakpoint1,2.0)) - 1.0)) {this.curr_img = (this.curr_img + 1)%this.images.length;}
           this.curr_img = (this.curr_img + 1)%this.images.length;
@@ -356,7 +355,7 @@ class  Content {
       //myApp.masterBuf.clear();
       
       myApp.masterBuf.shader(glich.sCine);
-      glich.sCine.setUniform("iResolution",[width,height]);
+      glich.sCine.setUniform("iResolution",[windowWidth,windowHeight]);
       glich.sCine.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
       glich.sCine.setUniform("iTime",second());
       myApp.masterBuf.rect(0,0,imgWidth*0.25,imgHeight*0.25);
@@ -441,9 +440,7 @@ class Glitch {
 
       /*Cloud tunnel shader*/
       this.sProtean = loadShader(myApp.path + 'shadersGL3/protean.vert',myApp.path + 'shadersGL3/protean.frag'); //Protean shader taken from Shadertoy, MIT 3.0 License
-      //this.proteanFbo = createGraphics(windowWidth,windowHeight,WEBGL); //FBOs for combining shaders implemented as createGraphics buffer
-      //this.proteanFbo.show();
-
+      
       /*Warp/noise shader*/
       this.sWarp = loadShader(myApp.path + 'shadersGL3/warp.vert',myApp.path + 'shadersGL3/warp.frag');
 
@@ -454,15 +451,7 @@ class Glitch {
 
      /*Simplex shader from Ashima - MIT License*/
       this.sSimplex = loadShader(myApp.path + 'shadersGL3/simplex.vert',myApp.path + 'shadersGL3/simplex.frag'); //Simplex noise shader
-      //this.simplexFbo = createGraphics(windowWidth,windowHeight,WEBGL); //As above, OF FBO buffer is implemented as createGraphics
-      //this.simplexFbo.show();
-
-      /*Create an FBO into which all glitch shaders will go.  Don't need separate FBOs as we are stacking the glitches*/
-      /* Using the masterBuf in myApp instead so everything writes to that
-      this.glitchFbo = createGraphics(windowWidth,windowHeight,WEBGL);
-      this.glitchFbo.show();
-      */
-
+      
 
       /*Fire shader from Javier Garcia Carpio's repo @ webgl-shaders.com/fire-example.html*/
       this.sFire = loadShader(myApp.path + 'shadersGL3/fireshader.vert',myApp.path + 'shadersGL3/fireshader.frag');
@@ -497,7 +486,7 @@ class Glitch {
       myApp.masterBuf.shader(this.sNoisy);
 
       this.sNoisy.setUniform("iTime",myApp.days_elapsed/myApp.max_days);
-      myApp.masterBuf.rect(0,0,width,height);
+      myApp.masterBuf.rect(0,0,windowWidth,windowHeight);
     }
 
     sFire_setup()
@@ -520,9 +509,9 @@ class Glitch {
    
       myApp.masterBuf.shader(this.sFireball);
       this.sFireball.setUniform("iTime",float(millis()/1000)); 
-      this.sFireball.setUniform("iResolution",[width,height]);
+      this.sFireball.setUniform("iResolution",[windowWidth,windowHeight]);
       this.sFireball.setUniform("iMouse",[mouseX,mouseY]); 
-      myApp.masterBuf.rect(0,0,width,height);
+      myApp.masterBuf.rect(0,0,windowWidth,windowHeight);
     }
 
     sSimplex_setup()
@@ -579,22 +568,12 @@ class Glitch {
         myApp.masterBuf.shader(this.sSimplex); //Using the masterBuf, instead of the local buffers above
 
 
-        //this.sSimplex.setUniform("iResolution",[width,height]);
-        this.sSimplex.setUniform("iResolution",[width,height]);
+        this.sSimplex.setUniform("iResolution",[windowWidth,windowHeight]);
         this.sSimplex.setUniform("iTime", second());
         this.sSimplex.setUniform("tex0",this.img_array[this.current_img]); //Explicit binding is good if multiple textures
         this.sSimplex.setUniform("uDayFrac",this.simplex_df); //Pass the fraction of interval (bp1-ease,bp2+ease)
-        /*
-        this.simplexFbo.rect(0,0,width,height);
-        image(this.simplexFbo,0,0,width,height);
-        */
-
-        /*Using masterBuf instead of glitchFbo (which replaces simplexFbo)
-        this.glitchFbo.rect(0,0,width,height);
-        image(this.glitchFbo,-800,-200,width,height);
-        */
-
-        myApp.masterBuf.rect(0,0,width,height);
+      
+        myApp.masterBuf.rect(0,0,windowWidth,windowHeight);
     
         image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,windowWidth,windowHeight);
     }
@@ -641,7 +620,7 @@ class Glitch {
         // we can pass in two values into the shader at the same time by using the setUniform2 function.
         // inside the shader these two values are set inside a vec2 object.
         this.sProtean.setUniform("iMouse", [x, y]);  // SET A UNIFORM
-        this.sProtean.setUniform("iResolution",[width,height]);
+        this.sProtean.setUniform("iResolution",[windowWidth,windowHeight]);
         /*Need this iTime scaled in range (0.1,1), affects speed/violence, but also colours,
          *so orders of magnitude less result in monochrome.  Maybe vary this factor based on a market seed 
          *(i.e. URA ETF price or vol)*/
@@ -668,7 +647,7 @@ class Glitch {
         */
 
         myApp.masterBuf.rect(0,0,);
-        image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,width,height);
+        image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,windowWidth,windowHeight);
 
         if(frameCount%10 == 0) {
            //Display stux text on top of buffer so it stays
@@ -740,11 +719,12 @@ function preload() {
 
 function setup() {
   /*Note that preload() automatically goes first, hence images aren't explicitly loaded*/
+  
 
   //URL fetchers
   var cd_y,cd_m,cd_d,cd_h,cd_u,cd_s,bTestLoop;
 
-  console.log("Test URL stuff");
+  //console.log("Test URL stuff");  console.log("Local date & UTC ",Date.now(),(new Date).toUTCString());
   var queryString = window.location.href;
   var urlParams = new URLSearchParams(queryString);
   
@@ -847,7 +827,7 @@ function draw() {
     if(DEBUG) {console.log("Night is here draw")};
     frameCount%int(random(120)) == 0 ? glich.sNoisy_draw() : glich.sFire_draw();
     //glich.sNoisy_draw();
-    image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,width,height);
+    image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,windowWidth,windowHeight);
     //glich.sNoisy_draw();
    } else {
 
@@ -857,7 +837,7 @@ function draw() {
           var c1 = color(28,57,187); //Persian blue
           var c2 = color(50,18,122); //Persian indigo
           // Background
-          setGradient(-myApp.offsetw, -myApp.offseth, windowWidth, windowHeight, c1, c2, 2);
+          setGradient(-myApp.offsetw, -myApp.offseth, width, height, c1, c2, 2);
           //setGradient(width / 2, 0, width / 2, height, c2, c1, 1);
 
           //background(28,57,187); //Persian blue/lapis
