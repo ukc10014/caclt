@@ -620,31 +620,12 @@ class Glitch {
         // we can pass in two values into the shader at the same time by using the setUniform2 function.
         // inside the shader these two values are set inside a vec2 object.
         this.sProtean.setUniform("iMouse", [x, y]);  // SET A UNIFORM
-        this.sProtean.setUniform("iResolution",[windowWidth,windowHeight]);
+        this.sProtean.setUniform("iResolution",[windowWidth/8.0,windowHeight/8.0]);
         /*Need this iTime scaled in range (0.1,1), affects speed/violence, but also colours,
          *so orders of magnitude less result in monochrome.  Maybe vary this factor based on a market seed 
          *(i.e. URA ETF price or vol)*/
         this.sProtean.setUniform("iTime", (new Date()).getMilliseconds()*(0.1 * (1 - protean_df) + 0.9 * protean_df)); 
         
-        /*
-        this.glitchFbo.rect(0,0,width,height);
-        image(this.glitchFbo,-400,-400,width,height);
-        */
-
-        /* Using a common glitchFbo for both simplex and protean shaders
-        this.proteanFbo.rect(0,0,width,height);
-        image(this.proteanFbo,0,0,width,height);
-        */
-
-        /*Layer a noise shader*/
-        /*
-        myApp.masterBuf.shader(this.sCine);
-        this.sCine.setUniform("iResolution",[width,height]);
-        var scrimg = myApp.masterBuf;
-        this.sCine.setUniform("tex0",scrimg); //Explicit binding is good if multiple textures
-        this.sCine.setUniform("iTime",second());
-        myApp.masterBuf.rect(0,0,width/4,height/4);
-        */
 
         myApp.masterBuf.rect(0,0,);
         image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,windowWidth,windowHeight);
@@ -719,7 +700,8 @@ function preload() {
 
 function setup() {
   /*Note that preload() automatically goes first, hence images aren't explicitly loaded*/
-  
+  // Draw FPS (rounded to 2 decimal places) at the bottom left of the screen
+
 
   //URL fetchers
   var cd_y,cd_m,cd_d,cd_h,cd_u,cd_s,bTestLoop;
@@ -810,7 +792,12 @@ function setup() {
 
 function draw() {
   myApp.update();
-  
+  /*Show framerate*/
+    let fps = frameRate();
+fill(255);
+stroke(0);
+text("FPS: " + fps.toFixed(2), 10, height - 10);
+
 
 
   if(DEBUG) {myApp.debug_shite();}
@@ -870,6 +857,7 @@ function draw() {
       }
 
     } 
+
   
 }    
   

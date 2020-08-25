@@ -107,7 +107,7 @@ function make_dat() {
 
     for(i=1;i<=31;i++) {
       if(d.getDate() == i) {
-        str = str.concat(`<option value=\"${i}\" selected>${i}</option>`);
+        str = str.concat(`<option value=\"${i+1}\" selected>${i+1}</option>`);
       } else {
         str = str.concat(`<option value=\"${i}\">${i}</option>`);
       }

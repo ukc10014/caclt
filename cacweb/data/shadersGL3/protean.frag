@@ -138,12 +138,12 @@ void main()
     to get used anywhere (it was used in the mouse-based colour changing below).
     Rather 'p' below is the one being used.*/
 
-    vec2 p = (gl_FragCoord.xy - 0.5*iResolution.xy)/iResolution.y;
+    vec2 p = (gl_FragCoord.xy - iResolution.xy)/iResolution.y;
     bsMo = (iMouse.xy - 0.5*iResolution.xy)/iResolution.y;
 
     /*UKC: change time multiplier to speed up cloud movement, debug etc.,
     note though both time and the uniform iTime are used in this code*/
-    float time = iTime*0.51;
+    float time = iTime*5.0;
     vec3 ro = vec3(0,0,time);
 
     ro += vec3(sin(iTime)*0.5,sin(iTime*1.)*0.,0);
@@ -185,8 +185,8 @@ void main()
       scene looked like it was hanging ever few seconds, when in actuality what was happening
       was that the updates were too transparent to show up*/
     
-    gl_FragColor = vec4( col, max(0.51,sin(time))); 
-
+  //  gl_FragColor = vec4( col, max(0.51,sin(time))); 
+  gl_FragColor = vec4( col, 1.0); 
     //UKC: modified to change 'a' in vec4(col,a) to a function, rather than 1.0 (original shadertoy code)
 
 }
