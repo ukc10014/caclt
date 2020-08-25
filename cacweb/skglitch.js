@@ -38,10 +38,15 @@ class App {
 
     this.myFont;
 
-    this.masterBuf = createGraphics(windowWidth,windowHeight,WEBGL);
+    this.masterBuf; 
     //this.masterBuf.show();
     //this.grabimg_mBuf; //Need a second (image type object) to hold get() of masterBuf because tint() doesn't affect createGraphics objects but does affect image objects
 
+    }
+
+    make_masterBuf() 
+    {
+      this.masterBuf = createGraphics(windowWidth,windowHeight,WEBGL);
     }
 
     test_loop()
@@ -353,6 +358,8 @@ class  Content {
       var imgWidth = this.images[this.curr_img].width;
       var imgHeight = this.images[this.curr_img].height;
       var imgshow = this.images[this.curr_img];
+      var ulx = width/2 - imgWidth/8; //upper left-hand corner x (8 is based on 1/4 size [below] x 50%)
+      var uly = height/2 - imgHeight/8; //Upper left-hand corner y
   
       //myApp.masterBuf.clear();
       
@@ -361,16 +368,10 @@ class  Content {
       glich.sCine.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
       glich.sCine.setUniform("iTime",second());
       myApp.masterBuf.rect(0,0,imgWidth*0.25,imgHeight*0.25);
-      image(myApp.masterBuf,-myApp.offsetw/2,-myApp.offseth/2-150,imgWidth*0.25,imgHeight*0.25);
+      //image(myApp.masterBuf,-myApp.offsetw/2,-myApp.offseth/2-150,imgWidth*0.25,imgHeight*0.25);
+      image(myApp.masterBuf,ulx,uly,imgWidth*0.25,imgHeight*0.25);
 
-/*
-      myApp.masterBuf.shader(glich.sWarp);
-      glich.sWarp.setUniform("iResolution",[width,height]);
-      glich.sWarp.setUniform("iTime", frameCount*0.1);
-      glich.sWarp.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
-      myApp.masterBuf.rect(0,0,imgWidth*0.25,imgHeight*0.25);
-      image(myApp.masterBuf,-myApp.offsetw/2,-myApp.offseth/2,imgWidth*0.25,imgHeight*0.25);
-*/
+
 
 
       if(this.nextimg == 0)
@@ -513,7 +514,8 @@ class Glitch {
       this.sFireball.setUniform("iTime",float(millis()/1000)); 
       this.sFireball.setUniform("iResolution",[windowWidth,windowHeight]);
       this.sFireball.setUniform("iMouse",[mouseX,mouseY]); 
-      myApp.masterBuf.rect(0,0,windowWidth,windowHeight);
+      //myApp.masterBuf.rect(0,0,windowWidth,windowHeight);
+      myApp.masterBuf.rect(0,0,width,height);
     }
 
     sSimplex_setup()
@@ -637,7 +639,7 @@ class Glitch {
 
         if(frameCount%120 == 0) {
            //Display stux text on top of buffer so it stays
-          text(this.stuxtoks[int(random(this.stuxtoks.length))],-myApp.offsetw,-myApp.offseth*0.1);
+          text(this.stuxtoks[int(random(this.stuxtoks.length))],20,height*0.6);
         }
 
     }
@@ -707,7 +709,6 @@ function setup() {
   /*Note that preload() automatically goes first, hence images aren't explicitly loaded*/
   // Draw FPS (rounded to 2 decimal places) at the bottom left of the screen
 
-
   //URL fetchers
   var cd_y,cd_m,cd_d,cd_h,cd_u,cd_s,bTestLoop;
 
@@ -729,9 +730,13 @@ function setup() {
 
   // put setup code here
   //createCanvas(1024,768,WEBGL);
-  createCanvas(windowWidth,windowHeight,WEBGL);
-  myApp.offsetw = windowWidth/2; myApp.offseth = windowHeight/2; //Offset to get images to cover window, handle resize, etc.
+  createCanvas(windowWidth,windowHeight);
+  myApp.offsetw = windowWidth/2*0; myApp.offseth = windowHeight/2*0; //Offset to get images to cover window, handle resize, etc.
   console.log("Setup width/height windowWidth/windowHeight  ",width,height,windowWidth,windowHeight);  
+
+
+  /*Make masterbuffer once the canvas has been created since createGraphics effectively generates an HTML canvas*/  
+  myApp.make_masterBuf(); //Create the mastebufffer
 
 
   /* When in LIVE mode, this uses actual start date of the show, otherwise uses today() 
@@ -797,11 +802,6 @@ function setup() {
 
 function draw() {
   myApp.update();
-  /*Show framerate*/
-    let fps = frameRate();
-fill(255);
-stroke(0);
-text("FPS: " + fps.toFixed(2), 10, height - 10);
 
 
 
@@ -817,10 +817,18 @@ text("FPS: " + fps.toFixed(2), 10, height - 10);
     /*Stuff to do if the exhibition is shut*/
     //background(frameCount%4 == 0 ? 0 : 255); //flashing screen placeholder
     if(DEBUG) {console.log("Night is here draw")};
-    frameCount%int(random(120)) == 0 ? glich.sNoisy_draw() : glich.sFire_draw();
-    //glich.sNoisy_draw();
-    image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,windowWidth,windowHeight);
-    //glich.sNoisy_draw();
+    
+    if(frameCount%int(random(120)) == 0)  
+      {
+        glich.sNoisy_draw(); 
+        //image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,windowWidth,windowHeight);
+        image(myApp.masterBuf,0,0,windowWidth,windowHeight);
+      } else {
+        glich.sFire_draw(); 
+        //image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth+windowHeight*(cos(frameCount/1000)*0.5+0.5),windowWidth,windowHeight);
+        image(myApp.masterBuf,0,0,width,height);
+      }
+    
    } else {
 
     if(myApp.days_elapsed<=myApp.breakpoint1+myApp.breakpoint_ease && myApp.days_elapsed > 0)
