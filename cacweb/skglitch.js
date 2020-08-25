@@ -579,7 +579,7 @@ class Glitch {
       
         myApp.masterBuf.rect(0,0,windowWidth,windowHeight);
     
-        image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,windowWidth,windowHeight);
+        image(myApp.masterBuf,0,0,windowWidth,windowHeight);
     }
 
     pass_time(days,  maxd,  b1,  b2)
@@ -635,7 +635,7 @@ class Glitch {
 //        this.sProtean.setUniform("iTime", second());
 
         myApp.masterBuf.rect(0,0,windowWidth);
-        image(myApp.masterBuf,-myApp.offsetw-1000,-myApp.offseth-200,windowWidth*2,windowHeight*2);
+        image(myApp.masterBuf,-1000,-200,windowWidth*2,windowHeight*2);
 
         if(frameCount%120 == 0) {
            //Display stux text on top of buffer so it stays
@@ -731,7 +731,7 @@ function setup() {
   // put setup code here
   //createCanvas(1024,768,WEBGL);
   createCanvas(windowWidth,windowHeight);
-  myApp.offsetw = windowWidth/2*0; myApp.offseth = windowHeight/2*0; //Offset to get images to cover window, handle resize, etc.
+  //myApp.offsetw = windowWidth/2*0; myApp.offseth = windowHeight/2*0; //Offset to get images to cover window, handle resize, etc.
   console.log("Setup width/height windowWidth/windowHeight  ",width,height,windowWidth,windowHeight);  
 
 
@@ -837,7 +837,7 @@ function draw() {
           var c1 = color(28,57,187); //Persian blue
           var c2 = color(50,18,122); //Persian indigo
           // Background
-          setGradient(-myApp.offsetw, -myApp.offseth, width, height, c1, c2, 2);
+          setGradient(0,0, width, height, c1, c2, 2);
           //setGradient(width / 2, 0, width / 2, height, c2, c1, 1);
 
           //background(28,57,187); //Persian blue/lapis
@@ -902,6 +902,6 @@ function setGradient(x, y, w, h, c1, c2, axis) {
 function windowResized(){
   resizeCanvas(windowWidth, windowHeight);
   //So that images draw in correct place
-  myApp.offsetw = windowWidth/2;
-  myApp.offseth = windowHeight/2;
+  //myApp.offsetw = windowWidth/2;
+  //myApp.offseth = windowHeight/2;
 }
