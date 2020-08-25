@@ -826,7 +826,7 @@ function draw() {
       } else {
         glich.sFire_draw(); 
         //image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth+windowHeight*(cos(frameCount/1000)*0.5+0.5),windowWidth,windowHeight);
-        image(myApp.masterBuf,0,0,width,height);
+        image(myApp.masterBuf,0,height*(cos(frameCount/1000)*0.5+0.5),width,height);
       }
     
    } else {
