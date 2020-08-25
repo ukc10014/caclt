@@ -95,6 +95,8 @@ class App {
        *that well if the dates are both the same (i.e. the difference is just one of time),
        *whereas parsing into milliseconds and then going back is more robust.*/
       var days_diff = (Date.parse(date2) - Date.parse(date1))/this.day_ms; //Diff in ms converted to fractional days
+      //console.log("get_dayselapsed  ",days_diff,Date.UTC(date1.getYear(),date1.getMonth(),date1.getDate(),date1.getHours(),date1.getMinutes(),date1.getSeconds(),date1.getMilliseconds()) 
+      //  - Date.UTC(date2.getYear(),date2.getMonth(),date2.getDate(),date2.getHours(),date2.getMinutes(),date2.getSeconds(),date2.getMilliseconds()));
       return days_diff;
     }
 
@@ -609,8 +611,11 @@ class Glitch {
 
         // the plane is being positioned in the middle of the screen,
         // so we have to apply the same offset to the mouse coordinates before passing into the sProtean.
-        var x = mouseX - cx;
-        var y = mouseY - cy;
+        //var x = mouseX - cx;
+        //var y = mouseY - cy;
+        var x = cx;
+        var y = cy;
+
         //this.proteanFbo.shader(this.sProtean); //Comment out for now, using glitchFbo
         //this.glitchFbo.shader(this.sProtean); //First do the simplex shader
         fill(255,0,0);
@@ -620,17 +625,17 @@ class Glitch {
         // we can pass in two values into the shader at the same time by using the setUniform2 function.
         // inside the shader these two values are set inside a vec2 object.
         this.sProtean.setUniform("iMouse", [x, y]);  // SET A UNIFORM
-        this.sProtean.setUniform("iResolution",[windowWidth/8.0,windowHeight/8.0]);
+        this.sProtean.setUniform("iResolution",[windowWidth/1.0,windowHeight/1.0]);
         /*Need this iTime scaled in range (0.1,1), affects speed/violence, but also colours,
          *so orders of magnitude less result in monochrome.  Maybe vary this factor based on a market seed 
          *(i.e. URA ETF price or vol)*/
         this.sProtean.setUniform("iTime", (new Date()).getMilliseconds()*(0.1 * (1 - protean_df) + 0.9 * protean_df)); 
-        
+//        this.sProtean.setUniform("iTime", second());
 
-        myApp.masterBuf.rect(0,0,);
-        image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,windowWidth,windowHeight);
+        myApp.masterBuf.rect(0,0,windowWidth);
+        image(myApp.masterBuf,-myApp.offsetw-1000,-myApp.offseth-200,windowWidth*2,windowHeight*2);
 
-        if(frameCount%10 == 0) {
+        if(frameCount%120 == 0) {
            //Display stux text on top of buffer so it stays
           text(this.stuxtoks[int(random(this.stuxtoks.length))],-myApp.offsetw,-myApp.offseth*0.1);
         }

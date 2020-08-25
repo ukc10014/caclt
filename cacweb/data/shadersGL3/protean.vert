@@ -16,7 +16,8 @@ void main(){
 	//gl_Position = modelViewProjectionMatrix * position;
 	
 	//Uncomment this to have the clouds cover the screen
-    positio.xy = positio.xy * 2.0 - 1.0;
+    //positio.xy = positio.xy * 2.0 - 1.0;
+positio.xy = positio.xy * 0.5;
 
 	gl_Position = positio;
     

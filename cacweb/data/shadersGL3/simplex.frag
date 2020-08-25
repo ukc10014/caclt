@@ -164,6 +164,6 @@ void main()
     gl_FragColor.b = mix(gl_FragColor.r, texture2D(tex0, vec2(xpos - noise * 0.05, uv.y)).b, 0.25);
 
     /*UKC: Couple choices on alpha to get the underlying images*/
-    gl_FragColor.a = mix(0.2,1.0,uDayFrac);
-      
+    //gl_FragColor.a = mix(0.2,1.0,uDayFrac);
+      gl_FragColor.a = 1.0;
 }
