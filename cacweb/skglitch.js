@@ -54,7 +54,7 @@ class App {
       /*Below is a testing loop to quickly see how things change over entire 30 days*/
 
     //Increment days_elapsed ever z seconds
-    var z = 300; //Expressed in frames
+    var z = 100; //Expressed in frames
     if(this.days_elapsed >= 1.0 && this.days_elapsed <= this.max_days)
     {
       if(frameCount != this.ts && frameCount%z == 0)
@@ -118,6 +118,23 @@ class App {
       /*Return days elapsed*/
       return this.days_elapsed;
     }; 
+
+   /*UKC: This is being set based on URL above, with defaults set there.  Note, as in all date stuff here,
+         *the assumption is we are working in UTC, however the Date object will always have local timezone offset
+         *and label.  So must be careful to just use the numbers and interpret them consistently as UTC. In the 
+         *bloody_painful_UTC_utility the getUTCTimezoneOffset() is used to retrieve the TZO info and effectively
+         *reverse out the new Date() function used in line 770 (myApp.show_start) which seems in JS unavoidably
+         *to hold local TZ.  In other words, there seems to be no way to a) create a UTC date object with the 
+         *current (i.e. Now()) time, or b) to explicitly change the TZ in an existing Date object to UTC*/
+
+    bloody_painful_UTC_utility(e) 
+    {
+      /*Basically just a shithell that takes a Date object in and creates a new Date object out but in UTC hours (albeit might still have a local TZ marker 'cuz that's what Date constructor does)*/
+      var offset = e.getTimezoneOffset(); //Pull out timezone offset and subtract it (note e MUST be a Date object, this fx is part of Date prototype)
+      const utcDate3 = new Date(Date.UTC(e.getUTCFullYear(),e.getUTCMonth(),e.getUTCDate(),e.getUTCHours(),e.getUTCMinutes()+offset,e.getUTCSeconds(),e.getUTCMilliseconds()));
+
+      return utcDate3;
+    }
     
     smootherstep(edge0, edge1, x) 
     {
@@ -137,19 +154,6 @@ class App {
       return x;
     }
 
-    debug_shite()
-    {
-      /*Debug shit on screen*/
-      erase();
-      circle(width/4+20,height/4-8,60);
-      noErase();
-      fill(0,255,0);
-      text(round(this.days_elapsed,2),width/4,height/4);
-
-      if(frameCount%1 == 0) {console.log("Debug shite (fc, days) ",frameCount,round(this.days_elapsed,2));}
-
-    }
-
     update_JSmodel()
     {
       if(LIVE)
@@ -161,7 +165,8 @@ class App {
         this.current_date = tmp;
       } else {
         /*In non-LIVE case where we are simulating behaviour a certain interval after start date (say 5 days into the sim)*/
-        var tmp = new Date(this.interval_current_start * this.day_ms + Date.parse(new Date()));
+        var tmp = this.bloody_painful_UTC_utility(new Date(this.interval_current_start * this.day_ms + Date.parse(new Date())));
+        console.log("  sending date", this.interval_current_start, this.day_ms, Date.parse(new Date()));
         this.current_date = tmp;
       }
 
@@ -546,7 +551,7 @@ class Glitch {
 
     sSimplex_draw_array()
     {
-        if(this.counter >= 60) {
+        if(this.counter >= 50) {
             this.counter = 0;
             //Set an index for each draw, and locations for draw
             this.current_img =  int(random(this.img_array.length));
@@ -573,6 +578,7 @@ class Glitch {
 
 
         this.sSimplex.setUniform("iResolution",[windowWidth,windowHeight]);
+        //this.sSimplex.setUniform("iTime", (new Date).getMilliseconds());
         this.sSimplex.setUniform("iTime", second());
         this.sSimplex.setUniform("tex0",this.img_array[this.current_img]); //Explicit binding is good if multiple textures
         this.sSimplex.setUniform("uDayFrac",this.simplex_df); //Pass the fraction of interval (bp1-ease,bp2+ease)
@@ -744,20 +750,29 @@ function setup() {
    * which can be changed in testing */
 
   if(LIVE) {
-      myApp.show_start = new Date(2020,8,18, 18,0,0,0); //REMEMBER: MONTHS START AT ZERO SO 8 IS SEP
-      myApp.current_date = new Date(); //Can play with this      
+      myApp.show_start = new Date(Date.UTC(2020,8,18, 18,0,0,0)); //REMEMBER: MONTHS START AT ZERO SO 8 IS SEP
+      var a = new Date(); 
+      myApp.current_date = myApp.bloody_painful_UTC_utility(a); //Need this utility as no other obvious way to ensure a non-current (i.e. now()) date carries UTC TZ      
     } else {
       /*If not running LIVE, this is essentially a testing branch, because current_date is set relative to some arbitrary current_start*/
       //myApp.interval_current_start = 5 * myApp.day_ms; //Days between date assumed for testing and (testing) current date, expressed in ms (in order to work with JS code)
-      myApp.show_start = new Date();
+      var f = new Date();
+      myApp.show_start = myApp.bloody_painful_UTC_utility(f);  //This basically creates a UTC offset
       //myApp.current_date = new Date(Date.parse(myApp.show_start) + myApp.interval_current_start);     
-      myApp.current_date = new Date(cd_y,cd_m,cd_d,cd_h,cd_u,cd_s); //This is being set based on URL above, with defaults set there
+      /*UKC: This is being set based on URL above, with defaults set there.  Note, as in all date stuff here,
+       *the assumption is we are working in UTC, however the Date object will always have local timezone offset
+       *and label.  So must be careful to just use the numbers and interpret them consistently as UTC. In the 
+       *bloody_painful_UTC_utility the getUTCTimezoneOffset() is used to retrieve the TZO info and effectively
+       *reverse out the new Date() function used in line 770 (myApp.show_start) which seems in JS unavoidably
+       *to hold local TZ.  In other words, there seems to be no way to a) create a UTC date object with the 
+       *current (i.e. Now()) time, or b) to explicitly change the TZ in an existing Date object to UTC*/
+      myApp.current_date = new Date(cd_y,cd_m,cd_d,cd_h,cd_u,cd_s); 
       myApp.interval_current_start = myApp.get_dayselapsed(myApp.show_start,myApp.current_date);
       myApp.bTestLoop = bTestLoop;
     }
 
     myApp.max_days = 31;
-    myApp.show_end = new Date(Date.parse(myApp.show_start) + myApp.max_days * myApp.day_ms);
+    myApp.show_end = myApp.bloody_painful_UTC_utility(new Date(Date.parse(myApp.show_start) + myApp.max_days * myApp.day_ms));
     console.log("                           show_end before adjustment",myApp.show_end);
     myApp.show_end.setHours(23);myApp.show_end.setMinutes(59);myApp.show_end.setSeconds(59);
     console.log("                           show_end after adjustment",myApp.show_end);
@@ -805,7 +820,6 @@ function draw() {
 
 
 
-  if(DEBUG) {myApp.debug_shite();}
     
   /* Note this is probably somewhat inefficient, all 3 (images, simplex glitch, protean
    * glitch) are being rendered, even though current plan is that only one would be

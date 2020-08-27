@@ -29,5 +29,5 @@ void main() {
   // what happens if you multiply the coords by another number?
   float random = rand(coord*sin(iTime)*sin(iTime) + cos(iTime)*cos(iTime));
 
-  gl_FragColor = vec4(random, random, random, 1.0);
+  gl_FragColor = vec4(1.0, random, random, 1.0);
 }

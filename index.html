@@ -51,14 +51,19 @@
   //$(document).ready(function showDate() {
   function showDate() {
   var outstr = '';
-  outstr = outstr.concat($("#fhour").val() + "h:"); 
-  outstr = outstr.concat($("#fminute").val() + "m:");
-  outstr = outstr.concat($("#fsecond").val() + "s    ");
+  var tmphour = $("#fhour").val();
+  var tmpmin = $("#fminute").val();
+  var tmpsec = $("#fsecond").val();
+
+  outstr = outstr.concat(zeroFill(tmphour,2) + "h:"); 
+  outstr = outstr.concat(zeroFill(tmpmin,2) + "m:");
+  outstr = outstr.concat(zeroFill(tmpsec,2) + "s    ");
   outstr = outstr.concat($("#fday").val() +" "+ months[Number($("#fmon").val())] +" "+ $("#fyear").val());
   
   var dt_start = new Date();
 
-  document.getElementById("Output").innerHTML = `Simulation date:    ${outstr} .<br><br><br>  Exhibition start date: ${dt_start}`;
+  //document.getElementById("Output").innerHTML = `Simulation date:    ${outstr} .<br><br><br>  Exhibition start date: ${dt_start}`;
+  document.getElementById("Output").innerHTML = `Simulation date:    ${outstr} UTC`; //Have left out the exhibition start date as that is set in cacweb code
 }
 //});
 </script>
@@ -71,6 +76,16 @@
     make_dat();
     showDate();
   }
+
+function zeroFill( number, width )
+{
+  width -= number.toString().length;
+  if ( width > 0 )
+  {
+    return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+  }
+  return number + ""; // always return a string
+}
 
   function make_yr() {
     var h = document.getElementById("form_date");
@@ -196,6 +211,7 @@ on the date displayed below.</p>
 
 <h1>Notes</h1>
 <p></p>
+<p>Times are always and everywhere written as UTC not local</p>
 <p>Dates aren't validated for 28/29/30/31 day months.</p>
 
 </body>

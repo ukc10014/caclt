@@ -14,7 +14,7 @@ precision mediump float;
 // Scene Settings
 #define ExpPosition vec3(0.0)
 #define Radius 2.0
-#define Background vec4(1.0, 0.0, 0.0, 1.0)
+#define Background vec4(1.0, 0.0, 0.0, 0.1)
 // Noise Settings
 #define NoiseSteps 1
 #define NoiseAmplitude 0.06
