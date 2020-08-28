@@ -1,7 +1,7 @@
 /*Debug flag*/
 let DEBUG = false;
 let LIVE = false; //When this goes live, mainly this influences whether setup() uses real or fake date
-
+let CREDITS = 1; //Should credits be shewn
 
 
 /*These must be declared/promised globally, and then defined in setup(), so that they can be accessed in draw()*/
@@ -41,6 +41,8 @@ class App {
     this.masterBuf; 
     //this.masterBuf.show();
     //this.grabimg_mBuf; //Need a second (image type object) to hold get() of masterBuf because tint() doesn't affect createGraphics objects but does affect image objects
+
+    this.fc_credits = 0; //Framecount for credits onscreen hold
 
     }
 
@@ -266,7 +268,33 @@ class App {
       }
     }
 
+    credits() {
+      background(0);
+      fill(255,255,255);
+      textSize(24);
+      var credx = width*0.1; //Location x as proportion of screen width
+      var credw = width*0.8; //Portion of screen width
+      var credh = 200; //Portion of screen height for a given block of credits
+      var leading = 40; //Text leading
+      var myInfo = "U. Kanad Chakrabarti, 2020 \n\n Center for Contemporary Art (Vilnius, Lithuania)";
+      var bookInfo = "Sources: \n\n \'The Land of Kings\', Massoudi, Ali (ed.), Ministry of Foreign Affairs, Tehran 1974."; //Shah book for imgs in makeimgbuf
+      var shaderInfo = "Shaders based upon those by: \n\n Ian McEwan, Ashima Arts; \n jmpep @ https://www.shadertoy.com/view/Xdl3D8;\n nimitz @ https://www.shadertoy.com/view/3l23Rh;\n Full credits in GLSL sources.";
+      var otherInfo = "Images of Marshall Islands, Moruroa/Fangataufa, et cetera from online sources."
+      var softInfo = "Software: Processing/p5.js, WebGL, OpenFrameworks.  Font: Inconsolata-VariableFont_wdth."
 
+      textAlign(RIGHT);
+      text(myInfo,credx,100,credw,credh);
+
+      //Other material used
+      textLeading(leading);
+      fill(200,200,200);
+      textSize(20);
+      textAlign(LEFT);
+      text(bookInfo,credx,400,credw,credh);
+      text(shaderInfo,credx,500,credw,credh*4);
+      text(otherInfo,credx,700,credw,credh);
+      text(softInfo,credx,800,credw,credh);
+    }
 }
 
 /*Note: in OF, this was the content.h/content.cpp class*/
@@ -287,6 +315,7 @@ class  Content {
   this.breakpoint2; //Ditto above
   this.breakpoint_ease; //Ditto above
   this.nextimg = 0; //Counter for when images are held on the screen rather than incrementing
+  this.nextimgp = 0; //Outer counter, see makeimgbuf_noisy
 
   this.images = [];
 
@@ -312,43 +341,6 @@ class  Content {
 
     }
 
-     makeimgbuf()
-    {
-      /* The ofApp* gubbins is getting pointer to the ofApp object, because the Perlin smootherstep
-       * sigmoid implementation is there, to only have to implement that once.  Probably belongs
-       * in a utility package that the entire codebase can share */
-      
-
-      if(this.img_type == 0)
-      {
-        console.log("makeimgbuf():  UNIMPLEMENTED CONDITION '0' ");
-      } else if(this.img_type == 1)
-      {
-        
-          var imgWidth = this.images[this.curr_img].width*0.25;
-          var imgHeight = this.images[this.curr_img].height*0.25;
-          /*
-          var xpos = (windowWidth - imgWidth)/2;
-          var ypos = (windowHeight - imgHeight)/2;
-          */
-          console.log("                           Image size",imgWidth,imgHeight,this.curr_img);
-          myApp.masterBuf.clear();
-          myApp.masterBuf.image(this.images[this.curr_img],-50,-250,imgWidth,imgHeight);
-          
-          image(myApp.masterBuf,-width*0.7,-height*0.6,windowWidth,windowHeight);
-          //So as to have some randomness in how the current image is incremented
-          //if(random(0,1) < (exp(pow(this.days_elapsed/this.breakpoint1,2.0)) - 1.0)) {this.curr_img = (this.curr_img + 1)%this.images.length;}
-          this.curr_img = (this.curr_img + 1)%this.images.length;
-
-      } else if(this.img_type == 2)
-      {
-          console.log("There are no still images");
-      } else {
-          console.log("content.cpp: Wrong value for img_type");
-          return;
-      }
-
-    }
 
 
     makeimgbuf_noisy()
@@ -357,7 +349,17 @@ class  Content {
       /*19/8/20: Shah images but with lots of glitching, warping, noise*/      
 
       /*Stuff to get images to stutter and randomly hold rather than incrementing*/
-      if(this.nextimg == 0 && random()<0.05) {this.nextimg = int(random() * 30);} 
+      if(this.nextimg == 0) { //Do all gubbins below only if inner loop is completed (i.e. image is up for specified num frames)
+        if(random()<0.002 && this.nextimgp == 1) { //So smol prob of time, outer loop will be set to [60] frames of hold
+          this.nextimgp = 60; //Maximum num frames to hold an image for 
+        } else {
+          this.nextimgp = max(1,this.nextimgp - 1);  //Smoothly decrement from max frames
+        } //Outer counter that determines setting of inner counter
+        this.nextimg = this.nextimgp; //Inner counter that counts how long image is up for
+        this.curr_img = (this.curr_img + 1)%this.images.length; //Increment image
+      } else {
+        this.nextimg = max(0,this.nextimg - 1); //Decrement inner loop
+      }
 
 
       var imgWidth = this.images[this.curr_img].width;
@@ -375,16 +377,6 @@ class  Content {
       myApp.masterBuf.rect(0,0,imgWidth*0.25,imgHeight*0.25);
       //image(myApp.masterBuf,-myApp.offsetw/2,-myApp.offseth/2-150,imgWidth*0.25,imgHeight*0.25);
       image(myApp.masterBuf,ulx,uly,imgWidth*0.25,imgHeight*0.25);
-
-
-
-
-      if(this.nextimg == 0)
-      {
-        this.curr_img = (this.curr_img + 1)%this.images.length;
-      } else {
-        this.nextimg = max(0,this.nextimg - 1);
-      }
 
 
     }
@@ -554,9 +546,9 @@ class Glitch {
         if(this.counter >= 50) {
             this.counter = 0;
             //Set an index for each draw, and locations for draw
-            this.current_img =  int(random(this.img_array.length));
-            this.imgx = random(width)*0.5;
-            this.imgy = random(height)*0.5;
+            this.current_img =  int(random()*this.img_array.length);
+            this.imgx = random()*width*0.5;
+            this.imgy = random()*height*0.5;
         } else {
             this.counter++;
         }
@@ -645,7 +637,7 @@ class Glitch {
 
         if(frameCount%120 == 0) {
            //Display stux text on top of buffer so it stays
-          text(this.stuxtoks[int(random(this.stuxtoks.length))],20,height*0.6);
+          text(this.stuxtoks[int(random()*this.stuxtoks.length)],20,height*0.6);
         }
 
     }
@@ -702,7 +694,7 @@ function preload() {
   glich = new Glitch();
 
   /*Awkward hardwire on number of glitch images, is also done in the constructor()*/
-  glich.sSimplex_n_imgs = 34;
+  glich.sSimplex_n_imgs = 35;
   glich.sSimplex_setup_array();
 
   /*Load up stux file*/
@@ -832,7 +824,21 @@ function draw() {
     //background(frameCount%4 == 0 ? 0 : 255); //flashing screen placeholder
     if(DEBUG) {console.log("Night is here draw")};
     
-    if(frameCount%int(random(120)) == 0)  
+    if(CREDITS == 1 && myApp.fc_credits == 0) {
+        myApp.fc_credits = 300; //Time to hold credits on screen for
+        CREDITS = 0;
+      } 
+
+    if(myApp.fc_credits > 0) {
+        myApp.credits();
+        myApp.fc_credits = max(0,myApp.fc_credits - 1); //Decrement
+        if(myApp.fc_credits == 0) {CREDITS = 1};
+        }
+      
+
+
+
+    if(frameCount%int(random()*120) == 0)  
       {
         glich.sNoisy_draw(); 
         //image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,windowWidth,windowHeight);
@@ -844,7 +850,6 @@ function draw() {
       }
     
    } else {
-
     if(myApp.days_elapsed<=myApp.breakpoint1+myApp.breakpoint_ease && myApp.days_elapsed > 0)
     {
       if(imgs.firsttime == true) {
