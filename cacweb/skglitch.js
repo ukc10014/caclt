@@ -1,13 +1,15 @@
+"use strict";
+
 /*Debug flag*/
-let DEBUG = false;
-let LIVE = false; //When this goes live, mainly this influences whether setup() uses real or fake date
+let DEBUG = true;
+let LIVE = true; //When this goes live, mainly this influences whether setup() uses real or fake date
 let CREDITS = 1; //Should credits be shewn
 
 
 /*These must be declared/promised globally, and then defined in setup(), so that they can be accessed in draw()*/
 let myApp;
 let imgs;
-//let glich;
+let glich;
 
 
 class App {
@@ -26,17 +28,21 @@ class App {
     this.day_ms = 86400000; //milliseconds in a day, useful for incrementing & testing 
     this.breakpoint1;
     this.breakpoint2; //Two breakpoints around which behaviour of glitches/images changes
-    this.breakpoint_ease; //The easing windows around breakpoints to have alpha change smoothly and not have dark time
+    this.breakpoint_ease1; //The easing windows around breakpoints to have alpha change smoothly and not have dark time
+    this.breakpoint_ease2;
     this.ts; //Timestamp for when the ofApp::update() last changed days_elapsed
     this.timeshift; //This is for testing, the shift of hour relative to actual time
     this.interval_current_start; //This is the date/time (in ms), in the non-LIVE case, between the date the sim is starting and t_0 in JS (1 Jan 1970)
     this.grab; //Screengrab image
     this.bTestLoop = false; //Should the test_loop be run, this is changed in setup()
+    this.t_incr; //The increment for any testing, measured in seconds, can be set by URL or there is a default in the URL handler
     this.start_ts = new Date(); //Get starting time, in Javascript format (Wed Aug 12 2020 08:07:39 GMT-0400 (Eastern Daylight Time))
 
     this.path = 'data/'; //Lets us use a single path everywhere, in case the filestructure changes, only one change hopefully
 
     this.myFont;
+    this.fontsize_credits = 24; //Respective fontsizes for credits and stux code
+    this.fontsize_stux = 38;
 
     this.masterBuf; 
     //this.masterBuf.show();
@@ -51,12 +57,17 @@ class App {
       this.masterBuf = createGraphics(windowWidth,windowHeight,WEBGL);
     }
 
+    delete_masterBuf()
+    {
+      this.masterBuf = null;
+    }
+
     test_loop()
     {
       /*Below is a testing loop to quickly see how things change over entire 30 days*/
 
     //Increment days_elapsed ever z seconds
-    var z = 100; //Expressed in frames
+    let z = 100; //Expressed in frames
     if(this.days_elapsed >= 1.0 && this.days_elapsed <= this.max_days)
     {
       if(frameCount != this.ts && frameCount%z == 0)
@@ -71,7 +82,7 @@ class App {
         }
         this.ts = frameCount;
            
-            if(DEBUG) {console.log("ofApp::test_loop() "+this.ts+" "+this.days_elapsed)};
+            //if(DEBUG) {console.log("ofApp::test_loop() "+this.ts+" "+this.days_elapsed)};
 
           }
         }
@@ -81,9 +92,9 @@ class App {
     GetElapsedTimef()
     {
       //Function to replace ofGetElapsedTime from openframeworks, return milliseconds
-      var curr_ts;
+      let curr_ts;
       curr_ts = new Date();
-      if(DEBUG) {console.log("GetElapsedTimef ",curr_ts - this.start_ts)};
+      //if(DEBUG) {console.log("GetElapsedTimef ",curr_ts - this.start_ts)};
       return (curr_ts - this.start_ts); 
 
     }
@@ -101,7 +112,7 @@ class App {
        *Assume date2>date1.  Also, seems simply subtracting Date() objects doesn't work
        *that well if the dates are both the same (i.e. the difference is just one of time),
        *whereas parsing into milliseconds and then going back is more robust.*/
-      var days_diff = (Date.parse(date2) - Date.parse(date1))/this.day_ms; //Diff in ms converted to fractional days
+      let days_diff = (Date.parse(date2) - Date.parse(date1))/this.day_ms; //Diff in ms converted to fractional days
       //console.log("get_dayselapsed  ",days_diff,Date.UTC(date1.getYear(),date1.getMonth(),date1.getDate(),date1.getHours(),date1.getMinutes(),date1.getSeconds(),date1.getMilliseconds()) 
       //  - Date.UTC(date2.getYear(),date2.getMonth(),date2.getDate(),date2.getHours(),date2.getMinutes(),date2.getSeconds(),date2.getMilliseconds()));
       return days_diff;
@@ -109,9 +120,10 @@ class App {
 
     propagate_dayselapsed()
     {
-      /*Propagate updated day/time to various places that need it*/
+      /*Propagate updated day/time to letious places that need it*/
       //Note: pass_time in Content.h has two implementations, one includes the breakpoint ease
-      imgs.pass_time(this.days_elapsed,this.max_days,this.breakpoint1,this.breakpoint2,this.breakpoint_ease);
+      if(imgs != null) {imgs.pass_time(this.days_elapsed,this.max_days,this.breakpoint1,this.breakpoint2,this.breakpoint_ease1);}
+      if(glich != null) {glich.pass_time(this.days_elapsed,this.max_days,this.breakpoint1,this.breakpoint2,this.breakpoint_ease2);}
     }
 
 
@@ -132,7 +144,7 @@ class App {
     bloody_painful_UTC_utility(e) 
     {
       /*Basically just a shithell that takes a Date object in and creates a new Date object out but in UTC hours (albeit might still have a local TZ marker 'cuz that's what Date constructor does)*/
-      var offset = e.getTimezoneOffset(); //Pull out timezone offset and subtract it (note e MUST be a Date object, this fx is part of Date prototype)
+      let offset = e.getTimezoneOffset(); //Pull out timezone offset and subtract it (note e MUST be a Date object, this fx is part of Date prototype)
       const utcDate3 = new Date(Date.UTC(e.getUTCFullYear(),e.getUTCMonth(),e.getUTCDate(),e.getUTCHours(),e.getUTCMinutes()+offset,e.getUTCSeconds(),e.getUTCMilliseconds()));
 
       return utcDate3;
@@ -163,17 +175,33 @@ class App {
         /* If LIVE then current_date is just the actual current Date(). Note sure how to handle
          * end of show.
          */
-         tmp = new Date();
+         let tmp, tmp2; //Use for setting the currnet date
+         /*bTestloop is set through URL as test_loop=true*/
+         if(this.bTestLoop) {
+          /*In DEBUG mode we want to increment from a specific date by the t_incr above*/
+          tmp2 = this.current_date.getSeconds();
+          tmp = new Date(this.current_date.getFullYear(),
+            this.current_date.getMonth(),this.current_date.getDate(),this.current_date.getHours(),
+            this.current_date.getMinutes(),tmp2+this.t_incr,this.current_date.getMilliseconds());
+         } else {
+          /*If not debugging then just use the present date/time*/
+         tmp = this.bloody_painful_UTC_utility(new Date());
+       }
         this.current_date = tmp;
       } else {
         /*In non-LIVE case where we are simulating behaviour a certain interval after start date (say 5 days into the sim)*/
-        var tmp = this.bloody_painful_UTC_utility(new Date(this.interval_current_start * this.day_ms + Date.parse(new Date())));
+        let tmp = this.bloody_painful_UTC_utility(new Date(this.interval_current_start * this.day_ms + Date.parse(new Date())));
         console.log("  sending date", this.interval_current_start, this.day_ms, Date.parse(new Date()));
         this.current_date = tmp;
       }
 
       this.days_elapsed = this.get_dayselapsed(this.show_start,this.current_date);
       this.propagate_dayselapsed();
+
+        if(DEBUG && frameCount%60 == 0) {
+          console.log("frameCount current_date days_elapsed",frameCount,this.current_date,this.days_elapsed);
+        }
+
     }
 
     update() 
@@ -183,7 +211,7 @@ class App {
       this.update_JSmodel();
 
       /*TEST CODE Remove this when testing is done*/
-      if(Boolean(this.bTestLoop)) {this.test_loop();}
+      if(Boolean(this.bTestLoop) && !LIVE) {this.test_loop();}
     }
 
 
@@ -195,10 +223,10 @@ class App {
       /*Main purpose is to update the time/date, which JS seems to have good support for (vs OF)
        * hence we have a newer version above that uses JS native stuff*/
 
-      var h,m,s; //Hours, minutes, seconds in whatever (local time?) that OF/C++ return
-      var day_frac; //Fraction of day
-      var intpart;
-      var d = new Date(); //Date
+      let h,m,s; //Hours, minutes, seconds in whatever (local time?) that OF/C++ return
+      let day_frac; //Fraction of day
+      let intpart;
+      let d = new Date(); //Date
 
       h = (d.getHours() + myApp.timeshift); //Add in timeshift if any
       if(h == 24) {
@@ -240,15 +268,15 @@ class App {
 
     /*These fetch params from the URL line*/    
     getUrlVars() {
-      var vars = {};
-      var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+      let vars = {};
+      let parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
         vars[key] = value;
       });
       return vars;
     }
 
     getUrlParam(parameter, defaultvalue){
-      var urlparameter = defaultvalue;
+      let urlparameter = defaultvalue;
       if(window.location.href.indexOf(parameter) > -1){
         urlparameter = this.getUrlVars()[parameter];
       }
@@ -271,16 +299,16 @@ class App {
     credits() {
       background(0);
       fill(255,255,255);
-      textSize(24);
-      var credx = width*0.1; //Location x as proportion of screen width
-      var credw = width*0.8; //Portion of screen width
-      var credh = 200; //Portion of screen height for a given block of credits
-      var leading = 40; //Text leading
-      var myInfo = "U. Kanad Chakrabarti, 2020 \n\n Center for Contemporary Art (Vilnius, Lithuania)";
-      var bookInfo = "Sources: \n\n \'The Land of Kings\', Massoudi, Ali (ed.), Ministry of Foreign Affairs, Tehran 1974."; //Shah book for imgs in makeimgbuf
-      var shaderInfo = "Shaders based upon those by: \n\n Ian McEwan, Ashima Arts; \n jmpep @ https://www.shadertoy.com/view/Xdl3D8;\n nimitz @ https://www.shadertoy.com/view/3l23Rh;\n Full credits in GLSL sources.";
-      var otherInfo = "Images of Marshall Islands, Moruroa/Fangataufa, et cetera from online sources."
-      var softInfo = "Software: Processing/p5.js, WebGL, OpenFrameworks.  Font: Inconsolata-VariableFont_wdth."
+      textSize(this.fontsize_credits);
+      let credx = width*0.1; //Location x as proportion of screen width
+      let credw = width*0.8; //Portion of screen width
+      let credh = 200; //Portion of screen height for a given block of credits
+      let leading = 40; //Text leading
+      let myInfo = "U. Kanad Chakrabarti, 2020 \n\n Center for Contemporary Art (Vilnius, Lithuania)";
+      let bookInfo = "Sources: \n\n \'The Land of Kings\', Massoudi, Ali (ed.), Ministry of Foreign Affairs, Tehran 1974."; //Shah book for imgs in makeimgbuf
+      let shaderInfo = "Shaders based upon those by: \n\n Ian McEwan, Ashima Arts; \n jmpep @ https://www.shadertoy.com/view/Xdl3D8;\n nimitz @ https://www.shadertoy.com/view/3l23Rh;\n Full credits in GLSL sources.";
+      let otherInfo = "Images of Marshall Islands, Moruroa/Fangataufa, et cetera from online sources."
+      let softInfo = "Software: Processing/p5.js, WebGL, OpenFrameworks.  Font: Inconsolata-VariableFont_wdth."
 
       textAlign(RIGHT);
       text(myInfo,credx,100,credw,credh);
@@ -288,7 +316,7 @@ class App {
       //Other material used
       textLeading(leading);
       fill(200,200,200);
-      textSize(20);
+      textSize(max(1,this.fontsize_credits - 4));
       textAlign(LEFT);
       text(bookInfo,credx,400,credw,credh);
       text(shaderInfo,credx,500,credw,credh*4);
@@ -328,12 +356,12 @@ class  Content {
     {
      /*Creates array of images from files on disk*/
      let fn;
-     let tmpnum = 4587; //Starting hardwire name of files from Google downloaded from Shah book
+     let tmpnum = 4692; //Starting hardwire name of files from Google downloaded from Shah book
 
       for(let i=0;i<this.num_imgs;i++) 
       {
           //fn = "shah/test"+ofToString(i)+".jpeg";
-          fn = myApp.path+"shah_book/IMG_" + tmpnum + ".jpg";
+          fn = myApp.path+"shah_book2/IMG_" + tmpnum + ".jpg";
           tmpnum++;
           
           this.images[i] = loadImage(fn);
@@ -362,11 +390,11 @@ class  Content {
       }
 
 
-      var imgWidth = this.images[this.curr_img].width;
-      var imgHeight = this.images[this.curr_img].height;
-      var imgshow = this.images[this.curr_img];
-      var ulx = width/2 - imgWidth/8; //upper left-hand corner x (8 is based on 1/4 size [below] x 50%)
-      var uly = height/2 - imgHeight/8; //Upper left-hand corner y
+      let imgWidth = this.images[this.curr_img].width;
+      let imgHeight = this.images[this.curr_img].height;
+      let imgshow = this.images[this.curr_img];
+      let ulx = width/2 - imgWidth*0.75; //upper left-hand corner x (0.75 is based on 1.5x size [below] x 50%)
+      let uly = height/2 - imgHeight*0.75; //Upper left-hand corner y
   
       //myApp.masterBuf.clear();
       
@@ -374,9 +402,9 @@ class  Content {
       glich.sCine.setUniform("iResolution",[windowWidth,windowHeight]);
       glich.sCine.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
       glich.sCine.setUniform("iTime",second());
-      myApp.masterBuf.rect(0,0,imgWidth*0.25,imgHeight*0.25);
+      myApp.masterBuf.rect(0,0,imgWidth,imgHeight);
       //image(myApp.masterBuf,-myApp.offsetw/2,-myApp.offseth/2-150,imgWidth*0.25,imgHeight*0.25);
-      image(myApp.masterBuf,ulx,uly,imgWidth*0.25,imgHeight*0.25);
+      image(myApp.masterBuf,ulx,uly,imgWidth*1.5,imgHeight*1.5);
 
 
     }
@@ -473,7 +501,7 @@ class Glitch {
       /*Stuxnet code*/
       this.stuxtxt; //Unparsed
       this.stuxtoks; //Tokenised
-      this.firsttime = true; //Utility var for resetting buffer to desired colour or other one-time draw things
+      this.firsttime = true; //Utility let for resetting buffer to desired colour or other one-time draw things
     }
 
     sNoisy_setup()
@@ -496,7 +524,7 @@ class Glitch {
 
     sFire_draw()
     {
-      var d = new Date();
+      let d = new Date();
       /*This is all the stuff for the fireshader, remove it and the shader*/
       /*
       myApp.masterBuf.shader(this.sFire);
@@ -524,11 +552,11 @@ class Glitch {
     sSimplex_setup_array()
     {
       /*Creates array of images from files on disk*/
-      var i_tmpimg;
-      var s_fn;
-      var n_imgs = this.sSimplex_n_imgs; //This is hardwired awkwardly, need to make it self-setting
+      let i_tmpimg;
+      let s_fn;
+      let n_imgs = this.sSimplex_n_imgs; //This is hardwired awkwardly, need to make it self-setting
 
-      for(var i=0;i<n_imgs;i++) {
+      for(let i=0;i<n_imgs;i++) {
         s_fn = myApp.path + "moruroa/m_img"+i+".jpeg";
           i_tmpimg = loadImage(s_fn);
           this.img_array.push(i_tmpimg);
@@ -558,8 +586,8 @@ class Glitch {
         
         //Bring image up around breakpoint1 and down by breakpoint2
         /*
-        var alpha_sigmoid_1 = (myApp.smootherstep(max(0.0,this.breakpoint1-1.0),this.breakpoint2+1.0,this.days_elapsed));
-        var alpha_sigmoid_2 = 1.0 - (myApp.smootherstep(0.0,this.breakpoint2+1.0,this.days_elapsed));
+        let alpha_sigmoid_1 = (myApp.smootherstep(max(0.0,this.breakpoint1-1.0),this.breakpoint2+1.0,this.days_elapsed));
+        let alpha_sigmoid_2 = 1.0 - (myApp.smootherstep(0.0,this.breakpoint2+1.0,this.days_elapsed));
         */
         
 
@@ -598,28 +626,27 @@ class Glitch {
     sProtean_draw()
     {
         //Bring image up around breakpoint2
-        var alpha_sigmoid_2 = (myApp.smootherstep(this.breakpoint2-1.0,this.max_days,this.days_elapsed));
+        let alpha_sigmoid_2 = (myApp.smootherstep(this.breakpoint2-1.0,this.max_days,this.days_elapsed));
 
         //Time elapsed as a proportion of the simplex period uniform for simplex.frag. NB: for no good reason this is a local, while simplex_df is class member 
-        var protean_df = (myApp.days_elapsed - myApp.breakpoint2)/(myApp.show_end - myApp.breakpoint2);
+        let protean_df = (myApp.days_elapsed - myApp.breakpoint2)/(myApp.show_end - myApp.breakpoint2);
 
         //tint(255,255,255,255);
         
         // center screen.
-        var cx = width / 2.0;
-        var cy = height / 2.0;
+        let cx = width / 2.0;
+        let cy = height / 2.0;
 
         // the plane is being positioned in the middle of the screen,
         // so we have to apply the same offset to the mouse coordinates before passing into the sProtean.
-        //var x = mouseX - cx;
-        //var y = mouseY - cy;
-        var x = cx;
-        var y = cy;
+        //let x = mouseX - cx;
+        //let y = mouseY - cy;
+        let x = cx;
+        let y = cy;
 
         //this.proteanFbo.shader(this.sProtean); //Comment out for now, using glitchFbo
         //this.glitchFbo.shader(this.sProtean); //First do the simplex shader
         fill(255,0,0);
-        
         myApp.masterBuf.shader(this.sProtean);
         
         // we can pass in two values into the shader at the same time by using the setUniform2 function.
@@ -631,15 +658,20 @@ class Glitch {
          *(i.e. URA ETF price or vol)*/
         this.sProtean.setUniform("iTime", (new Date()).getMilliseconds()*(0.1 * (1 - protean_df) + 0.9 * protean_df)); 
 //        this.sProtean.setUniform("iTime", second());
-
+        fill(255,255,255);
         myApp.masterBuf.rect(0,0,windowWidth);
-        image(myApp.masterBuf,-1000,-200,windowWidth*2,windowHeight*2);
+  
 
-        if(frameCount%120 == 0) {
+
+        
+        //image(myApp.masterBuf,-1000,-200,windowWidth*2,windowHeight*2);
+        image(myApp.masterBuf,0,0,windowWidth,windowHeight);
+
+  if(frameCount%60 == 0) {
            //Display stux text on top of buffer so it stays
+          textSize(myApp.fontsize_stux);
           text(this.stuxtoks[int(random()*this.stuxtoks.length)],20,height*0.6);
-        }
-
+        }    
     }
 
 
@@ -652,8 +684,8 @@ class Glitch {
 
     readTextFile(file)
     {
-      var rawFile = new XMLHttpRequest();
-      var txt;
+      let rawFile = new XMLHttpRequest();
+      let txt;
       rawFile.open("GET", file, false);
       rawFile.onreadystatechange = function ()
       {
@@ -679,16 +711,8 @@ function preload() {
 
   myApp.myFont = loadFont('data/fonts/Inconsolata-VariableFont_wdth,wght.ttf');
 
-  /*Need this to ensure the images load before anything else happens*/
-  imgs = new Content();
-
-  /*All stuff for Shah images below this*/
-  imgs.img_type = 1; /*Type of img: 0 mosaic; 1 series; 2 none*/
-  imgs.curr_img = 0; /*Initialise current image in case we show serially*/
-  imgs.num_imgs = 23; /*Number of images*/
-
-  imgs.makeimgs(); //Make an array of images
-
+  /*Bring in image files*/
+  load_Content();
 
   /*Create new Glitch object*/
   glich = new Glitch();
@@ -702,17 +726,34 @@ function preload() {
 
 }
 
+function load_Content() {
+  /*Create Content class and load up files*/
+  /*Need this to ensure the images load before anything else happens*/
+  imgs = new Content();
+
+  /*All stuff for Shah images below this*/
+  imgs.img_type = 1; /*Type of img: 0 mosaic; 1 series; 2 none*/
+  imgs.curr_img = 0; /*Initialise current image in case we show serially*/
+  imgs.num_imgs = 144; /*Number of images*/
+
+  imgs.makeimgs(); //Make an array of images
+}
+
+function delete_Content() {
+  /*Shabby way of deleting Content object which is instantiated as a memory-hogging 'imgs'.  Don't know of an in-class destructor*/
+  imgs = null;
+}
 
 function setup() {
   /*Note that preload() automatically goes first, hence images aren't explicitly loaded*/
   // Draw FPS (rounded to 2 decimal places) at the bottom left of the screen
 
   //URL fetchers
-  var cd_y,cd_m,cd_d,cd_h,cd_u,cd_s,bTestLoop;
+  let cd_y,cd_m,cd_d,cd_h,cd_u,cd_s,bTestLoop,test_incr;
 
   //console.log("Test URL stuff");  console.log("Local date & UTC ",Date.now(),(new Date).toUTCString());
-  var queryString = window.location.href;
-  var urlParams = new URLSearchParams(queryString);
+  let queryString = window.location.href;
+  let urlParams = new URLSearchParams(queryString);
   
 
   /*Validate if URL contains this stuff and otherwise set defaults*/
@@ -723,8 +764,12 @@ function setup() {
   if(urlParams.has('mi')) {cd_u = urlParams.get('mi');} else {cd_u = 1;}
   if(urlParams.has('se')) {cd_s = urlParams.get('se');} else {cd_s = 1;}
   if(urlParams.get('test_loop') == 'true' ) {bTestLoop = true;} else {bTestLoop = "";}
+  if(urlParams.has('incr')) {test_incr = int(urlParams.get('incr'));} else {test_incr = 60;} /*Seconds*/
 
-  console.log("current_date ",cd_y,cd_m,cd_d,cd_h,cd_u,cd_s,bTestLoop);
+
+  if(DEBUG) {
+  //console.log("current_date ",cd_y,cd_m,cd_d,cd_h,cd_u,cd_s,bTestLoop);
+}
 
   // put setup code here
   //createCanvas(1024,768,WEBGL);
@@ -742,13 +787,36 @@ function setup() {
    * which can be changed in testing */
 
   if(LIVE) {
-      myApp.show_start = new Date(Date.UTC(2020,8,18, 18,0,0,0)); //REMEMBER: MONTHS START AT ZERO SO 8 IS SEP
-      var a = new Date(); 
-      myApp.current_date = myApp.bloody_painful_UTC_utility(a); //Need this utility as no other obvious way to ensure a non-current (i.e. now()) date carries UTC TZ      
+      /*UKC: 3/9/20 setting show_start to 2 Sep 2020 1700h UTC so that we can test out LIVE.  Line below is commented out therefore.*/
+      
+      //let b = new Date(Date.UTC(2020,8,18, 18,0,0,0)); //REMEMBER: MONTHS START AT ZERO SO 8 IS SEP
+      let b = new Date(Date.UTC(2020,8,5,17,0,0,0)); //UKC: 3/9/20 --> DURING SHOW, MUST RESTORE LINE ABOVE
+      myApp.show_start = myApp.bloody_painful_UTC_utility(b); //Necessary to use fx because new Date() always returns timeshifted to local time
+      
+      let a;
+
+      /*UKC: Note, if in LIVE mode the URL thing is a little weird.  Namely, the dates etc are ignored UNLESS 
+       *test_loop is true (and therefore myApp.bTestLoop is true).  Might as well just put in URL without any stuff.
+       *In other words, in LIVE mode, the way to check how code behaves as real-time passes (1 sim second
+       *equals 1 real second) at some hypothetical
+       *point in the future is to set t_incr to 1 second. Again, this only applies to LIVE mode   
+       */
+
+
+      if(bTestLoop) {
+        /*If in DEBUG mode then set the current_date to the date set in the browser*/
+        a = myApp.bloody_painful_UTC_utility(new Date(Date.UTC(cd_y,cd_m,cd_d,cd_h,cd_u,cd_s))); 
+        myApp.t_incr = test_incr; /*This only is set by URL if bTestLoop is true ie it is meaningless otherwise*/   
+      } else {
+        /*If in non-test looping then the current_date is just the actual current date (adjusted back to UTC)*/
+      a = myApp.bloody_painful_UTC_utility(new Date());  //Need this utility as no other obvious way to ensure a non-current (i.e. now()) date carries UTC TZ 
+      } 
+      myApp.current_date = a; //Need this utility as no other obvious way to ensure a non-current (i.e. now()) date carries UTC TZ      
+      myApp.bTestLoop = bTestLoop;
     } else {
       /*If not running LIVE, this is essentially a testing branch, because current_date is set relative to some arbitrary current_start*/
       //myApp.interval_current_start = 5 * myApp.day_ms; //Days between date assumed for testing and (testing) current date, expressed in ms (in order to work with JS code)
-      var f = new Date();
+      let f = new Date();
       myApp.show_start = myApp.bloody_painful_UTC_utility(f);  //This basically creates a UTC offset
       //myApp.current_date = new Date(Date.parse(myApp.show_start) + myApp.interval_current_start);     
       /*UKC: This is being set based on URL above, with defaults set there.  Note, as in all date stuff here,
@@ -763,7 +831,7 @@ function setup() {
       myApp.bTestLoop = bTestLoop;
     }
 
-    myApp.max_days = 31;
+    myApp.max_days = 39;
     myApp.show_end = myApp.bloody_painful_UTC_utility(new Date(Date.parse(myApp.show_start) + myApp.max_days * myApp.day_ms));
     console.log("                           show_end before adjustment",myApp.show_end);
     myApp.show_end.setHours(23);myApp.show_end.setMinutes(59);myApp.show_end.setSeconds(59);
@@ -784,9 +852,10 @@ function setup() {
       remove();
     }
 
-    myApp.breakpoint_ease = 1; //Number of days around breakpoints to ease in/out
-    myApp.breakpoint1 = 10;
-    myApp.breakpoint2 = 20;
+    myApp.breakpoint_ease1 = 0; //Number of days around breakpoints to ease in/out
+    myApp.breakpoint_ease2 = 1;
+    myApp.breakpoint1 = 13;
+    myApp.breakpoint2 = 26;
     myApp.timeshift = 0.0;
 
     myApp.propagate_dayselapsed();
@@ -822,23 +891,29 @@ function draw() {
    if(myApp.isNight() == true) {
     /*Stuff to do if the exhibition is shut*/
     //background(frameCount%4 == 0 ? 0 : 255); //flashing screen placeholder
-    if(DEBUG) {console.log("Night is here draw")};
+    //if(DEBUG) {console.log("Night is here draw")};
     
+    /*Set glich.first_time true so that when night passess into any Glitch (in practice,
+     *currently defined only for Protean), we delete the masterBuf and re-create it
+     *so that ghost of night blue ball doesn't show up
+     */
+     glich.firsttime = true;
+
     if(CREDITS == 1 && myApp.fc_credits == 0) {
         myApp.fc_credits = 300; //Time to hold credits on screen for
         CREDITS = 0;
       } 
 
-    if(myApp.fc_credits > 0) {
+      if(myApp.fc_credits > 0) {
         myApp.credits();
         myApp.fc_credits = max(0,myApp.fc_credits - 1); //Decrement
         if(myApp.fc_credits == 0) {CREDITS = 1};
-        }
+      }
       
 
 
 
-    if(frameCount%int(random()*120) == 0)  
+      if(frameCount%int(random()*120) == 0)  
       {
         glich.sNoisy_draw(); 
         //image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,windowWidth,windowHeight);
@@ -848,29 +923,36 @@ function draw() {
         //image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth+windowHeight*(cos(frameCount/1000)*0.5+0.5),windowWidth,windowHeight);
         image(myApp.masterBuf,0,height*(cos(frameCount/1000)*0.5+0.5),width,height);
       }
-    
-   } else {
-    if(myApp.days_elapsed<=myApp.breakpoint1+myApp.breakpoint_ease && myApp.days_elapsed > 0)
+
+    } else {
+    if(myApp.days_elapsed<=myApp.breakpoint1+myApp.breakpoint_ease1 && myApp.days_elapsed > 0)
     {
-      if(imgs.firsttime == true) {
-          var c1 = color(28,57,187); //Persian blue
-          var c2 = color(50,18,122); //Persian indigo
+//      if(imgs.firsttime == true) {
+          let c1 = color(28,57,187); //Persian blue
+          let c2 = color(50,18,122); //Persian indigo
           // Background
           setGradient(0,0, width, height, c1, c2, 2);
           //setGradient(width / 2, 0, width / 2, height, c2, c1, 1);
 
           //background(28,57,187); //Persian blue/lapis
           //background(50,18,122); //Persian indigo aka 'regimental'
-          imgs.firsttime = false; 
-          }
-      if(DEBUG) {console.log("shah imgs draw")};
+  //        imgs.firsttime = false; 
+  //        }
+      //if(DEBUG) {console.log("shah imgs draw")};
       imgs.makeimgbuf_noisy();
     } 
   
   
-      if(myApp.days_elapsed>=myApp.breakpoint1-myApp.breakpoint_ease && myApp.days_elapsed<=myApp.breakpoint2+myApp.breakpoint_ease)
+      if(myApp.days_elapsed>=myApp.breakpoint1-myApp.breakpoint_ease1 && myApp.days_elapsed<=myApp.breakpoint2+myApp.breakpoint_ease2)
       {
-        if(DEBUG) {console.log("simplex draw")};
+        /*UKC 5/9/20: This is slight cheat, we are getting rid of imgs object, on assumption that sSimplex covers entire
+         *screen and so there is no overlap (hence imgs can be deleted without checking whether the break_point_ease
+         *period has elapsed.  But if ever time loops back to beginning or if we have a type of sSimplex that doesn't
+         *occlude everthing under it then there won't be an imgs object and will get a reference error.
+         */
+        delete_Content(); 
+
+        //if(DEBUG) {console.log("simplex draw")};
         glich.sSimplex_draw_array();
 
       }
@@ -878,13 +960,21 @@ function draw() {
      
 
 
-      if(myApp.days_elapsed>=myApp.breakpoint2-myApp.breakpoint_ease && myApp.days_elapsed<=myApp.max_days)
+      if(myApp.days_elapsed>=myApp.breakpoint2-myApp.breakpoint_ease2 && myApp.days_elapsed<=myApp.max_days)
       {
         if(glich.firsttime == true) {
           background(15,15,15);
+/* UKC: 5/9/20 Have commented all this out. Somehow, delete_masterBuf() followed by a make_masterBuff() was
+ * not working: the new buffer wasn't displaying.  On the face of it, nothing different, but in the Elements
+ * tab on debugger it was clear that extra HTML Canvas elements with 'display: none' were being set, but 
+ * deleting them (in Elements) did not change anything.  Finally gave up
+ */ 
+/*       myApp.delete_masterBuf();
+          myApp.make_masterBuf();
+*/
           glich.firsttime = false;
         }
-        if(DEBUG) {console.log("protean draw")};
+        //if(DEBUG) {console.log("protean draw")};
         glich.sProtean_draw();
       }
 
