@@ -35,7 +35,7 @@ class App {
     this.interval_current_start; //This is the date/time (in ms), in the non-LIVE case, between the date the sim is starting and t_0 in JS (1 Jan 1970)
     this.grab; //Screengrab image
     this.bTestLoop = false; //Should the test_loop be run, this is changed in setup()
-    this.t_incr; //The increment for any testing, measured in seconds, can be set by URL or there is a default in the URL handler
+    this.t_incr; //The increment for any testing, measured in milliseconds, can be set by URL or there is a default in the URL handler
     this.start_ts = new Date(); //Get starting time, in Javascript format (Wed Aug 12 2020 08:07:39 GMT-0400 (Eastern Daylight Time))
 
     this.path = 'data/'; //Lets us use a single path everywhere, in case the filestructure changes, only one change hopefully
@@ -179,10 +179,10 @@ class App {
          /*bTestloop is set through URL as test_loop=true*/
          if(this.bTestLoop) {
           /*In DEBUG mode we want to increment from a specific date by the t_incr above*/
-          tmp2 = this.current_date.getSeconds();
+          tmp2 = this.current_date.getMilliseconds(); //If t_incr < 1 second, need to work in ms
           tmp = new Date(this.current_date.getFullYear(),
             this.current_date.getMonth(),this.current_date.getDate(),this.current_date.getHours(),
-            this.current_date.getMinutes(),tmp2+this.t_incr,this.current_date.getMilliseconds());
+            this.current_date.getMinutes(),this.current_date.getSeconds(),tmp2+this.t_incr);
          } else {
           /*If not debugging then just use the present date/time*/
          tmp = this.bloody_painful_UTC_utility(new Date());
@@ -350,6 +350,9 @@ class  Content {
 
   /*First time through?*/
   this.firsttime = true;
+
+  /*Fraction of period through Content/imgs/shah section. Equivalent to sProtean and sSimplex.*/
+  this.imgs_df;
   }
 
    makeimgs()
@@ -375,6 +378,13 @@ class  Content {
     {
 
       /*19/8/20: Shah images but with lots of glitching, warping, noise*/      
+
+      /*Time elapsed as a proportion of the shah imgs period. Simple version of sSimplex_df because we assume
+       *shah imgs come first and therefore the start of that period is always zero (whereas sSimplex and sProtean
+       *are bounded by their respective LHS breakpoints)
+       */
+ 
+      this.imgs_df = (myApp.days_elapsed)/(myApp.breakpoint1);         
 
       /*Stuff to get images to stutter and randomly hold rather than incrementing*/
       if(this.nextimg == 0) { //Do all gubbins below only if inner loop is completed (i.e. image is up for specified num frames)
@@ -764,7 +774,7 @@ function setup() {
   if(urlParams.has('mi')) {cd_u = urlParams.get('mi');} else {cd_u = 1;}
   if(urlParams.has('se')) {cd_s = urlParams.get('se');} else {cd_s = 1;}
   if(urlParams.get('test_loop') == 'true' ) {bTestLoop = true;} else {bTestLoop = "";}
-  if(urlParams.has('incr')) {test_incr = int(urlParams.get('incr'));} else {test_incr = 60;} /*Seconds*/
+  if(urlParams.has('incr')) {test_incr = float(urlParams.get('incr'));} else {test_incr = 60;} /*Seconds*/
 
 
   if(DEBUG) {
@@ -806,7 +816,7 @@ function setup() {
       if(bTestLoop) {
         /*If in DEBUG mode then set the current_date to the date set in the browser*/
         a = myApp.bloody_painful_UTC_utility(new Date(Date.UTC(cd_y,cd_m,cd_d,cd_h,cd_u,cd_s))); 
-        myApp.t_incr = test_incr; /*This only is set by URL if bTestLoop is true ie it is meaningless otherwise*/   
+        myApp.t_incr = test_incr*1000.0; /*This only is set by URL if bTestLoop is true ie it is meaningless otherwise*/   
       } else {
         /*If in non-test looping then the current_date is just the actual current date (adjusted back to UTC)*/
       a = myApp.bloody_painful_UTC_utility(new Date());  //Need this utility as no other obvious way to ensure a non-current (i.e. now()) date carries UTC TZ 
@@ -889,56 +899,48 @@ function draw() {
     
    /*If we are in night then run the fire sim, otherwise move on to daytime stuff*/ 
    if(myApp.isNight() == true) {
-    /*Stuff to do if the exhibition is shut*/
-    //background(frameCount%4 == 0 ? 0 : 255); //flashing screen placeholder
-    //if(DEBUG) {console.log("Night is here draw")};
-    
-    /*Set glich.first_time true so that when night passess into any Glitch (in practice,
-     *currently defined only for Protean), we delete the masterBuf and re-create it
-     *so that ghost of night blue ball doesn't show up
-     */
-     glich.firsttime = true;
+        /*Stuff to do if the exhibition is shut*/
+        //background(frameCount%4 == 0 ? 0 : 255); //flashing screen placeholder
+        //if(DEBUG) {console.log("Night is here draw")};
+        
+        /*Set glich.first_time true so that when night passess into any Glitch (in practice,
+         *currently defined only for Protean), we delete the masterBuf and re-create it
+         *so that ghost of night blue ball doesn't show up
+         */
+         glich.firsttime = true;
 
-    if(CREDITS == 1 && myApp.fc_credits == 0) {
-        myApp.fc_credits = 300; //Time to hold credits on screen for
-        CREDITS = 0;
-      } 
+        if(CREDITS == 1 && myApp.fc_credits == 0) {
+            myApp.fc_credits = 300; //Time to hold credits on screen for
+            CREDITS = 0;
+          } 
 
-      if(myApp.fc_credits > 0) {
-        myApp.credits();
-        myApp.fc_credits = max(0,myApp.fc_credits - 1); //Decrement
-        if(myApp.fc_credits == 0) {CREDITS = 1};
-      }
-      
+          if(myApp.fc_credits > 0) {
+            myApp.credits();
+            myApp.fc_credits = max(0,myApp.fc_credits - 1); //Decrement
+            if(myApp.fc_credits == 0) {CREDITS = 1};
+          }
+          
 
 
 
-      if(frameCount%int(random()*120) == 0)  
-      {
-        glich.sNoisy_draw(); 
-        //image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,windowWidth,windowHeight);
-        image(myApp.masterBuf,0,0,windowWidth,windowHeight);
-      } else {
-        glich.sFire_draw(); 
-        //image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth+windowHeight*(cos(frameCount/1000)*0.5+0.5),windowWidth,windowHeight);
-        image(myApp.masterBuf,0,height*(cos(frameCount/1000)*0.5+0.5),width,height);
-      }
+          if(frameCount%int(random()*120) == 0)  
+          {
+            glich.sNoisy_draw(); 
+            //image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth,windowWidth,windowHeight);
+            image(myApp.masterBuf,0,0,windowWidth,windowHeight);
+          } else {
+            glich.sFire_draw(); 
+            //image(myApp.masterBuf,-myApp.offsetw,-myApp.offseth+windowHeight*(cos(frameCount/1000)*0.5+0.5),windowWidth,windowHeight);
+            image(myApp.masterBuf,0,height*(cos(frameCount/1000)*0.5+0.5),width,height);
+          }
 
     } else {
     if(myApp.days_elapsed<=myApp.breakpoint1+myApp.breakpoint_ease1 && myApp.days_elapsed > 0)
     {
-//      if(imgs.firsttime == true) {
-          let c1 = color(28,57,187); //Persian blue
-          let c2 = color(50,18,122); //Persian indigo
-          // Background
-          setGradient(0,0, width, height, c1, c2, 2);
-          //setGradient(width / 2, 0, width / 2, height, c2, c1, 1);
+          let c1 = color(28,57,187); //Persian blue (lapis)
+          let c2 = color(50,18,122); //Persian indigo (aka 'regimental')
+          setGradient(0,0, width, height*imgs.imgs_df, c1, c2, 2);
 
-          //background(28,57,187); //Persian blue/lapis
-          //background(50,18,122); //Persian indigo aka 'regimental'
-  //        imgs.firsttime = false; 
-  //        }
-      //if(DEBUG) {console.log("shah imgs draw")};
       imgs.makeimgbuf_noisy();
     } 
   

@@ -186,7 +186,6 @@ function make_dat() {
 'Test Loop' simulates the output screen, stepping through time <br> based on the looping increment, starting
 on the date/time displayed below.  <br>Test loop should be checked; if it isn't, the date inputs are ignored and the simulation <br> just plays as of the current date (like it would in the exhibition). Defaults are <br> already set below, just hit 'Launch'. <br><br>
 
-
 </p> 
 
 <p id="form_date"></p>
@@ -205,7 +204,7 @@ on the date/time displayed below.  <br>Test loop should be checked; if it isn't,
   <label for="fsecond">Second  </label><input type="number" id="fsecond" name="fsecond" min="1" max="60" value="1"/ onClick="showDate()">
   
   <label for="myCheck">Test Loop?   </label><input type="checkbox" id="myCheck" checked>
-  <label for="incr">Looping increment (seconds per frame)  </label><input type="number" id="tincr" name="tincr" min="1" max="60" value="60">
+  <label for="incr">Looping increment (seconds per frame)  </label><input type="number" id="tincr" name="tincr" min="0" max="60" value="0.01667">
   
 <br><br><input type="button" id="submit" value="Launch Simulator"/>
 
@@ -216,9 +215,11 @@ on the date/time displayed below.  <br>Test loop should be checked; if it isn't,
 
 <h1>Notes</h1>
 <p></p>
+<p><b>Simulation is only tested on Linux and Mac desktop running recent version of Chrome.  Doesn't work on phones, sorry.</b></p>
 <p>Times are always and everywhere written as UTC not local</p>
 <p>Dates aren't validated for 28/29/30/31 day months.</p>
 <p>Test Loop should be checked if user wants to see how the software looks at some future point</p>
+<p>Looping increment is seconds of simulation time per frame.  <br>Example using an increment of 0.01667: on a browser operating at 60 fps (frames-per-second), <br>each second of (real) time will be 60 x 0.01667 => 1 second of (simulation) time.  <br>Another example: an increment of 1, on the same browser would 60 seconds of (sim) time in each second of (real) time.  <br>Obviously is browser speed dependent.</p>
 <p>Comments, errors, catastrophic crashes please get in touch ukc10014 (at) mac (dot) com
 
 </body>
