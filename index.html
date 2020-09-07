@@ -148,6 +148,7 @@ function make_dat() {
 	  		if($("#fhour").val() != null) {string = string.concat("ho=" + $("#fhour").val() + "&");}
 	  		if($("#fminute").val() != null) {string = string.concat("mi=" + $("#fminute").val() + "&");}
 	  		if($("#fsecond").val() != null) {string = string.concat("se=" + $("#fsecond").val() + "&");}
+        if($("#tincr").val() != null) {string = string.concat("incr=" + $("#tincr").val() + "&");}
 	  		var x = document.getElementById("myCheck").checked;
 	  		string = string.concat("test_loop=" + x);
 	  		//alert(string);
@@ -181,9 +182,12 @@ function make_dat() {
  </head>
 
 <title>CAC Web Version</title>
-<body onload="builder()"><p>Use this page to simulate the ESTHER code as of a specific date<br> after the hypothetical exhibition start date (for testing purposes, <br>assumed to be the current date (i.e. today). Defaults are <br> already set below, just hit 'Launch'. <br><br>
-'Test Loop' simulates the output screen every remaining day of the <br> exhibition run (at the same time each day), starting
-on the date displayed below.</p>
+<body onload="builder()"><p>Use this page to simulate the ESTHER code as of a specific date<br> after the hypothetical exhibition start date (for testing purposes, <br>assumed to be 5 Sep; until the exhibition date,<br> when it will be permanently set, within the final version of the code, to 18 Sep).<br><br>  
+'Test Loop' simulates the output screen, stepping through time <br> based on the looping increment, starting
+on the date/time displayed below.  <br>Test loop should be checked; if it isn't, the date inputs are ignored and the simulation <br> just plays as of the current date (like it would in the exhibition). Defaults are <br> already set below, just hit 'Launch'. <br><br>
+
+
+</p> 
 
 <p id="form_date"></p>
 <!--
@@ -200,8 +204,9 @@ on the date displayed below.</p>
   <label for="fminute">Minute  </label><input type="number" id="fminute" name="fminute" min="1" max="60" value="1"/ onClick="showDate()">
   <label for="fsecond">Second  </label><input type="number" id="fsecond" name="fsecond" min="1" max="60" value="1"/ onClick="showDate()">
   
-  <label for="myCheck">Test Loop?   </label><input type="checkbox" id="myCheck">
-
+  <label for="myCheck">Test Loop?   </label><input type="checkbox" id="myCheck" checked>
+  <label for="incr">Looping increment (seconds per frame)  </label><input type="number" id="tincr" name="tincr" min="1" max="60" value="60">
+  
 <br><br><input type="button" id="submit" value="Launch Simulator"/>
 
 </p>
@@ -213,6 +218,8 @@ on the date displayed below.</p>
 <p></p>
 <p>Times are always and everywhere written as UTC not local</p>
 <p>Dates aren't validated for 28/29/30/31 day months.</p>
+<p>Test Loop should be checked if user wants to see how the software looks at some future point</p>
+<p>Comments, errors, catastrophic crashes please get in touch ukc10014 (at) mac (dot) com
 
 </body>
 
