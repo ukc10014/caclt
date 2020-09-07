@@ -744,7 +744,7 @@ function load_Content() {
   /*All stuff for Shah images below this*/
   imgs.img_type = 1; /*Type of img: 0 mosaic; 1 series; 2 none*/
   imgs.curr_img = 0; /*Initialise current image in case we show serially*/
-  imgs.num_imgs = 14; /*Number of images*/
+  imgs.num_imgs = 144; /*Number of images*/
 
   imgs.makeimgs(); //Make an array of images
 }
