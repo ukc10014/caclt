@@ -42,7 +42,7 @@ class App {
 
     this.myFont;
     this.fontsize_credits = 24; //Respective fontsizes for credits and stux code
-    this.fontsize_stux = 38;
+    this.fontsize_stux = 28;
 
     this.masterBuf; 
     //this.masterBuf.show();
@@ -297,8 +297,8 @@ class App {
     }
 
     credits() {
-      background(0);
-      fill(255,255,255);
+  //    background(0);
+//      fill(255,255,255);
       textSize(this.fontsize_credits);
       let credx = width*0.1; //Location x as proportion of screen width
       let credw = width*0.8; //Portion of screen width
@@ -315,7 +315,7 @@ class App {
 
       //Other material used
       textLeading(leading);
-      fill(200,200,200);
+      fill(250,243,51);
       textSize(max(1,this.fontsize_credits - 4));
       textAlign(LEFT);
       text(bookInfo,credx,400,credw,credh);
@@ -627,6 +627,10 @@ class Glitch {
         this.breakpoint2 = b2;
     }
 
+    clear_buf()
+    {
+      myApp.masterBuf.background(0,0,0,0);
+    }
 
     sProtean_setup()
     {
@@ -639,7 +643,7 @@ class Glitch {
         let alpha_sigmoid_2 = (myApp.smootherstep(this.breakpoint2-1.0,this.max_days,this.days_elapsed));
 
         //Time elapsed as a proportion of the simplex period uniform for simplex.frag. NB: for no good reason this is a local, while simplex_df is class member 
-        let protean_df = (myApp.days_elapsed - myApp.breakpoint2)/(myApp.show_end - myApp.breakpoint2);
+        let protean_df = (myApp.days_elapsed - myApp.breakpoint2)/(myApp.max_days - myApp.breakpoint2);
 
         //tint(255,255,255,255);
         
@@ -654,33 +658,36 @@ class Glitch {
         let x = cx;
         let y = cy;
 
-        //this.proteanFbo.shader(this.sProtean); //Comment out for now, using glitchFbo
-        //this.glitchFbo.shader(this.sProtean); //First do the simplex shader
-        fill(255,0,0);
-        myApp.masterBuf.shader(this.sProtean);
+         myApp.masterBuf.shader(this.sProtean);
         
         // we can pass in two values into the shader at the same time by using the setUniform2 function.
         // inside the shader these two values are set inside a vec2 object.
         this.sProtean.setUniform("iMouse", [x, y]);  // SET A UNIFORM
-        this.sProtean.setUniform("iResolution",[windowWidth/1.0,windowHeight/1.0]);
+        this.sProtean.setUniform("iResolution",[windowWidth*protean_df,windowHeight*protean_df]); 
+                                                                                  /*Vary between 2 and 0.33 for movement around the cloud
+                                                                                  *Higher numbers (1-2) gives a softer, less cloudy, more hazy look
+                                                                                  *Lower numbers (0.33-1) is more distinctly cloudy, but also
+                                                                                  *moves out of the cloud centre 
+                                                                                  */ 
         /*Need this iTime scaled in range (0.1,1), affects speed/violence, but also colours,
          *so orders of magnitude less result in monochrome.  Maybe vary this factor based on a market seed 
          *(i.e. URA ETF price or vol)*/
         this.sProtean.setUniform("iTime", (new Date()).getMilliseconds()*(0.1 * (1 - protean_df) + 0.9 * protean_df)); 
 //        this.sProtean.setUniform("iTime", second());
-        fill(255,255,255);
+        //fill(255,255,255);
         myApp.masterBuf.rect(0,0,windowWidth);
   
 
 
         
-        //image(myApp.masterBuf,-1000,-200,windowWidth*2,windowHeight*2);
+        //image(myApp.masterBuf,-2500,-600,windowWidth*3,windowHeight*3);
         image(myApp.masterBuf,0,0,windowWidth,windowHeight);
 
-  if(frameCount%60 == 0) {
+        fill(220,255,255);
+        if(frameCount%60 == 0) {
            //Display stux text on top of buffer so it stays
           textSize(myApp.fontsize_stux);
-          text(this.stuxtoks[int(random()*this.stuxtoks.length)],20,height*0.6);
+          text(this.stuxtoks[int(random()*this.stuxtoks.length)],20,random()*height*0.9);
         }    
     }
 
@@ -910,7 +917,7 @@ function draw() {
          glich.firsttime = true;
 
         if(CREDITS == 1 && myApp.fc_credits == 0) {
-            myApp.fc_credits = 300; //Time to hold credits on screen for
+            myApp.fc_credits = 255; //Time to hold credits on screen for
             CREDITS = 0;
           } 
 
@@ -935,16 +942,16 @@ function draw() {
           }
 
     } else {
-    if(myApp.days_elapsed<=myApp.breakpoint1+myApp.breakpoint_ease1 && myApp.days_elapsed > 0)
-    {
-          let c1 = color(28,57,187); //Persian blue (lapis)
-          let c2 = color(50,18,122); //Persian indigo (aka 'regimental')
-          setGradient(0,0, width, height*imgs.imgs_df, c1, c2, 2);
+      if(myApp.days_elapsed<=myApp.breakpoint1+myApp.breakpoint_ease1 && myApp.days_elapsed > 0)
+        {
+            let c1 = color(28,57,187); //Persian blue (lapis)
+            let c2 = color(50,18,122); //Persian indigo (aka 'regimental')
+            setGradient(0,0, width, height*imgs.imgs_df, c1, c2, 2);
 
-      imgs.makeimgbuf_noisy();
-    } 
-  
-  
+        imgs.makeimgbuf_noisy();
+        } 
+    
+    
       if(myApp.days_elapsed>=myApp.breakpoint1-myApp.breakpoint_ease1 && myApp.days_elapsed<=myApp.breakpoint2+myApp.breakpoint_ease2)
       {
         /*UKC 5/9/20: This is slight cheat, we are getting rid of imgs object, on assumption that sSimplex covers entire
@@ -974,6 +981,7 @@ function draw() {
 /*       myApp.delete_masterBuf();
           myApp.make_masterBuf();
 */
+          glich.clear_buf();
           glich.firsttime = false;
         }
         //if(DEBUG) {console.log("protean draw")};
