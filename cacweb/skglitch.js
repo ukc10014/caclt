@@ -1,7 +1,7 @@
 "use strict";
 
 /*Debug flag*/
-let DEBUG = true;
+let DEBUG = false;
 let LIVE = true; //When this goes live, mainly this influences whether setup() uses real or fake date
 let CREDITS = 1; //Should credits be shewn
 
@@ -49,6 +49,10 @@ class App {
     //this.grabimg_mBuf; //Need a second (image type object) to hold get() of masterBuf because tint() doesn't affect createGraphics objects but does affect image objects
 
     this.fc_credits = 0; //Framecount for credits onscreen hold
+
+    /*UKC 16/9: These kludges allow the display width/height to be overriden through URL, to accommodate resolution isues (eg Retina disps)*/
+    this.kludge_w;
+    this.kludge_h;
 
     }
 
@@ -410,7 +414,7 @@ class  Content {
       
       myApp.masterBuf.shader(glich.sCine);
       //glich.sCine.setUniform("iResolution",[windowWidth,windowHeight]);
-      glich.sCine.setUniform("iResolution",[2560,1390]);
+      glich.sCine.setUniform("iResolution",[myApp.kludge_w,myApp.kludge_h]);
       glich.sCine.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
       glich.sCine.setUniform("iTime",second());
       myApp.masterBuf.rect(0,0,imgWidth,imgHeight);
@@ -775,6 +779,9 @@ function setup() {
   
 
   /*Validate if URL contains this stuff and otherwise set defaults*/
+  /*UKC 16/9: see help line for correct format.  FOR HELP MUST TYPE - ukc10014.github.io/cacweb/index.html?&help NOT .../cacweb/index.html?help*/
+  if(urlParams.get('help') == 'true') {alert("Correct URL usage is \n\n http:ukc10014.github.io/cacweb/index.html?yr=2020&mo=8&dt=17&ho=15&mi=1&se=1&dw=2560&dh=1390&test_loop=true \n\n corresponds to simulating code as of 17 Sep 2020 (months start at zero in JS), 15:01:01 UTC, and hardwired resolution of 2560,1390.");} //Popup gives correct syntax
+
   if(urlParams.has('yr')) {cd_y = urlParams.get('yr');} else {cd_y = 2020;}
   if(urlParams.has('mo')) {cd_m = urlParams.get('mo');} else {cd_m = 8;}
   if(urlParams.has('dt')) {cd_d = urlParams.get('dt');} else {cd_d = 26;}
@@ -783,7 +790,8 @@ function setup() {
   if(urlParams.has('se')) {cd_s = urlParams.get('se');} else {cd_s = 1;}
   if(urlParams.get('test_loop') == 'true' ) {bTestLoop = true;} else {bTestLoop = "";}
   if(urlParams.has('incr')) {test_incr = float(urlParams.get('incr'));} else {test_incr = 60;} /*Seconds*/
-
+  if(urlParams.has('dw')) {myApp.kludge_w = urlParams.get('dw');} else {myApp.kludge_w = windowWidth;}
+  if(urlParams.has('dh')) {myApp.kludge_h = urlParams.get('dh');} else {myApp.kludge_h = windowHeight;}
 
   if(DEBUG) {
   //console.log("current_date ",cd_y,cd_m,cd_d,cd_h,cd_u,cd_s,bTestLoop);
