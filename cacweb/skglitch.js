@@ -409,7 +409,8 @@ class  Content {
       //myApp.masterBuf.clear();
       
       myApp.masterBuf.shader(glich.sCine);
-      glich.sCine.setUniform("iResolution",[windowWidth,windowHeight]);
+      //glich.sCine.setUniform("iResolution",[windowWidth,windowHeight]);
+      glich.sCine.setUniform("iResolution",[width,height]);
       glich.sCine.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
       glich.sCine.setUniform("iTime",second());
       myApp.masterBuf.rect(0,0,imgWidth,imgHeight);
@@ -1019,8 +1020,42 @@ function setGradient(x, y, w, h, c1, c2, axis) {
 
 
 function windowResized(){
-  resizeCanvas(windowWidth, windowHeight);
-  //So that images draw in correct place
-  //myApp.offsetw = windowWidth/2;
-  //myApp.offseth = windowHeight/2;
+  //resizeCanvas(windowWidth, windowHeight);
+  
+  /*Basically using the p5js wrapper to access the resize(gl) function below*/
+  // Get A WebGL context
+  /** @type {HTMLCanvasElement} */
+  var canvas = document.querySelector("#canvas");
+  //var gl = canvas.getContext("webgl");
+  var gl = drawingContext;
+  if (!gl) {
+    return;
+  }
+
+  resize(gl);
+
+}
+
+function resize(gl) 
+{
+  /*Taken from webglfundamentals.org/webgl/lessons/webgl-resizing-the-canvas.html*/
+  var realToCSSPixels = window.devicePixelRatio;
+
+  // Lookup the size the browser is displaying the canvas in CSS pixels
+  // and compute a size needed to make our drawingbuffer match it in
+  // device pixels.
+  var displayWidth  = Math.floor(gl.canvas.clientWidth  * realToCSSPixels);
+  var displayHeight = Math.floor(gl.canvas.clientHeight * realToCSSPixels);
+
+  // Check if the canvas is not the same size.
+  if (gl.canvas.width  !== displayWidth ||
+      gl.canvas.height !== displayHeight) {
+
+    // Make the canvas the same size
+    gl.canvas.width  = displayWidth;
+    gl.canvas.height = displayHeight;
+  }
+
+  gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
 }
