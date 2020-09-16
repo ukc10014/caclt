@@ -410,7 +410,7 @@ class  Content {
       
       myApp.masterBuf.shader(glich.sCine);
       //glich.sCine.setUniform("iResolution",[windowWidth,windowHeight]);
-      glich.sCine.setUniform("iResolution",[width,height]);
+      glich.sCine.setUniform("iResolution",[2560,1390]);
       glich.sCine.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
       glich.sCine.setUniform("iTime",second());
       myApp.masterBuf.rect(0,0,imgWidth,imgHeight);
