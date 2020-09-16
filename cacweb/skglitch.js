@@ -552,7 +552,7 @@ class Glitch {
    
       myApp.masterBuf.shader(this.sFireball);
       this.sFireball.setUniform("iTime",float(millis()/1000)); 
-      this.sFireball.setUniform("iResolution",[windowWidth,windowHeight]);
+      this.sFireball.setUniform("iResolution",[myApp.kludge_w,myApp.kludge_h]);
       this.sFireball.setUniform("iMouse",[mouseX,mouseY]); 
       //myApp.masterBuf.rect(0,0,windowWidth,windowHeight);
       myApp.masterBuf.rect(0,0,width,height);
@@ -612,7 +612,8 @@ class Glitch {
         myApp.masterBuf.shader(this.sSimplex); //Using the masterBuf, instead of the local buffers above
 
 
-        this.sSimplex.setUniform("iResolution",[windowWidth,windowHeight]);
+        //this.sSimplex.setUniform("iResolution",[windowWidth,windowHeight]);
+        this.sSimplex.setUniform("iResolution",[myApp.kludge_w,myApp.kludge_h]);
         //this.sSimplex.setUniform("iTime", (new Date).getMilliseconds());
         this.sSimplex.setUniform("iTime", second());
         this.sSimplex.setUniform("tex0",this.img_array[this.current_img]); //Explicit binding is good if multiple textures
@@ -777,10 +778,11 @@ function setup() {
   let queryString = window.location.href;
   let urlParams = new URLSearchParams(queryString);
   
+  let pdensity = window.devicePixelRatio;
 
   /*Validate if URL contains this stuff and otherwise set defaults*/
   /*UKC 16/9: see help line for correct format.  FOR HELP MUST TYPE - ukc10014.github.io/cacweb/index.html?&help NOT .../cacweb/index.html?help*/
-  if(urlParams.get('help') == 'true') {alert("Correct URL usage is \n\n http:ukc10014.github.io/cacweb/index.html?yr=2020&mo=8&dt=17&ho=15&mi=1&se=1&dw=2560&dh=1390&test_loop=true \n\n corresponds to simulating code as of 17 Sep 2020 (months start at zero in JS), 15:01:01 UTC, and hardwired resolution of 2560,1390.");} //Popup gives correct syntax
+  if(urlParams.get('help') == 'true') {alert("Correct URL usage is \n\n http:ukc10014.github.io/cacweb/index.html?yr=2020&mo=8&dt=17&ho=15&mi=1&se=1&incr=0.01667&dw=2560&dh=1390&test_loop=true \n\n corresponds to simulating code as of 17 Sep 2020 (months start at zero in JS), 15:01:01 UTC, and hardwired resolution of 2560,1390. \n\n The simulation steps forward at a rate of 0.01667 sim seconds per frame, at 60fps that is 1 sim second per 1 real second, specified in 'incr'.");} //Popup gives correct syntax
 
   if(urlParams.has('yr')) {cd_y = urlParams.get('yr');} else {cd_y = 2020;}
   if(urlParams.has('mo')) {cd_m = urlParams.get('mo');} else {cd_m = 8;}
@@ -790,8 +792,8 @@ function setup() {
   if(urlParams.has('se')) {cd_s = urlParams.get('se');} else {cd_s = 1;}
   if(urlParams.get('test_loop') == 'true' ) {bTestLoop = true;} else {bTestLoop = "";}
   if(urlParams.has('incr')) {test_incr = float(urlParams.get('incr'));} else {test_incr = 60;} /*Seconds*/
-  if(urlParams.has('dw')) {myApp.kludge_w = urlParams.get('dw');} else {myApp.kludge_w = windowWidth;}
-  if(urlParams.has('dh')) {myApp.kludge_h = urlParams.get('dh');} else {myApp.kludge_h = windowHeight;}
+  if(urlParams.has('dw')) {myApp.kludge_w = urlParams.get('dw');} else {myApp.kludge_w = windowWidth * pdensity;}
+  if(urlParams.has('dh')) {myApp.kludge_h = urlParams.get('dh');} else {myApp.kludge_h = windowHeight * pdensity;}
 
   if(DEBUG) {
   //console.log("current_date ",cd_y,cd_m,cd_d,cd_h,cd_u,cd_s,bTestLoop);
