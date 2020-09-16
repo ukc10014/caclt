@@ -407,8 +407,8 @@ class  Content {
       let imgWidth = this.images[this.curr_img].width;
       let imgHeight = this.images[this.curr_img].height;
       let imgshow = this.images[this.curr_img];
-      let ulx = width/2 - imgWidth*0.75; //upper left-hand corner x (0.75 is based on 1.5x size [below] x 50%)
-      let uly = height/2 - imgHeight*0.75; //Upper left-hand corner y
+      let ulx = width/2 - imgWidth*0.5; //upper left-hand corner x (0.75 is based on 1.5x size [below] x 50%)
+      let uly = height/2 - imgHeight*0.5; //Upper left-hand corner y
   
       //myApp.masterBuf.clear();
       
@@ -419,7 +419,7 @@ class  Content {
       glich.sCine.setUniform("iTime",second());
       myApp.masterBuf.rect(0,0,imgWidth,imgHeight);
       //image(myApp.masterBuf,-myApp.offsetw/2,-myApp.offseth/2-150,imgWidth*0.25,imgHeight*0.25);
-      image(myApp.masterBuf,ulx,uly,imgWidth*1.5,imgHeight*1.5);
+      image(myApp.masterBuf,ulx,uly,imgWidth,imgHeight);
 
 
     }
