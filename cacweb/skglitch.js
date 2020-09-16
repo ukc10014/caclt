@@ -669,7 +669,8 @@ class Glitch {
         // we can pass in two values into the shader at the same time by using the setUniform2 function.
         // inside the shader these two values are set inside a vec2 object.
         this.sProtean.setUniform("iMouse", [x, y]);  // SET A UNIFORM
-        this.sProtean.setUniform("iResolution",[windowWidth*protean_df,windowHeight*protean_df]); 
+        //this.sProtean.setUniform("iResolution",[windowWidth*protean_df,windowHeight*protean_df]);
+        this.sProtean.setUniform("iResolution",[myApp.kludge_w*protean_df,myApp.kludge_h*protean_df]); 
                                                                                   /*Vary between 2 and 0.33 for movement around the cloud
                                                                                   *Higher numbers (1-2) gives a softer, less cloudy, more hazy look
                                                                                   *Lower numbers (0.33-1) is more distinctly cloudy, but also
