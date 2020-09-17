@@ -778,27 +778,57 @@ function setup() {
   //console.log("Test URL stuff");  console.log("Local date & UTC ",Date.now(),(new Date).toUTCString());
   let queryString = window.location.href;
   let urlParams = new URLSearchParams(queryString);
+  let bURL = false; //Boolean on whether URL contains params
   
   let pdensity = window.devicePixelRatio;
 
   /*Validate if URL contains this stuff and otherwise set defaults*/
   /*UKC 16/9: see help line for correct format.  FOR HELP MUST TYPE - ukc10014.github.io/cacweb/index.html?&help NOT .../cacweb/index.html?help*/
-  if(urlParams.get('help') == 'true') {alert("Correct URL usage is \n\n http:ukc10014.github.io/cacweb/index.html?yr=2020&mo=8&dt=17&ho=15&mi=1&se=1&incr=0.01667&dw=2560&dh=1390&test_loop=true \n\n corresponds to simulating code as of 17 Sep 2020 (months start at zero in JS), 15:01:01 UTC, and hardwired resolution of 2560,1390. \n\n The simulation steps forward at a rate of 0.01667 sim seconds per frame, at 60fps that is 1 sim second per 1 real second, specified in 'incr'.");} //Popup gives correct syntax
+  if(urlParams.has('help')) 
+  {
+    let str = "Correct URL usage is \n\n";
+    str = str.concat("http:ukc10014.github.io/cacweb/index.html?yr=2020&mo=8&dt=17&ho=15&mi=1&se=1&incr=0.01667&dw=2560&dh=1390&test_loop=true \n\n"); 
+    str = str.concat("corresponds to simulating code as of 17 Sep 2020 (months start at zero in JS)," + 
+      "15:01:01 UTC, and hardwired resolution of 2560,1390. \n\n " +
+      "The simulation steps forward at a rate of 0.01667 sim seconds per frame, at 60fps that is 1 sim " +
+      "second per 1 real second, specified in 'incr'.");
+    alert(str);
+    bURL = true;
+    } //Popup gives correct syntax
 
-  if(urlParams.has('yr')) {cd_y = urlParams.get('yr');} else {cd_y = 2020;}
-  if(urlParams.has('mo')) {cd_m = urlParams.get('mo');} else {cd_m = 8;}
-  if(urlParams.has('dt')) {cd_d = urlParams.get('dt');} else {cd_d = 26;}
-  if(urlParams.has('ho')) {cd_h = urlParams.get('ho');} else {cd_h = 13;}
-  if(urlParams.has('mi')) {cd_u = urlParams.get('mi');} else {cd_u = 1;}
-  if(urlParams.has('se')) {cd_s = urlParams.get('se');} else {cd_s = 1;}
-  if(urlParams.get('test_loop') == 'true' ) {bTestLoop = true;} else {bTestLoop = "";}
-  if(urlParams.has('incr')) {test_incr = float(urlParams.get('incr'));} else {test_incr = 60;} /*Seconds*/
-  if(urlParams.has('dw')) {myApp.kludge_w = urlParams.get('dw');} else {myApp.kludge_w = windowWidth * pdensity;}
-  if(urlParams.has('dh')) {myApp.kludge_h = urlParams.get('dh');} else {myApp.kludge_h = windowHeight * pdensity;}
+  
 
-  if(DEBUG) {
+  if(urlParams.has('yr')) {cd_y = urlParams.get('yr');bURL = true;} else {cd_y = 2020;}
+  if(urlParams.has('mo')) {cd_m = urlParams.get('mo');bURL = true;} else {cd_m = 9;}
+  if(urlParams.has('dt')) {cd_d = urlParams.get('dt');bURL = true;} else {cd_d = 20;}
+  if(urlParams.has('ho')) {cd_h = urlParams.get('ho');bURL = true;} else {cd_h = 13;}
+  if(urlParams.has('mi')) {cd_u = urlParams.get('mi');bURL = true;} else {cd_u = 1;}
+  if(urlParams.has('se')) {cd_s = urlParams.get('se');bURL = true;} else {cd_s = 1;}
+  if(urlParams.has('test_loop')) {bTestLoop = true;bURL = true;} else {bTestLoop = "";}
+  if(urlParams.has('incr')) {test_incr = float(urlParams.get('incr'));bURL = true;} else {test_incr = 60;} /*Seconds*/
+  if(urlParams.has('dw')) {myApp.kludge_w = urlParams.get('dw');bURL = true;} else {myApp.kludge_w = windowWidth * pdensity;}
+  if(urlParams.get('dh') != null) {myApp.kludge_h = urlParams.get('dh');bURL = true;} else {myApp.kludge_h = windowHeight * pdensity;}
+
+
+  if(bURL) {
+    let tmp = "URL params entered (note, if bTestLoop is off, then date/time are default & test_incr is meaningless): \n \n" +
+    "cd_y " + cd_y + "\n" +
+    "cd_m " + cd_m + "\n" +
+    "cd_d " + cd_d + "\n" +
+    "cd_h " + cd_h + "\n" +
+    "cd_u " + cd_u + "\n" +
+    "cd_s " + cd_s + "\n" +
+    "bTestLoop " + bTestLoop + "\n" +
+    "test_incr " + test_incr + "\n" +
+    "kludge_w " + myApp.kludge_w + "\n" +
+    "kludge_h " + myApp.kludge_h + "\n" +
+    "help " + urlParams.has('help');
+
+    alert(tmp); 
+  }         
+
   //console.log("current_date ",cd_y,cd_m,cd_d,cd_h,cd_u,cd_s,bTestLoop);
-}
+
 
   // put setup code here
   //createCanvas(1024,768,WEBGL);
