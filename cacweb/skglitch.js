@@ -849,7 +849,7 @@ function setup() {
       /*UKC: 3/9/20 setting show_start to 2 Sep 2020 1700h UTC so that we can test out LIVE.  Line below is commented out therefore.*/
       
       //let b = new Date(Date.UTC(2020,8,18, 18,0,0,0)); //REMEMBER: MONTHS START AT ZERO SO 8 IS SEP
-      let b = new Date(Date.UTC(2020,8,14,17,0,0,0)); //UKC: 3/9/20 --> DURING SHOW, MUST RESTORE LINE ABOVE
+      let b = new Date(Date.UTC(2020,8,17,17,0,0,0)); //UKC: 3/9/20 --> DURING SHOW, MUST RESTORE LINE ABOVE
       myApp.show_start = myApp.bloody_painful_UTC_utility(b); //Necessary to use fx because new Date() always returns timeshifted to local time
       
       let a;
