@@ -1,0 +1,69 @@
+.overlay[data-v-20204cc8] {
+    background: rgba(145, 145, 155, .93)
+}
+
+.video-overlay[data-v-20204cc8] {
+    background: #91919b
+}
+
+.overlay-content[data-v-20204cc8] {
+    max-height: 60vh;
+    overflow: auto
+}
+
+#player[data-v-20204cc8] {
+    position: fixed;
+    top: 200vh;
+    left: 200vw
+}
+
+#progress-track[data-v-20204cc8] {
+    height: .5rem;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    border-radius: .25rem;
+    cursor: pointer;
+    width: 100%;
+    max-width: 50vw;
+    background: rgba(0, 0, 0, .2)
+}
+
+#progress-bar[data-v-20204cc8] {
+    height: .5rem;
+    position: relative;
+    border-radius: .25rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30%;
+    background: #000
+}
+
+#caption[data-v-20204cc8] {
+    line-height: 1.25;
+    font-size: .5rem
+}
+
+#caption[data-v-20204cc8] h1 {
+    margin-bottom: .5rem !important;
+    font-size: 1rem !important
+}
+
+#caption[data-v-20204cc8] h2 {
+    font-size: .7rem
+}
+
+#caption[data-v-20204cc8] p {
+    display: none
+}
+
+#caption[data-v-20204cc8]:hover p {
+    margin-top: .75rem;
+    display: block
+}
+
+img.poster[data-v-20204cc8] {
+    width: 100%;
+    height: auto
+}
