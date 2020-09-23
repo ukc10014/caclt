@@ -3010,8 +3010,14 @@ html {
 }
 
 body {
-    background: #91919b;
+    /*background-color: rgb(100,200,255);*/
+    background-image: linear-gradient(rgb(100,200,255),rgb(0,10,20));
     font-family: Unicorn, Helvetica, sans-serif
+}
+
+/*UKC addition to make the navigation uniform*/
+#nav {
+    background-color: rgb(100,200,255);
 }
 
 .transition {
@@ -3619,7 +3625,7 @@ h6 {
 }
 
 a {
-    color: inherit;
+    color: rgb(0,0,50);
     text-decoration: inherit
 }
 

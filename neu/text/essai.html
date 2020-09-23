@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
+  <link href="../css/app.54882b13.css" rel=stylesheet>
+
+
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Kanad Chakrabarti" />
   <title>The Game Engine as Transhumanist Sandbox</title>
 
-  <LINK REL="STYLESHEET" HREF="../css/app.54882b13.css">
 
 <!-- <style type="text/css">
       code{white-space: pre-wrap;}
@@ -15,6 +17,7 @@
       span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style> -->
+
 </head>
 <body>
 
@@ -23,7 +26,7 @@
             <div data-v-3c4263c1="" class="stars"></div>
         </div> 
         <!---->
-        <div data-v-3c4263c1="" id="nav" class="z-10 transition sticky top-0 flex justify-between uppercase py-3 px-3 md:px-6 bg-gray-500" style="background-color: rgb(145, 145, 155);">
+        <div data-v-3c4263c1="" id="nav" class="z-10 transition sticky top-0 flex justify-between uppercase py-3 px-3 md:px-6 bg-gray-500">
             <div data-v-3c4263c1="" class="w-1/4"><a data-v-3c4263c1="" href="../index.html" class="hidden md:inline router-link-active"><p class="dot"></p></a><a data-v-3c4263c1="" href="../index.html" class="md:hidden"><p class="dot"></p></a></div>
             <div data-v-3c4263c1="" class="cursor-pointer"><span data-v-3c4263c1="" class="hidden lg:inline">sweeney's island</span><span data-v-3c4263c1="" class="md:inline lg:hidden">sweeney's island</span></div>
             <div data-v-3c4263c1="" class="w-1/4 text-right"></div>
@@ -37,274 +40,784 @@
 
 <div data-v-fb2bae8a="" data-v-10799180=""><div data-v-fb2bae8a="" class="relative max-w-xl mx-auto mb-6" id="the-world-of-wbes-agis"><strong>The World of WBEs &amp; AGIs</strong></div></div>
 
-<p>The thought-experiments proposed by Robin Hanson(<span class="citation" data-cites="HANSON_HOW_LIVE_SIM">(Hanson 2001)</span>) and Nick Bostrom at Oxford Unversity’s <a href="https://www.fhi.ox.ac.uk/">Future of Humanity Institute</a>,<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> <em>et al.</em> suggest a world where much of the physical and mental tasks humans do, machines can do better and faster. Humans are reduced to a subsistence existence, on something like a minimum wage (<span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span>, pp. 195-197). Whether whole-brain emulations (WBE)<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> or artificial general intelligence (AGI) comes first<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>, the considerable investment required, and the potential speed of technological change, imply a significant concentration of wealth in favour of capital(<span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span>, pp. 197-199).</p>
-<p>The time-frame for Superintelligence seems to centre around 2050 (in a survey of AI researchers, the date by which 50% of respondents expect human-level AGI will have been achieved (<span class="citation" data-cites="Baum_2020">(Baum 2020)</span>), while this <a href="https://www.openphilanthropy.org/blog/some-background-our-views-regarding-advanced-artificial-intelligence">article</a> provides a more granular survey, albeit from 2016<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>. Moreover, the challenges of the transition may, in fact, emerge somewhat more gradually as increasingly sophisticated AIs<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> start working alongside humans, a process already under-way. Alternatively, the prospect of such a future may prompt regulation to retard such an outcome until humanity’s social and governance structures have time to catch up (<span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span>, Chapter 14), or even a reactionary-Luddite politics, akin to a <a href="https://en.wikipedia.org/wiki/Dune_(franchise)#The_Butlerian_Jihad">Butlerian Jihad</a>. Variants of these views, albeit not contingent on AGI, have entered the mainstream, for instance in <a href="https://www.danielsusskind.com/a-world-without-work">Daniel Susskind’s</a> book on automation, or Richard Baldwin’s <a href="https://www.amazon.com/Globotics-Upheaval-Globalization-Robotics-Future/dp/0190901764"><em>The Globotics Upheaval</em> (2019)</a><span id="GLOBOTICS" label="GLOBOTICS">[GLOBOTICS]</span>.</p>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">The thought-experiments proposed by Robin Hanson
+   <span class="citation annotation-counter annotation-counter-inner" data-cites="HANSON_HOW_LIVE_SIM" data-tippy-content="<p>Hanson 2001</p>">&bull;
+   </span>
+
+ and Nick Bostrom at Oxford Unversity’s <a href="https://www.fhi.ox.ac.uk/">Future of Humanity Institute</a>,<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> <em>et al.</em> suggest a world where much of the physical and mental tasks humans do, machines can do better and faster. Humans are reduced to a subsistence existence, on something like a minimum wage <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>Bostrom 2017, pp. 195-197</p>">&bull;</span>. Whether whole-brain emulations (WBE)<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> or artificial general intelligence (AGI) comes first<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>, the considerable investment required, and the potential speed of technological change, imply a significant concentration of wealth in favour of capital<span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>Bostrom 2017, pp. 197-199</p>">&bull;</span>.</div>
+
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">The time-frame for Superintelligence seems to centre around 2050 (in a survey of AI researchers, the date by which 50% of respondents expect human-level AGI will have been achieved <span class="citation annotation-counter annotation-counter-inner" data-cites="Baum_2020" data-tippy-content="<p>Baum 2020</p>">&bull;</span>, while this <a href="https://www.openphilanthropy.org/blog/some-background-our-views-regarding-advanced-artificial-intelligence">article</a> provides a more granular survey, albeit from 2016<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>. Moreover, the challenges of the transition may, in fact, emerge somewhat more gradually as increasingly sophisticated AIs<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> start working alongside humans, a process already under-way. Alternatively, the prospect of such a future may prompt regulation to retard such an outcome until humanity’s social and governance structures have time to catch up <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>Bostrom 2017, Chapter 14</p>">&bull;</span>, or even a reactionary-Luddite politics, akin to a <a href="https://en.wikipedia.org/wiki/Dune_(franchise)#The_Butlerian_Jihad">Butlerian Jihad</a>. Variants of these views, albeit not contingent on AGI, have entered the mainstream, for instance in <a href="https://www.danielsusskind.com/a-world-without-work">Daniel Susskind’s</a> book on automation, or Richard Baldwin’s <a href="https://www.amazon.com/Globotics-Upheaval-Globalization-Robotics-Future/dp/0190901764"><em>The Globotics Upheaval</em> (2019)</a>.</div></div>
 
 <div data-v-fb2bae8a="" data-v-10799180=""><div data-v-fb2bae8a="" class="relative max-w-xl mx-auto mb-6" id="each-epoch-dreams-the-one-to-follow"><strong>‘Each epoch dreams the one to follow’</strong></div></div>
 
 
-<p>Games, thought of as dynamic data structures embodied in code, that also happen to have a dominant visual/aural/haptic interface, are distinct from moving images (or indeed music or literature). They seem to place the player in something like a dream<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>, owing to their player-performative nature; mutable narrative and potentially massive scenario-space; increasingly compelling fidelity to our visual world; as well as their synergy with immersive VR. These dreams, or nightmares according to one’s preference, perhaps may help us more clearly see the phenomenological, governance, and ethical issues of a world of uploads, AGI, and ‘mind theft’.</p>
-<p>In a more sinister vein, this essay proposes videogames, and the game engine (see below), as something akin to Giorgio Agamben’s apparatus (<span class="citation" data-cites="AGAMBEN_2009">(Agamben 2009)</span>) or a <em>dispositif</em> in Michel Foucault’s terminology, particularly as these concepts get picked up in Benjamin Bratton’s writing (<span class="citation" data-cites="BRATTON_2015">(Bratton 2015)</span>, pp. 161, 271-274)<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>.</p>
-<p>The game-as-apparatus perhaps also allows us to view the game as something other than ’mere entertainment’, and rather as a complex assemblage that in the first instance pervades much of our online lives. That we live in a world increasingly gamified<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> seems obvious: from riders on public transport compulsively shifting coloured tiles on an over-sized smartphone; personal fitness devices that award points for exercise; foreign language instruction from a chirpy green owl on Duolingo; access to (fairly sophisticated and often risky) options markets via a game-like interface on the <a href="https://www.bloomberg.com/opinion/articles/2019-11-05/playing-the-game-of-infinite-leverage">Robinhood</a> trading app.</p>
-<p>But it also speaks to our current environment of constant work, falling wages, ubiquitous self-entrepreneurship, and a framework of corporate-state biopolitics that is, at once, expansive and intrusive. In short, a new form of slavery, as suggested by Mark Fisher (<span class="citation" data-cites="FISHER_2009">(Fisher 2009)</span>), combined with the <em>ennui</em> and constant distraction that are documented as far back as the 1920s, in the writing of Walter Benjamin and Siegfried Kracauer(<span class="citation" data-cites="BOWN_2018">(Bown 2018)</span> pp. 35-39).</p>
-<h2 id="what-is-a-game-engine">What is a Game Engine?</h2>
-<p>Although games may well play a large part in futures under automation, this is not intended to be a survey of game design, logic, politics, etc., which are however comprehensively addressed in <span class="citation" data-cites="GALLOWAY_2006">(Galloway 2006)</span>, <span class="citation" data-cites="WARK_2007">(Wark 2007)</span>, <span class="citation" data-cites="BOWN_2018">(Bown 2018)</span>, as well as the blog-posts and books of game theorist <a href="http://bogost.com/books/">Ian Bogost</a>. Similarly, the architecture of game engines is well covered in the technical literature, for instance: <a href="https://www.gameenginebook.com/urls.html">here</a>, or <a href="https://www.gamedev.net/articles/programming/general-and-gameplay-programming/making-a-game-engine-core-design-principles-r3210/">here</a>. However, some broad features are outlined, taking as a concrete example the <a href="https://www.unrealengine.com/en-US/">Unreal Engine</a> platform, made by <a href="https://www.epicgames.com/site/en-US/home">Epic Games</a>, who also make the commercial hit Fortnite.</p>
-<p>The game engine, narrowly defined, is the software in which the game is written and ultimately what drives the possibilities of the game, the computer/device platforms it can run on, and how it is finally distributed to consumers. More abstractly, it can be viewed as a ‘stack’ of software<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>, in the sense developed by Benjamin Bratton which emphasises a relevance to spatio-political concerns, through and <em>contra</em> the geo-political writings of Carl Schmitt (<span class="citation" data-cites="BRATTON_2015">(Bratton 2015)</span>) . Specifically, it can be argued that elements of this Stack metaphor are applicable to the game engine<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>, owing to physical interfaces with the world and our built environment. Although games are typically written on general-purpose computers, they are deployed on a range of computing platforms: dedicated consoles (Playstation, Xbox), smartphones, virtual and augmented reality (VR/AR) devices, servers, and desktop computers.</p>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Games, thought of as dynamic data structures embodied in code, that also happen to have a dominant visual/aural/haptic interface, are distinct from moving images (or indeed music or literature). They seem to place the player in something like a dream<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>, owing to their player-performative nature; mutable narrative and potentially massive scenario-space; increasingly compelling fidelity to our visual world; as well as their synergy with immersive VR. These dreams, or nightmares according to one’s preference, perhaps may help us more clearly see the phenomenological, governance, and ethical issues of a world of uploads, AGI, and ‘mind theft’.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">In a more sinister vein, this essay proposes videogames, and the game engine (see below), as something akin to Giorgio Agamben’s apparatus <span class="citation annotation-counter annotation-counter-inner" data-cites="AGAMBEN_2009" data-tippy-content="<p>Agamben 2009</p>">&bull;</span> or a <em>dispositif</em> in Michel Foucault’s terminology, particularly as these concepts get picked up in Benjamin Bratton’s writing <span class="citation annotation-counter annotation-counter-inner" data-cites="BRATTON_2015" data-tippy-content="<p>Bratton 2015, pp. 161, 271-274</p>">&bull;</span><a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">The game-as-apparatus perhaps also allows us to view the game as something other than ’mere entertainment’, and rather as a complex assemblage that in the first instance pervades much of our online lives. That we live in a world increasingly gamified<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> seems obvious: from riders on public transport compulsively shifting coloured tiles on an over-sized smartphone; personal fitness devices that award points for exercise; foreign language instruction from a chirpy green owl on Duolingo; access to (fairly sophisticated and often risky) options markets via a game-like interface on the <a href="https://www.bloomberg.com/opinion/articles/2019-11-05/playing-the-game-of-infinite-leverage">Robinhood</a> trading app.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">But it also speaks to our current environment of constant work, falling wages, ubiquitous self-entrepreneurship, and a framework of corporate-state biopolitics that is, at once, expansive and intrusive. In short, a new form of slavery, as suggested by Mark Fisher <span class="citation annotation-counter annotation-counter-inner" data-cites="FISHER_2009" data-tippy-content="<p>Fisher 2009</p>">&bull;</span>, combined with the <em>ennui</em> and constant distraction that are documented as far back as the 1920s, in the writing of Walter Benjamin and Siegfried Kracauer<span class="citation annotation-counter annotation-counter-inner" data-cites="BOWN_2018" data-tippy-content="<p>Bown 2018</p>">&bull;</span> pp. 35-39).</div></div>
+
+<div data-v-fb2bae8a="" data-v-10799180=""><div data-v-fb2bae8a="" class="relative max-w-xl mx-auto mb-6" id="what-is-a-game-engine"><strong>What is a Game Engine?</strong></div></div>
+
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Although games may well play a large part in futures under automation, this is not intended to be a survey of game design, logic, politics, etc., which are however comprehensively addressed in <span class="citation annotation-counter annotation-counter-inner" data-cites="GALLOWAY_2006" data-tippy-content="<p>Galloway 2006</p>">&bull;</span>, <span class="citation annotation-counter annotation-counter-inner" data-cites="WARK_2007" data-tippy-content="<p>Wark 2007</p>">&bull;</span>, <span class="citation annotation-counter annotation-counter-inner" data-cites="BOWN_2018" data-tippy-content="<p>Bown 2018</p>">&bull;</span>, as well as the blog-posts and books of game theorist <a href="http://bogost.com/books/">Ian Bogost</a>. Similarly, the architecture of game engines is well covered in the technical literature, for instance: <a href="https://www.gameenginebook.com/urls.html">here</a>, or <a href="https://www.gamedev.net/articles/programming/general-and-gameplay-programming/making-a-game-engine-core-design-principles-r3210/">here</a>. However, some broad features are outlined, taking as a concrete example the <a href="https://www.unrealengine.com/en-US/">Unreal Engine</a> platform, made by <a href="https://www.epicgames.com/site/en-US/home">Epic Games</a>, who also make the commercial hit Fortnite.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">The game engine, narrowly defined, is the software in which the game is written and ultimately what drives the possibilities of the game, the computer/device platforms it can run on, and how it is finally distributed to consumers. More abstractly, it can be viewed as a ‘stack’ of software<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>, in the sense developed by Benjamin Bratton which emphasises a relevance to spatio-political concerns, through and <em>contra</em> the geo-political writings of Carl Schmitt <span class="citation annotation-counter annotation-counter-inner" data-cites="BRATTON_2015" data-tippy-content="<p>Bratton 2015</p>">&bull;</span> . Specifically, it can be argued that elements of this Stack metaphor are applicable to the game engine<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>, owing to physical interfaces with the world and our built environment. Although games are typically written on general-purpose computers, they are deployed on a range of computing platforms: dedicated consoles (Playstation, Xbox), smartphones, virtual and augmented reality (VR/AR) devices, servers, and desktop computers.</div></div>
 
 <div data-v-fb2bae8a="" data-v-10799180=""><div data-v-fb2bae8a="" class="relative max-w-xl mx-auto mb-6" id="capital-eats-gamespace"><strong>Capital Eats (Game)Space</strong></div></div>
 
-<p>What is the shape of this ludic apparatus? McKenzie Wark’s ‘military-entertainment complex’ (<span class="citation" data-cites="WARK_2005">(Wark 2005)</span>), itself an adaptation to contemporary, technological conditions, of Guy Debord’s <a href="http://autonomies.org/2016/08/an-illustrated-guide-to-guy-debords-the-society-of-the-spectacle/">integrated spectacle</a> might provide a useful guide. In the examples below, we see incredibly well-capitalised companies, for some of which gaming is central, with R&amp;D divisions that strive for <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3176476/">addiction</a> amongst users, operate across multiple platforms, and in some cases with substantial physical assets that present barriers to entry against new competitors. Many of these companies also place AI/ML at the core of their businesses, and operate as entities with significant network benefits while generating, in some cases, negative social externalities. Lastly, explicitly or implicitly, through data harvesting, surveillance is often central to how they create value, as <a href="https://theintercept.com/2019/02/02/shoshana-zuboff-age-of-surveillance-capitalism/">Shoshana Zuboff</a> has convincingly detailed.</p>
-<p>Tencent are the world’s largest video-game company, and owns 40% of Epic Games (Fortnite and Unreal Engine). They also owns WeChat, China’s market leader in messaging, which povide mapping, gaming, and banking services, and a diversified portfolio of media, health, and real-estate assets. A fascinating overview of their media strategy, and how it is different from Western models, is <a href="https://musicindustryblog.wordpress.com/tag/tencent/">here</a>.</p>
-<p>Google, keeper of the Internet’s search-gate, have rolled out the <a href="https://en.wikipedia.org/wiki/Google_Stadia">Stadia</a> game-streaming service, which is hosted on a network of 21 globally-dispersed data centres, while sister company <a href="https://www.kdnuggets.com/2020/05/deepmind-gaming-ai-dominance.html">Deepmind</a> view games as a central locus of AI/AGI research.</p>
-<p>Amazon, with a massive footprint in cloud computing (which often host multi-player games)<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> and push into financial services (Amazon Pay), also own Twitch, the principal streaming service for gamers.</p>
-<p>Microsoft’s <a href="https://www.wired.com/story/cloud-gaming-infrastructure-arms-race/">XCloud</a> sits atop their extensive Azure server farms, providing a strong physical footprint for XBox gamers.</p>
-<p>Facebook, which already own the Oculus VR platform, are also pushing for a potentially transformative digital currency, Libra,<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a> to integrate to the company’s immense footprint in users’ lives.</p>
-<p>The profiles above of industry leaders in game development is illuminating in light of Bostrom’s point that major advances in WBE/AGI are likely to come from well-capitalised entities, and likely, once major developmental milestones have been hit, the successful pioneers in WBE are likely to pull ahead of competition at an accelerating pace (<span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span>, pp. 197-224, 107-108). The reasons are clear: the enormous investment required to successfully emulate a human brain at a neuronal level, the processing power to maintaining one or more uploads; or else, the scale and sophistication of research platform required to create fundamental algorithmic advances that seem necessary to make AGI happen.</p>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">What is the shape of this ludic apparatus? McKenzie Wark’s ‘military-entertainment complex’ <span class="citation annotation-counter annotation-counter-inner" data-cites="WARK_2005" data-tippy-content="<p>Wark 2005</p>">&bull;</span>, itself an adaptation to contemporary, technological conditions, of Guy Debord’s <a href="http://autonomies.org/2016/08/an-illustrated-guide-to-guy-debords-the-society-of-the-spectacle/">integrated spectacle</a> might provide a useful guide. In the examples below, we see incredibly well-capitalised companies, for some of which gaming is central, with R&amp;D divisions that strive for <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3176476/">addiction</a> amongst users, operate across multiple platforms, and in some cases with substantial physical assets that present barriers to entry against new competitors. Many of these companies also place AI/ML at the core of their businesses, and operate as entities with significant network benefits while generating, in some cases, negative social externalities. Lastly, explicitly or implicitly, through data harvesting, surveillance is often central to how they create value, as <a href="https://theintercept.com/2019/02/02/shoshana-zuboff-age-of-surveillance-capitalism/">Shoshana Zuboff</a> has convincingly detailed.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Tencent are the world’s largest video-game company, and owns 40% of Epic Games (Fortnite and Unreal Engine). They also owns WeChat, China’s market leader in messaging, which povide mapping, gaming, and banking services, and a diversified portfolio of media, health, and real-estate assets. A fascinating overview of their media strategy, and how it is different from Western models, is <a href="https://musicindustryblog.wordpress.com/tag/tencent/">here</a>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Google, keeper of the Internet’s search-gate, have rolled out the <a href="https://en.wikipedia.org/wiki/Google_Stadia">Stadia</a> game-streaming service, which is hosted on a network of 21 globally-dispersed data centres, while sister company <a href="https://www.kdnuggets.com/2020/05/deepmind-gaming-ai-dominance.html">Deepmind</a> view games as a central locus of AI/AGI research.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Amazon, with a massive footprint in cloud computing (which often host multi-player games)<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> and push into financial services (Amazon Pay), also own Twitch, the principal streaming service for gamers.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Microsoft’s <a href="https://www.wired.com/story/cloud-gaming-infrastructure-arms-race/">XCloud</a> sits atop their extensive Azure server farms, providing a strong physical footprint for XBox gamers.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Facebook, which already own the Oculus VR platform, are also pushing for a potentially transformative digital currency, Libra,<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a> to integrate to the company’s immense footprint in users’ lives.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">The profiles above of industry leaders in game development is illuminating in light of Bostrom’s point that major advances in WBE/AGI are likely to come from well-capitalised entities, and likely, once major developmental milestones have been hit, the successful pioneers in WBE are likely to pull ahead of competition at an accelerating pace <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>Bostrom 2017, pp. 197-224, 107-108</p>">&bull;</span>. The reasons are clear: the enormous investment required to successfully emulate a human brain at a neuronal level, the processing power to maintaining one or more uploads; or else, the scale and sophistication of research platform required to create fundamental algorithmic advances that seem necessary to make AGI happen.</div></div>
 
 <div data-v-fb2bae8a="" data-v-10799180=""><div data-v-fb2bae8a="" class="relative max-w-xl mx-auto mb-6" id="the-eggshell-world-rendered-on-demand"><strong>The Eggshell World, Rendered-on-Demand</strong></div></div>
 
 
-<p>In <span class="citation" data-cites="BOSTROM_SIM">(Bostrom 2003)</span>, Nick Bostrom conducts a thought-experiment to assess the probability that we (currently existing humans) are living within a simulation created by a far-advanced post-human civilisation. In this scenario, our phenomenological world, indeed our internal world, has been meticulously created within our descendants’ über-computer. Bostrom, as well as <span class="citation" data-cites="HANSON_HOW_LIVE_SIM">(Hanson 2001)</span> points out that, owing to computational intractability, not all parts of the simulated world need be maintained at all times, rather elements of ‘reality’ can be generated only to the extent that some human is observing or encountering that element of the simulated world.</p>
-<p>Rendering-upon-demand is something we find gaming engines doing now<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a>: they generate scenes as and when needed, i.e. when a player is focused on the objects in question, allowing the game engine to use its processing power and memory efficiently, and handle worlds that are much larger than if it tried to simulate ‘everything’, seen and unseen. Players in contemporary 3-D game-worlds usually expect physical laws to apply, i.e. balls should bounce, walls are usually hard, water is a fluid, fog licks into corners, etc. Therefore, the game engine often incorporates a physics engine that replicates the real world, at varying levels of fidelity: simple games may only handle macroscopic features such as balls and hard surfaces, while the most sophisticated model particle-based fluids such as fire and smoke.</p>
-<p>But the physics is simulated only at a level-of-detail required to convince the viewer, which is something the creator needs to define. So rocks, buildings, streets, leaves, trees, waves, clouds are mostly produced as textures (tiny image files), that are cleverly replicated and mathematically transformed to create a compelling illusion. Some phenomena such as fire and smoke use physics, but again, in limited ways so as to not waste computation on things that don’t change the believability of the final image. For instance, no game, to my knowledge, simulates quantum-level physical phenomena, because that is irrelevant for players<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>.</p>
-<p>This leads to curious, perhaps unsatisfying, situations where objects are simply a hollow shell with infinitesmally-thick sheet walls, much like a cinema set or Potemkin Village<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>. In other cases, like a mirage-in-reverse, forests that were amorphous, almost painterly expanses of sun-dappled green will visibly resolve themselves, as the player’s camera approaches, into individual leaves, branches and trunks<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a>. In a well-made game<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a>, perhaps these imperfections are crafted away (by rendering at the required level-of-detail well in advance of becoming visible to the player, for instance, or by not allowing the player to peer behind any under-implemented geometry). From the perspective of player expectations, it is plausible that human gamers understand these infidelities as a type of simplification, that allows the underlying logic and emotional content of the game to emerge, what Jesper Juul terms the ‘half-real’ (<span class="citation" data-cites="JUUL_2019">(Juul 2019)</span>). However, in the WBE/AGI world, as Bostrom discusses, artificially-constructed environments and VR quite possibly would not just be entertainment, rather it <em>is</em> the reality that an emulation lives within. Moreover, they could be a mode of control for an emulation-based society: supervising agents could use VR environments to test lower-ranking agents on whatever criteria (trust, normative behaviour, etc.) (<span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span>, pp. 209, 250). In such a control society, it seems reasonable that a lower-ranking agent will do everything possible to uncover flaws or deceptions in its VR, unlike Juul’s human player, who overlooks such imperfections<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a>.</p>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">In <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_SIM" data-tippy-content="<p>Bostrom 2003</p>">&bull;</span>, Nick Bostrom conducts a thought-experiment to assess the probability that we (currently existing humans) are living within a simulation created by a far-advanced post-human civilisation. In this scenario, our phenomenological world, indeed our internal world, has been meticulously created within our descendants’ über-computer. Bostrom, as well as <span class="citation annotation-counter annotation-counter-inner" data-cites="HANSON_HOW_LIVE_SIM" data-tippy-content="<p>Hanson 2001</p>">&bull;</span> points out that, owing to computational intractability, not all parts of the simulated world need be maintained at all times, rather elements of ‘reality’ can be generated only to the extent that some human is observing or encountering that element of the simulated world.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Rendering-upon-demand is something we find gaming engines doing now<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a>: they generate scenes as and when needed, i.e. when a player is focused on the objects in question, allowing the game engine to use its processing power and memory efficiently, and handle worlds that are much larger than if it tried to simulate ‘everything’, seen and unseen. Players in contemporary 3-D game-worlds usually expect physical laws to apply, i.e. balls should bounce, walls are usually hard, water is a fluid, fog licks into corners, etc. Therefore, the game engine often incorporates a physics engine that replicates the real world, at varying levels of fidelity: simple games may only handle macroscopic features such as balls and hard surfaces, while the most sophisticated model particle-based fluids such as fire and smoke.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">But the physics is simulated only at a level-of-detail required to convince the viewer, which is something the creator needs to define. So rocks, buildings, streets, leaves, trees, waves, clouds are mostly produced as textures (tiny image files), that are cleverly replicated and mathematically transformed to create a compelling illusion. Some phenomena such as fire and smoke use physics, but again, in limited ways so as to not waste computation on things that don’t change the believability of the final image. For instance, no game, to my knowledge, simulates quantum-level physical phenomena, because that is irrelevant for players<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">This leads to curious, perhaps unsatisfying, situations where objects are simply a hollow shell with infinitesmally-thick sheet walls, much like a cinema set or Potemkin Village<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>. In other cases, like a mirage-in-reverse, forests that were amorphous, almost painterly expanses of sun-dappled green will visibly resolve themselves, as the player’s camera approaches, into individual leaves, branches and trunks<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a>. In a well-made game<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a>, perhaps these imperfections are crafted away (by rendering at the required level-of-detail well in advance of becoming visible to the player, for instance, or by not allowing the player to peer behind any under-implemented geometry). From the perspective of player expectations, it is plausible that human gamers understand these infidelities as a type of simplification, that allows the underlying logic and emotional content of the game to emerge, what Jesper Juul terms the ‘half-real’ <span class="citation annotation-counter annotation-counter-inner" data-cites="JUUL_2019" data-tippy-content="<p>Juul 2019</p>">&bull;</span>. However, in the WBE/AGI world, as Bostrom discusses, artificially-constructed environments and VR quite possibly would not just be entertainment, rather it <em>is</em> the reality that an emulation lives within. Moreover, they could be a mode of control for an emulation-based society: supervising agents could use VR environments to test lower-ranking agents on whatever criteria (trust, normative behaviour, etc.) <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>Bostrom 2017, pp. 209, 250</p>">&bull;</span>. In such a control society, it seems reasonable that a lower-ranking agent will do everything possible to uncover flaws or deceptions in its VR, unlike Juul’s human player, who overlooks such imperfections<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a>.</div></div>
 
 <div data-v-fb2bae8a="" data-v-10799180=""><div data-v-fb2bae8a="" class="relative max-w-xl mx-auto mb-6" id="panoptic-grace-updated"><strong>Panoptic Grace, Updated</strong></div></div>
 
 
-<p>The problem of verifying intention and maximising trust, currently source of major societal costs and conflicts, would potentially be more tractable in a WBE/AGI world. For instance, personal selfishness could be written out of an emulation’s code, replaced with a clan or eusocial bias. In addition, an agent’s source code and history would be open to audit in a way that is not possible today (<span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span> p. 215-218).</p>
-<p>Currently, we find the gaming fitting neatly into the surveillance apparatus surrounding us (<span class="citation" data-cites="GALIC_2017">(Galic̆, Timan, and Koops 2017)</span>), explicitly in the case of <a href="https://www.latimes.com/business/story/2019-07-21/american-game-developers-china-surveillance">Chinese attempts</a> to co-opt American game developers into controlling supposed gaming addiction in China. Alternatively, in American and British surveillance of supposed <a href="https://www.propublica.org/article/world-of-spycraft-intelligence-agencies-spied-in-online-games">terrorism-related</a> infiltration of online communities, the data to be collected in the ferocious dragnet Bratton calls ‘The Black Stack’ (<span class="citation" data-cites="BRATTON_2015">(Bratton 2015)</span>, pp. 363-365), and subsequently cross-correlated, under government and corporate contract, by companies such as Peter Thiel’s <a href="https://www.computerweekly.com/feature/Surveillance-capitalism-in-the-age-of-Covid-19">Palantir</a>.</p>
-<p>There are more subtle, panoptic methods of self-discipline, as office workers play games, immediately feel guilty, and double their work effort to make up for their transgression, a cycle that managers are probably aware of and possibly encourage (<span class="citation" data-cites="BOWN_2018">(Bown 2018)</span> pp. 35-37). This is gaming’s version of the transition from Foucauldian factory-prison control to the post-disciplinarity of the office, infused with market ethos and enabled by pervasive information technology (see Mark Fisher’s reading of Deleuze and Kafka in <span class="citation" data-cites="FISHER_2009">(Fisher 2009)</span>, pp. 22-23, 51).</p>
-<p>If we more narrowly consider the point-based logics of individual games, Cameron Kunzelman describes systems that, as a means of keeping team members (in a multi-player game) coordinated, motivated and disciplined, ‘encourage a habit in the human player to not make mistakes, to show up on time, and to constantly be wary of losing one’s DKP [the game’s name for the disciplinary score]’ (<span class="citation" data-cites="KUNZELMAN_2014">(Kunzelman 2014)</span>).</p>
-<p>Another example: Microsoft’s Xbox console, which apparently forces players to accumulate ‘achievements’ (points in a scoring mechanism awarded for achieving particular goals such as shooting zombies, rescuing princesses, etc.), which are then tallied and, under the extremely generous (to Microsoft) terms of the Xbox user agreement, collected for essentially any purpose Microsoft deems necessary (<span class="citation" data-cites="CYBULSKI_2014">(Cybulski 2014)</span>). The fact that Microsoft’s games run on dedicated hardware makes this even more creepy: whereas a PC or smartphone <em>might</em> prevent such extensive surveillance (through system-wide privacy settings), the <em>raison d’etre</em> of the Xbox is to only play Microsoft games, hence if the user chooses not to accept Microsoft’s terms, that Xbox is ‘bricked’ (rendered useless). Lastly, in a recursive echo of the media-military amalgalm McKenzie Wark diagnoses (<span class="citation" data-cites="WARK_2005">(Wark 2005)</span>), this (2016) <a href="https://slate.com/culture/2016/08/video-games-about-government-surveillance-like-replica-and-touchtone-reviewed.html">post</a> describes several games where the player acts as surveiller, monitoring conversations and activity, to ‘keep the nation safe’. Hence, as both victim and perpetrator, players become de-sensitised to in-game surveillance, continuing the pattern of normalisation of privacy eroding practices across the online world. Importantly, much of this happens mostly through nominally ‘free market’ mechanisms and without obvious state coercion, unlike in China, currently the prime example of a technologically advanced, politically repressive society.</p>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">The problem of verifying intention and maximising trust, currently source of major societal costs and conflicts, would potentially be more tractable in a WBE/AGI world. For instance, personal selfishness could be written out of an emulation’s code, replaced with a clan or eusocial bias. In addition, an agent’s source code and history would be open to audit in a way that is not possible today <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>Bostrom 2017, p. 215-218</p>">&bull;</span>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Currently, we find the gaming fitting neatly into the surveillance apparatus surrounding us <span class="citation annotation-counter annotation-counter-inner" data-cites="GALIC_2017" data-tippy-content="<p>Galic̆, Timan, and Koops 2017</p>">&bull;</span>, explicitly in the case of <a href="https://www.latimes.com/business/story/2019-07-21/american-game-developers-china-surveillance">Chinese attempts</a> to co-opt American game developers into controlling supposed gaming addiction in China. Alternatively, in American and British surveillance of supposed <a href="https://www.propublica.org/article/world-of-spycraft-intelligence-agencies-spied-in-online-games">terrorism-related</a> infiltration of online communities, the data to be collected in the ferocious dragnet Bratton calls ‘The Black Stack’ <span class="citation annotation-counter annotation-counter-inner" data-cites="BRATTON_2015" data-tippy-content="<p>Bratton 2015, pp. 363-365</p>">&bull;</span>, and subsequently cross-correlated, under government and corporate contract, by companies such as Peter Thiel’s <a href="https://www.computerweekly.com/feature/Surveillance-capitalism-in-the-age-of-Covid-19">Palantir</a>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">There are more subtle, panoptic methods of self-discipline, as office workers play games, immediately feel guilty, and double their work effort to make up for their transgression, a cycle that managers are probably aware of and possibly encourage <span class="citation annotation-counter annotation-counter-inner" data-cites="BOWN_2018" data-tippy-content="<p>Bown 2018, pp. 35-37</p>">&bull;</span>. This is gaming’s version of the transition from Foucauldian factory-prison control to the post-disciplinarity of the office, infused with market ethos and enabled by pervasive information technology (see Mark Fisher’s reading of Deleuze and Kafka in <span class="citation annotation-counter annotation-counter-inner" data-cites="FISHER_2009" data-tippy-content="<p>Fisher 2009, pp. 22-23, 51</p>">&bull;</span>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">If we more narrowly consider the point-based logics of individual games, Cameron Kunzelman describes systems that, as a means of keeping team members (in a multi-player game) coordinated, motivated and disciplined, ‘encourage a habit in the human player to not make mistakes, to show up on time, and to constantly be wary of losing one’s DKP [the game’s name for the disciplinary score]’ <span class="citation annotation-counter annotation-counter-inner" data-cites="KUNZELMAN_2014" data-tippy-content="<p>Kunzelman 2014</p>">&bull;</span>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Another example: Microsoft’s Xbox console, which apparently forces players to accumulate ‘achievements’ (points in a scoring mechanism awarded for achieving particular goals such as shooting zombies, rescuing princesses, etc.), which are then tallied and, under the extremely generous (to Microsoft) terms of the Xbox user agreement, collected for essentially any purpose Microsoft deems necessary <span class="citation annotation-counter annotation-counter-inner" data-cites="CYBULSKI_2014" data-tippy-content="<p>Cybulski 2014</p>">&bull;</span>. The fact that Microsoft’s games run on dedicated hardware makes this even more creepy: whereas a PC or smartphone <em>might</em> prevent such extensive surveillance (through system-wide privacy settings), the <em>raison d’etre</em> of the Xbox is to only play Microsoft games, hence if the user chooses not to accept Microsoft’s terms, that Xbox is ‘bricked’ (rendered useless). Lastly, in a recursive echo of the media-military amalgalm McKenzie Wark diagnoses <span class="citation annotation-counter annotation-counter-inner" data-cites="WARK_2005" data-tippy-content="<p>Wark 2005</p>">&bull;</span>, this (2016) <a href="https://slate.com/culture/2016/08/video-games-about-government-surveillance-like-replica-and-touchtone-reviewed.html">post</a> describes several games where the player acts as surveiller, monitoring conversations and activity, to ‘keep the nation safe’. Hence, as both victim and perpetrator, players become de-sensitised to in-game surveillance, continuing the pattern of normalisation of privacy eroding practices across the online world. Importantly, much of this happens mostly through nominally ‘free market’ mechanisms and without obvious state coercion, unlike in China, currently the prime example of a technologically advanced, politically repressive society.</div></div>
 
 <div data-v-fb2bae8a="" data-v-10799180=""><div data-v-fb2bae8a="" class="relative max-w-xl mx-auto mb-6" id="simulation-objecthood"><strong>Simulation &amp; Objecthood</strong></div></div>
 
-<p>Speculation about hte nature, behaviour and society of emulations and intelligent agents are a central concern of (<span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span> pp. 203-212) and <span class="citation" data-cites="HANSON_2014">(Hanson 2014)</span> or <span class="citation" data-cites="HANSON_1994">(Hanson 1994)</span>. Emulations, existing mostly as code (and some dedicated hardware, much as Amazon cloud instances do often exist on distinct processors), can be forked or replicated repeatedly, copied and backed-up, at a known cost. They can be brought into existence to work on particular problems (<span class="citation" data-cites="HANSON_2014">(Hanson 2014)</span>), spawned without childhoods or other developmental impedimenta, and ‘retired’<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a> when they have completed their task. Emulations that are descended (via copying) of a single human brain upload may organise as clans, with considerable intra-group trust, akin to families today, but with greater transparency to each other and to their controllers<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>.</p>
-<p>Thus, emulations would experience ‘subjective’ time in a very different way from siderial time (<span class="citation" data-cites="HANSON_1994">(Hanson 1994)</span>, p. 4), human subjective time, and indeed the time of other emulations that might be operating at markedly faster or slower clock speeds<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a>. Their understanding of birth, senescence, and death would be very different from our individuated perspective, laden with the baggage of <a href="https://www.e-flux.com/journal/53/59893/the-labor-of-the-inhuman-part-ii-the-inhuman/">conservative humanism</a>, emotion, religion and identity.</p>
-<h2 id="objects-in-games">Objects in Games</h2>
-<p>To what extent can game-worlds tell us anything about the subjective reality faced by a artificial agent? Is this even a meaningful question?</p>
-<p>On one hand, the idea of the inanimate having agency and relations is a concept not so unfamiliar from fiction(Japanese animation, Stanislaw Lem’s ocean-organism in <em>Solaris</em>) or non-Judeo-Christian-Islamic culture (Polynesian mythology). On the other, the very question of subjectivity and ethics pre-supposes a subject we have access to, whether ourselves or another human with whom we can empathise even though we might not be able to share their precise experience. Hence we probably remain in an anthropocentric trap (<span class="citation" data-cites="BOGOST_2012">(Bogost 2012)</span>, p. 78). Nevertheless, let us play on.</p>
-<p>At present, games are multi-agent, containing zero or more human players<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>, as well as non-players (game agents unassociated with a human player). Objects can also include things we don’t consider animal or human: flashing lights, rolling rocks, as well as complex self-interacting systems like an ocean, the weather, a jungle of trees that respond to wind, rain and so forth. As an aside, objecthood within games interacts with render-on-demand: in <em>No Man’s Sky</em> (2016), entire planets, and the plants, animals, and rocks on those planets are not created until required, raising some question as to <a href="https://www.newyorker.com/magazine/2015/05/18/world-without-end-raffi-khatchadourian">whether they exist</a> in any sense at all.</p>
-<p>In-game actors<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a> may also be representations of objects in the world outside the game. Game engines provide a software interface that connects other networked entities: geographically-distant players in a multi-player game; internet resources such as a financial market <a href="https://www.tradingview.com/">data-feed</a>; a global network of <a href="https://www.uradmonitor.com/">radiation sensors</a>; or consumer products in the Internet-of-Things (IoT) like <a href="https://www2.meethue.com/en-us">Philips Hue</a> smart lights, Google’s <a href="https://nest.com/">Nest</a> family of integrated networked devices, or Razer’s collection of keyboards, headphones, and lighting pulsating in <a href="https://www.razer.com/">lurid fuschia and turquoise</a>. In many cases, game engine and the diverse devices communicate using HTTP calls and TCP/IP, the basic communication protocols of the Internet. Game engines also accommodate bots, written within the game environment or indeed brought in from the ‘outside’ via an API. Importantly, all objects that are referenced in the game engine, whether within or without the game, also have specific addresses that place their corresponding data structure within the overall data ecosystem that the engine maintains<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>.</p>
-<p>These objects can be <a href="https://www.gamasutra.com/view/news/269634/7_examples_of_game_AI_that_every_developer_should_study.php">animated</a> or can speak, acting without explicit commands from a human user. Characters traverse terrain, navigate cities, or interact with other characters using terrain maps or decision trees, and these more-or-less sophisticated decision-tree system termed, somewhat optimistically, AI. However, new <a href="https://www.technologyreview.com/2017/11/29/147421/ai-is-dreaming-up-new-kinds-of-video-games/">directions</a> are exploring using machine learning to generate new content for games, scenarios, terrain, geometry, characters, based upon analysing existing, successful games. Conversely, mainstream AI research (such as <a href="https://nvidianews.nvidia.com/news/new-nvidia-research-creates-interactive-worlds-with-ai">self-driving cars</a>) are using gaming environment to generate training data and scenarios<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>.</p>
-<p>There are a few ways of thinking about how closely in-game objects can approach the Bostrom/Hanson model of WBE/AGI agents. To start with, we find an obvious and and practical problem: the agents within videogames today are neither sentient nor sapient<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>. This isn’t to say they are simplistic or easily understandable - their behavioural logic, viewed by players from outside the game, can be full of surprises for the player and can certainly be made intentionally obscure. For instance, one could embed a deep neural network into a game, the decisions of which are currently not easily <a href="https://en.wikipedia.org/wiki/Explainable_artificial_intelligence">explainable</a>.</p>
-<p>The fact that game objects are not themselves sentient or sapient doesn’t mean that they aren’t in some sense ‘real’, that human players can’t have emotional, empathetic or affective relationships with them, as described in this <a href="https://www.nytimes.com/2020/03/03/magazine/hideo-kojima-death-stranding-video-game.html">interview</a> with Hideo Kojima, creator of <em>Death Stranding</em>. A more ambiguous position is laid out in this article about the 2017 releases <em>Prey</em> and <em>Everything</em>, two games where players can embody themselves as <a href="http://textshopexperiments.org/textshop05/ooo-its-prey">objects</a>, and perhaps identify emotionally with the game, only to find the inner life of in-game objects remaining hidden, undisclosed, opaque.</p>
-<h2 id="philosophical-perspectives">Philosophical Perspectives</h2>
-<p>A convincing philosophical argument for the real-ness of digital, virtual worlds, albeit framed within a VR context, is made by David Chalmers (<span class="citation" data-cites="CHALMERS_2016">(Chalmers 2016)</span>) and a response from game theorist Jesper Juul (<span class="citation" data-cites="JUUL_2019">(Juul 2019)</span>). However, both Chalmers and Juul focus primarily on the reality of virtual worlds, principally from the perspective of a human subject, rather than the inner experience, or relations between, objects within the virtual world. As such, their views seem to remain (albeit by construction) resolutely anthropocentric<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a>.</p>
-<p>A more extreme metaphysical position is expressed in Graham Harman’s Object-Oriented Ontology (OOO), which is elaborated in a game context by Ian Bogost<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a>. One of the reservations about Bogost’s version of OOO, voiced in <span class="citation" data-cites="KUNZELMAN_2014">(Kunzelman 2014)</span> , pp. 62-66, is the fundamental anthropocentric perspective any discussion about the ethics of game objects still seems to retain.</p>
-<p>An argument that doesn’t axiomatically start with the human, and instead considers digital objects in their own right comes from Yuk Hui. He undertakes an inter-objective rather than inter-subjective approach, focuses on the material mechanisms<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a> of digital relations, and places time at the centre of relations (<span class="citation" data-cites="HUI_OBJECTS">(Hui 2016)</span>, p. 154, 175-182). Specifically relevant here is his analysis of how the languages of the web have changed over the years to become more ‘machine-readable’ (<span class="citation" data-cites="HUI_OBJECTS">(Hui 2016)</span>, p. 62-73). For instance, the early HTML<a href="#fn30" class="footnote-ref" id="fnref30"><sup>30</sup></a> was a formatting language, legible to humans, that basically described what a webpage looks like. In subsequent years, specifications have evolved to include much more than formatting: the connective tissue of metadata<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a> encapsulates information about content that other web platforms or softwares can interpret, and also make web objects ‘active’<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a>, in a way that is mostly transparent to the casual (non-programmer) user<a href="#fn33" class="footnote-ref" id="fnref33"><sup>33</sup></a>.</p>
-<p>These shared ontologies and relations between digital objects can be found in games also. For instance, a leaf object contains formatting data such as its colour and texture, as well as normally static relational data such as what branch and tree it is attached to. However, its data structure also needs to account for the wind, such that it flutters in a breeze. Its texture map must change to reflect wetness when rained upon, and so forth. Hence the game engine must embed ‘dictionaries’ of translation and relation in the form of databases, further defining a specific ontology for digital (game) objects <span class="citation" data-cites="HUI_OBJECTS">(Hui 2016)</span>, pp. 137-138. Importantly, these relations, being defined in code, can change themselves - after a storm, the leaf falls to the ground, whereupon a new process, that of rotting and discolouration begins.</p>
-<p>A contrasting approach to OOO is pursued in <span class="citation" data-cites="NEGARESTANI_2018">(Negarestani 2018)</span>, where, rather than promiscuously attributing a spooky ‘life’ to objects, Negarestani tries to isolate what might be the principally unique or irreducible features of the human as active, reasoning entity<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a>, and then imagines a toy (in the sense of vastly simplified) AGI that slowly learns this essential core of human capability, all the while stepping around the anthropocentric pit, the shared flaw (in his and Hui’s view) of transhumanists and nostalgic (post)humanists alike<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>.</p>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Speculation about hte nature, behaviour and society of emulations and intelligent agents are a central concern of <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>Bostrom 2017, pp. 203-212</p>">&bull;</span> and <span class="citation annotation-counter annotation-counter-inner" data-cites="HANSON_2014" data-tippy-content="<p>Hanson 2014</p>">&bull;</span> or <span class="citation annotation-counter annotation-counter-inner" data-cites="HANSON_1994" data-tippy-content="<p>Hanson 1994</p>">&bull;</span>. Emulations, existing mostly as code (and some dedicated hardware, much as Amazon cloud instances do often exist on distinct processors), can be forked or replicated repeatedly, copied and backed-up, at a known cost. They can be brought into existence to work on particular problems <span class="citation annotation-counter annotation-counter-inner" data-cites="HANSON_2014" data-tippy-content="<p>Hanson 2014</p>">&bull;</span>, spawned without childhoods or other developmental impedimenta, and ‘retired’<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a> when they have completed their task. Emulations that are descended (via copying) of a single human brain upload may organise as clans, with considerable intra-group trust, akin to families today, but with greater transparency to each other and to their controllers<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Thus, emulations would experience ‘subjective’ time in a very different way from siderial time <span class="citation annotation-counter annotation-counter-inner" data-cites="HANSON_1994" data-tippy-content="<p>Hanson 1994, p. 4</p>">&bull;</span>, human subjective time, and indeed the time of other emulations that might be operating at markedly faster or slower clock speeds<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a>. Their understanding of birth, senescence, and death would be very different from our individuated perspective, laden with the baggage of <a href="https://www.e-flux.com/journal/53/59893/the-labor-of-the-inhuman-part-ii-the-inhuman/">conservative humanism</a>, emotion, religion and identity.</div></div>
+
+<div data-v-fb2bae8a="" data-v-10799180=""><div data-v-fb2bae8a="" class="relative max-w-xl mx-auto mb-6" id="objects-in-games"><strong>Objects in Games</strong></div></div>
+
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">To what extent can game-worlds tell us anything about the subjective reality faced by a artificial agent? Is this even a meaningful question?</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">On one hand, the idea of the inanimate having agency and relations is a concept not so unfamiliar from fiction(Japanese animation, Stanislaw Lem’s ocean-organism in <em>Solaris</em>) or non-Judeo-Christian-Islamic culture (Polynesian mythology). On the other, the very question of subjectivity and ethics pre-supposes a subject we have access to, whether ourselves or another human with whom we can empathise even though we might not be able to share their precise experience. Hence we probably remain in an anthropocentric trap <span class="citation annotation-counter annotation-counter-inner" data-cites="BOGOST_2012" data-tippy-content="<p>Bogost 2012, p. 78</p>">&bull;</span>. Nevertheless, let us play on.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">At present, games are multi-agent, containing zero or more human players<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>, as well as non-players (game agents unassociated with a human player). Objects can also include things we don’t consider animal or human: flashing lights, rolling rocks, as well as complex self-interacting systems like an ocean, the weather, a jungle of trees that respond to wind, rain and so forth. As an aside, objecthood within games interacts with render-on-demand: in <em>No Man’s Sky</em> (2016), entire planets, and the plants, animals, and rocks on those planets are not created until required, raising some question as to <a href="https://www.newyorker.com/magazine/2015/05/18/world-without-end-raffi-khatchadourian">whether they exist</a> in any sense at all.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">In-game actors<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a> may also be representations of objects in the world outside the game. Game engines provide a software interface that connects other networked entities: geographically-distant players in a multi-player game; internet resources such as a financial market <a href="https://www.tradingview.com/">data-feed</a>; a global network of <a href="https://www.uradmonitor.com/">radiation sensors</a>; or consumer products in the Internet-of-Things (IoT) like <a href="https://www2.meethue.com/en-us">Philips Hue</a> smart lights, Google’s <a href="https://nest.com/">Nest</a> family of integrated networked devices, or Razer’s collection of keyboards, headphones, and lighting pulsating in <a href="https://www.razer.com/">lurid fuschia and turquoise</a>. In many cases, game engine and the diverse devices communicate using HTTP calls and TCP/IP, the basic communication protocols of the Internet. Game engines also accommodate bots, written within the game environment or indeed brought in from the ‘outside’ via an API. Importantly, all objects that are referenced in the game engine, whether within or without the game, also have specific addresses that place their corresponding data structure within the overall data ecosystem that the engine maintains<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">These objects can be <a href="https://www.gamasutra.com/view/news/269634/7_examples_of_game_AI_that_every_developer_should_study.php">animated</a> or can speak, acting without explicit commands from a human user. Characters traverse terrain, navigate cities, or interact with other characters using terrain maps or decision trees, and these more-or-less sophisticated decision-tree system termed, somewhat optimistically, AI. However, new <a href="https://www.technologyreview.com/2017/11/29/147421/ai-is-dreaming-up-new-kinds-of-video-games/">directions</a> are exploring using machine learning to generate new content for games, scenarios, terrain, geometry, characters, based upon analysing existing, successful games. Conversely, mainstream AI research (such as <a href="https://nvidianews.nvidia.com/news/new-nvidia-research-creates-interactive-worlds-with-ai">self-driving cars</a>) are using gaming environment to generate training data and scenarios<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">There are a few ways of thinking about how closely in-game objects can approach the Bostrom/Hanson model of WBE/AGI agents. To start with, we find an obvious and and practical problem: the agents within videogames today are neither sentient nor sapient<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>. This isn’t to say they are simplistic or easily understandable - their behavioural logic, viewed by players from outside the game, can be full of surprises for the player and can certainly be made intentionally obscure. For instance, one could embed a deep neural network into a game, the decisions of which are currently not easily <a href="https://en.wikipedia.org/wiki/Explainable_artificial_intelligence">explainable</a>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">The fact that game objects are not themselves sentient or sapient doesn’t mean that they aren’t in some sense ‘real’, that human players can’t have emotional, empathetic or affective relationships with them, as described in this <a href="https://www.nytimes.com/2020/03/03/magazine/hideo-kojima-death-stranding-video-game.html">interview</a> with Hideo Kojima, creator of <em>Death Stranding</em>. A more ambiguous position is laid out in this article about the 2017 releases <em>Prey</em> and <em>Everything</em>, two games where players can embody themselves as <a href="http://textshopexperiments.org/textshop05/ooo-its-prey">objects</a>, and perhaps identify emotionally with the game, only to find the inner life of in-game objects remaining hidden, undisclosed, opaque.</div></div>
+
+<div data-v-fb2bae8a="" data-v-10799180=""><div data-v-fb2bae8a="" class="relative max-w-xl mx-auto mb-6" id="philosophical-perspectives"><strong>Philosophical Perspectives</strong></div></div>
+
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">A convincing philosophical argument for the real-ness of digital, virtual worlds, albeit framed within a VR context, is made by David Chalmers <span class="citation annotation-counter annotation-counter-inner" data-cites="CHALMERS_2016" data-tippy-content="<p>Chalmers 2016</p>">&bull;</span> and a response from game theorist Jesper Juul <span class="citation annotation-counter annotation-counter-inner" data-cites="JUUL_2019" data-tippy-content="<p>Juul 2019</p>">&bull;</span>. However, both Chalmers and Juul focus primarily on the reality of virtual worlds, principally from the perspective of a human subject, rather than the inner experience, or relations between, objects within the virtual world. As such, their views seem to remain (albeit by construction) resolutely anthropocentric<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">A more extreme metaphysical position is expressed in Graham Harman’s Object-Oriented Ontology (OOO), which is elaborated in a game context by Ian Bogost<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a>. One of the reservations about Bogost’s version of OOO, voiced in <span class="citation annotation-counter annotation-counter-inner" data-cites="KUNZELMAN_2014" data-tippy-content="<p>Kunzelman 2014 , pp. 62-66</p>">&bull;</span>, is the fundamental anthropocentric perspective any discussion about the ethics of game objects still seems to retain.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">An argument that doesn’t axiomatically start with the human, and instead considers digital objects in their own right comes from Yuk Hui. He undertakes an inter-objective rather than inter-subjective approach, focuses on the material mechanisms<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a> of digital relations, and places time at the centre of relations <span class="citation annotation-counter annotation-counter-inner" data-cites="HUI_OBJECTS" data-tippy-content="<p>Hui 2016, p. 154, 175-182</p>">&bull;</span>. Specifically relevant here is his analysis of how the languages of the web have changed over the years to become more ‘machine-readable’ <span class="citation annotation-counter annotation-counter-inner" data-cites="HUI_OBJECTS" data-tippy-content="<p>Hui 2016, p. 62-73</p>">&bull;</span>. For instance, the early HTML<a href="#fn30" class="footnote-ref" id="fnref30"><sup>30</sup></a> was a formatting language, legible to humans, that basically described what a webpage looks like. In subsequent years, specifications have evolved to include much more than formatting: the connective tissue of metadata<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a> encapsulates information about content that other web platforms or softwares can interpret, and also make web objects ‘active’<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a>, in a way that is mostly transparent to the casual (non-programmer) user<a href="#fn33" class="footnote-ref" id="fnref33"><sup>33</sup></a>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">These shared ontologies and relations between digital objects can be found in games also. For instance, a leaf object contains formatting data such as its colour and texture, as well as normally static relational data such as what branch and tree it is attached to. However, its data structure also needs to account for the wind, such that it flutters in a breeze. Its texture map must change to reflect wetness when rained upon, and so forth. Hence the game engine must embed ‘dictionaries’ of translation and relation in the form of databases, further defining a specific ontology for digital (game) objects <span class="citation annotation-counter annotation-counter-inner" data-cites="HUI_OBJECTS" data-tippy-content="<p>Hui 2016, pp. 137-138</p>">&bull;</span>. Importantly, these relations, being defined in code, can change themselves - after a storm, the leaf falls to the ground, whereupon a new process, that of rotting and discolouration begins.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">A contrasting approach to OOO is pursued in <span class="citation annotation-counter annotation-counter-inner" data-cites="NEGARESTANI_2018" data-tippy-content="<p>Negarestani 2018</p>">&bull;</span>, where, rather than promiscuously attributing a spooky ‘life’ to objects, Negarestani tries to isolate what might be the principally unique or irreducible features of the human as active, reasoning entity<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a>, and then imagines a toy (in the sense of vastly simplified) AGI that slowly learns this essential core of human capability, all the while stepping around the anthropocentric pit, the shared flaw (in his and Hui’s view) of transhumanists and nostalgic (post)humanists alike<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>.</div></div>
 
 <div data-v-fb2bae8a="" data-v-10799180=""><div data-v-fb2bae8a="" class="relative max-w-xl mx-auto mb-6" id="boredom-is-the-ambivalent-gift-of-the-surplus..."><strong>‘Boredom is the ambivalent gift of the surplus...’</strong></div></div>
 
-<p>Assuming however, that some version of a WBE/AGI world comes to pass, two questions arise: a) why would humans be needed at all, b) what would they do all day? After all, a central claim in Hanson’s <a href="http://mason.gmu.edu/~rhanson/EconOfBrainEmulations.pdf">writing</a>, in <span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span>, pp. 195-197, on the economics of WBE is of collapsing wages in the face of near- or super-human intelligence. And fears over falling standards of living in the face of automation are neither new nor particularly niche (see Baldwin’s or Susskind’s work, linked ).</p>
-<p>Bostrom, in answering (a), also suggests a preference of capital-owning humans to consume goods and services from other humans, much as one might prefer a human artist’s painting to one created by an AI trained on a corpus of masterpieces. Possibly the WBE/AGI may have reason, not presently obvious to us, to maintain humans as an observational curiosity, in a rough analogy to Bostrom’s ancestor-simulation thought-experiment, discussed above (<span class="citation" data-cites="BOSTROM_SIM">(Bostrom 2003)</span>). Indeed much of discussion in AI safety centres upon ensuring AGI is developed in a way that doesn’t jeopardise survival of the human race and moreover tries to maximise humanity’s chances of flourishing<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a></p>
-<p>As for (b), perhaps we might continue the Georges Bataille’s quote above (in <span class="citation" data-cites="WARK_2007">(Wark 2007)</span>, p. 155): ‘....History is a struggle to wrest necessity from boredom.’. The recent, albeit unusual, experience of the pandemic lockdown suggests a prominent role for affective, ludic activities, laced with ‘loops of meaningless feedback’ (<span class="citation" data-cites="CYBULSKI_2014">(Cybulski 2014)</span>, p. 430), that have minimal marginal cost, soak up nervous energy, and are optimised for addiction.</p>
-<p>One can imagine millions of more-or-less educated unemployed, existing mostly within a gameworld and spending ‘the time that remains’<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a> interacting with a variety of VR devices. They play games to <a href="https://www.theatlantic.com/business/archive/2014/03/what-are-game-developers-a-view-from-the-future/284600/">‘fill the time between microtransactions’</a>, order their delivery through pop-ups within the game, day-trade in it, while the console monitors their in-body sensors, reminding them to take a walk. The game engine’s neural implant API monitors psychological, neural, and limbic markers, extracting information on emotional state, feeding a model that correlates these granular data to population-scale statistics, which goes straight to the health insurance provider. Meanwhile, the data is quietly used to identify potentially subversive or otherwise inappropriate thoughts, a logical extension of the <a href="https://www.ft.com/content/2182eebe-8a17-11e8-bf9e-8771d5404543">Chinese social credit system</a> which reportedly incorporates gaze and gait tracking and biometrics (DNA, iris recognition), or the clumsy, racially-tinged <a href="https://www.brennancenter.org/our-work/research-reports/predictive-policing-explained">predictive policing</a> of America.</p>
-<p>In the work-play heterotopia of Foucault-via-Wark (<span class="citation" data-cites="WARK_2007">(Wark 2007)</span>, pp. 107-110, 163), some players use in-game chat to find employment, perhaps bidding against other would-be workers, much as corporate-types do through LinkedIn, and yet others on Amazon’s Mechanical Turk (<span class="citation" data-cites="BRATTON_2015">(Bratton 2015)</span>, p. 278-279). One such gig could be as human test-subjects for new generations of games created by machines, which, despite their cleverness, cannot quite capture the spark of what makes an absorbing, addictive game. More generally, there may be residual tasks that humans simply perform better than algorithms. A present-day example could be Luis von Ahn’s <a href="https://en.wikipedia.org/wiki/ReCAPTCHA">reCAPTCHA</a>, social media <a href="https://www.theverge.com/2019/2/27/18242724/facebook-moderation-ai-artificial-intelligence-platforms">content moderators</a> and the early iteration of language app Duolingo.</p>
-<p>Thus, humans effectively become employees or prostheses (<span class="citation" data-cites="BRATTON_2015">(Bratton 2015)</span>, p. 273) of the machine - in any case, further dissolving the human-machine hierarchy. What Yuk Hui, referring to the thought of Peter Thiel (<span class="citation" data-cites="HUI_NEOREACTION">(Hui 2017)</span>), describes seems a distinct possibility: a transhumanist proletarianisation, an extreme version of Mark Fisher’s musing (in a video lecture but also in <span class="citation" data-cites="FISHER_2009">(Fisher 2009)</span>) about the continual self-improvement and self-entrepreneurship that is part of neoliberalism’s ideology.</p>
-<p>These mechanisms are currently visible within gaming’s socio-economic system: for instance, Epic makes UE available to developers on a license that costs no money, unless developers sell their game<a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a>. This incentivises a large community of smaller developers and amateurs, as well as users from outside the traditional gaming industry, who develop software, characters, 3-D objects, and games using UE. They interact via a <a href="https://unrealslackers.org/">Discord channel</a>, showing off new projects and trading know-how, and posting tutorials on <a href="https://www.youtube.com/channel/UCBobmJyzsJ6Ll7UbfhI4iwQ">YouTube</a> and <a href="https://www.twitch.tv/unrealengine/videos?category=509670&amp;filter=archives&amp;sort=time">Twitch</a>. This community-based ecosystem has a history within game development (<span class="citation" data-cites="GALLOWAY_2006">(Galloway 2006)</span> pp. 112-113), as well as echoes of the open-source ethos (circa 1980s-1990s) of Linux and the <a href="https://en.wikipedia.org/wiki/GNU_Manifesto">GNU Manifesto</a><a href="#fn39" class="footnote-ref" id="fnref39"><sup>39</sup></a>.</p>
-<p>So the intense commitment of players, which often represents monetised addiction, is mirrored by creatives and programmers, whose immaterial labour<a href="#fn40" class="footnote-ref" id="fnref40"><sup>40</sup></a> is crystallised into a fusion of ‘work, play, hacking, rebellion and creativity...[and then is] re-territorialized as sources of value’ (<span class="citation" data-cites="BULUT_2014">(Bulut 2014)</span> p. 31), forcing them into precarious self-entrepreneurship in a <a href="https://nca.tandfonline.com/doi/abs/10.1080/15295036.2015.1047880?journalCode=rcsm20#.XwXpNs9KiV5">gaming gig economy</a>.</p>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Assuming however, that some version of a WBE/AGI world comes to pass, two questions arise: a) why would humans be needed at all, b) what would they do all day? After all, a central claim in Hanson’s <a href="http://mason.gmu.edu/~rhanson/EconOfBrainEmulations.pdf">writing</a>, in <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>Bostrom 2017, pp. 195-197</p>">&bull;</span>, on the economics of WBE is of collapsing wages in the face of near- or super-human intelligence. And fears over falling standards of living in the face of automation are neither new nor particularly niche (see Baldwin’s or Susskind’s work, linked ).</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Bostrom, in answering (a), also suggests a preference of capital-owning humans to consume goods and services from other humans, much as one might prefer a human artist’s painting to one created by an AI trained on a corpus of masterpieces. Possibly the WBE/AGI may have reason, not presently obvious to us, to maintain humans as an observational curiosity, in a rough analogy to Bostrom’s ancestor-simulation thought-experiment, discussed above <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_SIM" data-tippy-content="<p>Bostrom 2003</p>">&bull;</span>. Indeed much of discussion in AI safety centres upon ensuring AGI is developed in a way that doesn’t jeopardise survival of the human race and moreover tries to maximise humanity’s chances of flourishing<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a></div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">As for (b), perhaps we might continue the Georges Bataille’s quote above (in <span class="citation annotation-counter annotation-counter-inner" data-cites="WARK_2007" data-tippy-content="<p>Wark 2007, p. 155</p>">&bull;</span>: ‘....History is a struggle to wrest necessity from boredom.’. The recent, albeit unusual, experience of the pandemic lockdown suggests a prominent role for affective, ludic activities, laced with ‘loops of meaningless feedback’ <span class="citation annotation-counter annotation-counter-inner" data-cites="CYBULSKI_2014" data-tippy-content="<p>Cybulski 2014, p. 430</p>">&bull;</span>, that have minimal marginal cost, soak up nervous energy, and are optimised for addiction.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">One can imagine millions of more-or-less educated unemployed, existing mostly within a gameworld and spending ‘the time that remains’<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a> interacting with a variety of VR devices. They play games to <a href="https://www.theatlantic.com/business/archive/2014/03/what-are-game-developers-a-view-from-the-future/284600/">‘fill the time between microtransactions’</a>, order their delivery through pop-ups within the game, day-trade in it, while the console monitors their in-body sensors, reminding them to take a walk. The game engine’s neural implant API monitors psychological, neural, and limbic markers, extracting information on emotional state, feeding a model that correlates these granular data to population-scale statistics, which goes straight to the health insurance provider. Meanwhile, the data is quietly used to identify potentially subversive or otherwise inappropriate thoughts, a logical extension of the <a href="https://www.ft.com/content/2182eebe-8a17-11e8-bf9e-8771d5404543">Chinese social credit system</a> which reportedly incorporates gaze and gait tracking and biometrics (DNA, iris recognition), or the clumsy, racially-tinged <a href="https://www.brennancenter.org/our-work/research-reports/predictive-policing-explained">predictive policing</a> of America.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">In the work-play heterotopia of Foucault-via-Wark <span class="citation annotation-counter annotation-counter-inner" data-cites="WARK_2007" data-tippy-content="<p>Wark 2007, pp. 107-110, 163</p>">&bull;</span>, some players use in-game chat to find employment, perhaps bidding against other would-be workers, much as corporate-types do through LinkedIn, and yet others on Amazon’s Mechanical Turk <span class="citation annotation-counter annotation-counter-inner" data-cites="BRATTON_2015" data-tippy-content="<p>Bratton 2015</p>">&bull;</span>, p. 278-279). One such gig could be as human test-subjects for new generations of games created by machines, which, despite their cleverness, cannot quite capture the spark of what makes an absorbing, addictive game. More generally, there may be residual tasks that humans simply perform better than algorithms. A present-day example could be Luis von Ahn’s <a href="https://en.wikipedia.org/wiki/ReCAPTCHA">reCAPTCHA</a>, social media <a href="https://www.theverge.com/2019/2/27/18242724/facebook-moderation-ai-artificial-intelligence-platforms">content moderators</a> and the early iteration of language app Duolingo.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Thus, humans effectively become employees or prostheses <span class="citation annotation-counter annotation-counter-inner" data-cites="BRATTON_2015" data-tippy-content="<p>Bratton 2015, p. 273</p>">&bull;</span> of the machine - in any case, further dissolving the human-machine hierarchy. What Yuk Hui, referring to the thought of Peter Thiel <span class="citation annotation-counter annotation-counter-inner" data-cites="HUI_NEOREACTION" data-tippy-content="<p>Hui 2017</p>">&bull;</span>, describes seems a distinct possibility: a transhumanist proletarianisation, an extreme version of Mark Fisher’s musing (in a video lecture but also in <span class="citation annotation-counter annotation-counter-inner" data-cites="FISHER_2009" data-tippy-content="<p>Fisher 2009</p>">&bull;</span> about the continual self-improvement and self-entrepreneurship that is part of neoliberalism’s ideology.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">These mechanisms are currently visible within gaming’s socio-economic system: for instance, Epic makes UE available to developers on a license that costs no money, unless developers sell their game<a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a>. This incentivises a large community of smaller developers and amateurs, as well as users from outside the traditional gaming industry, who develop software, characters, 3-D objects, and games using UE. They interact via a <a href="https://unrealslackers.org/">Discord channel</a>, showing off new projects and trading know-how, and posting tutorials on <a href="https://www.youtube.com/channel/UCBobmJyzsJ6Ll7UbfhI4iwQ">YouTube</a> and <a href="https://www.twitch.tv/unrealengine/videos?category=509670&amp;filter=archives&amp;sort=time">Twitch</a>. This community-based ecosystem has a history within game development <span class="citation annotation-counter annotation-counter-inner" data-cites="GALLOWAY_2006" data-tippy-content="<p>Galloway 2006 pp. 112-113</p>">&bull;</span>, as well as echoes of the open-source ethos (circa 1980s-1990s) of Linux and the <a href="https://en.wikipedia.org/wiki/GNU_Manifesto">GNU Manifesto</a><a href="#fn39" class="footnote-ref" id="fnref39"><sup>39</sup></a>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">So the intense commitment of players, which often represents monetised addiction, is mirrored by creatives and programmers, whose immaterial labour<a href="#fn40" class="footnote-ref" id="fnref40"><sup>40</sup></a> is crystallised into a fusion of ‘work, play, hacking, rebellion and creativity...[and then is] re-territorialized as sources of value’ <span class="citation annotation-counter annotation-counter-inner" data-cites="BULUT_2014" data-tippy-content="<p>Bulut 2014 p. 31</p>">&bull;</span>, forcing them into precarious self-entrepreneurship in a <a href="https://nca.tandfonline.com/doi/abs/10.1080/15295036.2015.1047880?journalCode=rcsm20#.XwXpNs9KiV5">gaming gig economy</a>.</div></div>
 
 <div data-v-fb2bae8a="" data-v-10799180=""><div data-v-fb2bae8a="" class="relative max-w-xl mx-auto mb-6" id="the-concentration-city"><strong>The Concentration City</strong></div></div>
 
 
-<p>One of the more visually compelling of Hanson’s predictions is this description of a city populated with emulations<a href="#fn41" class="footnote-ref" id="fnref41"><sup>41</sup></a>: ‘Such cities are very hot, even glowing, covered and pressurized, and arranged as a vast three-dimensional lattice, rather than as separate buildings, pulling winds of hot air into tall clouds overhead.’ (<span class="citation" data-cites="HANSON_2014">(Hanson 2014)</span>). The tiny emulations, 7mm tall in Hanson’s prediction (<span class="citation" data-cites="HANSON_1994">(Hanson 1994)</span>), are stacked at maximum density to minimise latency, supplied with power, network connections, cooling and any raw materials needed for repairs/modifications.</p>
-<p>Hanson’s description recalls a J.G. Ballard short story, ‘The Concentration City’ (1957): it has been built up and interconnected at multiple levels, is covered and closed to the sky. Property, measured as cubic feet, is traded in real-time, and arson, both real and state-inflicted, is rife, in order to clear out space for high-rent businesses. People seem to live a credulous, soporific life under a regime of ubiquitous surveillance, with all the consequent neuroses one could expect in a panoptic society. The human protagonist fancies finding the countryside that surely must lie beyond the city limits. He boards an outbound train intending not to alight until the far terminus, only to find himself, after days of travelling, back at his origin point, the calendar reset to his departure date: time and space embedded in a Klein Bottle.</p>
-<p>This <a href="https://www.youtube.com/watch?v=kDTjw_P7sIU">Landian vision</a> may be extreme, but the ongoing lockdown is a reminder that (at least for the relatively well-off in a modestly technological society) one can do most tasks online, and even many physical interactions can be handled without going into the city. A city without restaurants, bars, cultural venues, that is inhospitable owing to heat, perhaps disease, perhaps civil unrest, can be given a wide berth.</p>
-<p>Moreover, though cities can seem like vibrant, social zones built for people, they are interleaved with technological substructure. Consider New York City: data centres sited near high-frequency trading firms to shave off microseconds; <a href="https://www.wired.com/story/cloud-gaming-infrastructure-arms-race/">gaming servers</a> located strategically to minimise network latency; anonymous skyscrapers, chock-full of government surveillance equipment, house switching stations, continuously monitoring the <a href="https://theintercept.com/2018/06/25/att-internet-nsa-spy-hubs/">chokepoints</a> of modern telecommunications networks.</p>
-<p>Yet the city, even emptied, may leave a mediated after-image: games, video streams, Zoom backgrounds. In a seemingly anthropocentric prediction<a href="#fn42" class="footnote-ref" id="fnref42"><sup>42</sup></a>, emulations would live in a lavishly and luxuriously rendered VR world (see <span class="citation" data-cites="HANSON_2014">(Hanson 2014)</span> and <span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span> p. 209). The present, still getting to grips with immersive VR (<span class="citation" data-cites="BOWN_2018">(Bown 2018)</span>, pp. 86-90), finds Pokémon Go’s Augmented Reality (AR) seamlessly blending game-space with urban space, via a <a href="https://roarmag.org/magazine/algorithmic-control-smartphone-internet-apps/">Google Maps API</a>. Tencent’s WeChat helpfully produces ‘heat maps’ that show crowd concentrations within cities, while feeding location data to the organs of state security for future digestion. London’s transport authority mulls a slightly less sinister vision of in-game rewards to ‘nudge’ Underground passengers towards less-crowded stations (<span class="citation" data-cites="BOWN_2018">(Bown 2018)</span>, p. 16). Meanwhile the urban structures of the city become an armature for screens and CCTV: mounted atop buildings of glass and steel, we are treated to an excessively illuminated, continuous stream of Kardashian bottoms and CNBC ‘breaking news’, e.g. Times Square, central Tokyo, examples of Paul Virilio’s <a href="http://atributosurbanos.es/en/terms/overexposed-city/">‘Overexposed City’</a> (original essay <a href="https://www.gla.ac.uk/0t4/crcees/files/summerschool/readings/Virilio_2002_TheOverexposedCity.pdf">here</a>)....a grotesque funfair mirror of our smartphones.</p>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">One of the more visually compelling of Hanson’s predictions is this description of a city populated with emulations<a href="#fn41" class="footnote-ref" id="fnref41"><sup>41</sup></a>: ‘Such cities are very hot, even glowing, covered and pressurized, and arranged as a vast three-dimensional lattice, rather than as separate buildings, pulling winds of hot air into tall clouds overhead.’ <span class="citation annotation-counter annotation-counter-inner" data-cites="HANSON_2014" data-tippy-content="<p>Hanson 2014</p>">&bull;</span>. The tiny emulations, 7mm tall in Hanson’s prediction <span class="citation annotation-counter annotation-counter-inner" data-cites="HANSON_1994" data-tippy-content="<p>Hanson 1994</p>">&bull;</span>, are stacked at maximum density to minimise latency, supplied with power, network connections, cooling and any raw materials needed for repairs/modifications.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Hanson’s description recalls a J.G. Ballard short story, ‘The Concentration City’ (1957): it has been built up and interconnected at multiple levels, is covered and closed to the sky. Property, measured as cubic feet, is traded in real-time, and arson, both real and state-inflicted, is rife, in order to clear out space for high-rent businesses. People seem to live a credulous, soporific life under a regime of ubiquitous surveillance, with all the consequent neuroses one could expect in a panoptic society. The human protagonist fancies finding the countryside that surely must lie beyond the city limits. He boards an outbound train intending not to alight until the far terminus, only to find himself, after days of travelling, back at his origin point, the calendar reset to his departure date: time and space embedded in a Klein Bottle.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">This <a href="https://www.youtube.com/watch?v=kDTjw_P7sIU">Landian vision</a> may be extreme, but the ongoing lockdown is a reminder that (at least for the relatively well-off in a modestly technological society) one can do most tasks online, and even many physical interactions can be handled without going into the city. A city without restaurants, bars, cultural venues, that is inhospitable owing to heat, perhaps disease, perhaps civil unrest, can be given a wide berth.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Moreover, though cities can seem like vibrant, social zones built for people, they are interleaved with technological substructure. Consider New York City: data centres sited near high-frequency trading firms to shave off microseconds; <a href="https://www.wired.com/story/cloud-gaming-infrastructure-arms-race/">gaming servers</a> located strategically to minimise network latency; anonymous skyscrapers, chock-full of government surveillance equipment, house switching stations, continuously monitoring the <a href="https://theintercept.com/2018/06/25/att-internet-nsa-spy-hubs/">chokepoints</a> of modern telecommunications networks.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Yet the city, even emptied, may leave a mediated after-image: games, video streams, Zoom backgrounds. In a seemingly anthropocentric prediction<a href="#fn42" class="footnote-ref" id="fnref42"><sup>42</sup></a>, emulations would live in a lavishly and luxuriously rendered VR world (see <span class="citation annotation-counter annotation-counter-inner" data-cites="HANSON_2014" data-tippy-content="<p>Hanson 2014</p>">&bull;</span> and <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>Bostrom 2017, p. 209</p>">&bull;</span>. The present, still getting to grips with immersive VR <span class="citation annotation-counter annotation-counter-inner" data-cites="BOWN_2018" data-tippy-content="<p>Bown 2018, pp. 86-90</p>">&bull;</span>, finds Pokémon Go’s Augmented Reality (AR) seamlessly blending game-space with urban space, via a <a href="https://roarmag.org/magazine/algorithmic-control-smartphone-internet-apps/">Google Maps API</a>. Tencent’s WeChat helpfully produces ‘heat maps’ that show crowd concentrations within cities, while feeding location data to the organs of state security for future digestion. London’s transport authority mulls a slightly less sinister vision of in-game rewards to ‘nudge’ Underground passengers towards less-crowded stations <span class="citation annotation-counter annotation-counter-inner" data-cites="BOWN_2018" data-tippy-content="<p>Bown 2018, p. 16</p>">&bull;</span>. Meanwhile the urban structures of the city become an armature for screens and CCTV: mounted atop buildings of glass and steel, we are treated to an excessively illuminated, continuous stream of Kardashian bottoms and CNBC ‘breaking news’, e.g. Times Square, central Tokyo, examples of Paul Virilio’s <a href="http://atributosurbanos.es/en/terms/overexposed-city/">‘Overexposed City’</a> (original essay <a href="https://www.gla.ac.uk/0t4/crcees/files/summerschool/readings/Virilio_2002_TheOverexposedCity.pdf">here</a>)....a grotesque funfair mirror of our smartphones.</div></div>
 
 <div data-v-fb2bae8a="" data-v-10799180=""><div data-v-fb2bae8a="" class="relative max-w-xl mx-auto mb-6" id="recursive-mise-en-abyme"><strong>Recursive <em>mise en abyme</em></strong></div></div>
 
 
-<p>A recursive, ever receding hall of mirrors:</p>
-<blockquote>
-<p>(<br />
-Human plays a Playstation game:<br />
-(<br />
-Character playing a game on Xbox:<br />
-(<br />
-Character plays a game on iPad:<br />
-(<br />
-...<br />
-)<br />
-)<br />
-)<br />
-)<a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a></p>
-</blockquote>
-<p>From a programmer’s perspective, an interesting feature of certain game engines (including UE) is its reflexive platform: users are provided with source code for the engine (as opposed to an un-modifiable executable) to enable extension or customisation. Speculatively, the unified source code of the game engine and the game (as in UE) seems brings to mind the possibilities of games (and software more generally) dynamically re-writing themselves in response to pre-specified criteria<a href="#fn44" class="footnote-ref" id="fnref44"><sup>44</sup></a>.</p>
-<p>Closely related to recursion is the notion of virtuality: layers of simulations that are all running ‘on top of’ each other, which are ultimately executed on the same underlying physical substrate<a href="#fn45" class="footnote-ref" id="fnref45"><sup>45</sup></a>. Each layer of the simulation, existing as it does entirely in code, can be subtly different from the layers above and below, for instance with elastic notions of time or physical laws<a href="#fn46" class="footnote-ref" id="fnref46"><sup>46</sup></a>. The 2020 title <em>Death Stranding</em> features a rain known as ‘Timefall’: everything ages faster during the rainstorm, plants grow and wither visibly, objects undergo entropic decay. Yet there appear to be practical limits: we don’t speed up time in a videogame to the point where human players cannot perceive the action clearly<a href="#fn47" class="footnote-ref" id="fnref47"><sup>47</sup></a>, nor are games slowed down to the point of boredom<a href="#fn48" class="footnote-ref" id="fnref48"><sup>48</sup></a>. Returning to the Simulation Hypothesis, one can imagine simulations-within-simulations, operating on stacked virtual machines, one of which we happen to inhabit (<span class="citation" data-cites="BOSTROM_SIM">(Bostrom 2003)</span>).</p>
-<p>Virtual machines can also be a useful metaphor for conceptualising how human cognition actually works, as in <span class="citation" data-cites="NEGARESTANI_2018">(Negarestani 2018)</span> pp. 135-139, specifically for applying different algorithms at different scales within human perception and cognition, so our ‘reptile brain’, visual cortex, and higher cognitive functions are each specialised, through an evolutionary process, to handle specific tasks. The Virtual Machine Formalism models these as dedicated, layered processes, that nevertheless have protocols for sharing information. a point raised in a slightly different way in <span class="citation" data-cites="YUD_2007">(Yudkowsky 2007)</span>, pp. 15-23.</p>
-<p>Tranhumanism, AGI, and reflexivity within videogames share a deeper philosophical connection through the concept of recursion(<span class="citation" data-cites="HUI_OBJECTS">(Hui 2016)</span>, pp. 235-240) in theoretical computer science and mathematics<a href="#fn49" class="footnote-ref" id="fnref49"><sup>49</sup></a>. To put it simply, recursion, deferring the resolution of a computation to some final state<a href="#fn50" class="footnote-ref" id="fnref50"><sup>50</sup></a>, that depends on all prior computations in the process, which are retained within a record known as the call stack<a href="#fn51" class="footnote-ref" id="fnref51"><sup>51</sup></a>.</p>
-<p>Recursion’s utilisation of deferral and retention, as Hui theorises, is what places digital objects within time, orienting them towards the future, while also remaining possessed of a certain autonomy by virtue of recursions self-reference (<span class="citation" data-cites="HUI_2019">(Hui 2019)</span>, pp. 132-136). Hui’s emphasis on time as it pertains to digital objects recalls, albeit starting from completely different bases, the fascinating treatment of time as an elastic, subjective, diversely-experienced phenomenon for emulations (<span class="citation" data-cites="HANSON_2014">(Hanson 2014)</span>), and the rapidly widening gulf that would presumably emerge between humans, still running on their evolution-endowed wetware, and emulations (or AGIs), whose perception of time might be a thousandfold faster than ours. In a year of human time, a millenium might have passed for these agents, with everything that implies: technological progress, normative frameworks that diverge from ours, world-ending conflicts. Predicting the relations between a human running at a clock speed of 200Hz (<span class="citation" data-cites="YUD_2007">(Yudkowsky 2007)</span>, pp. 22-26) and a superintelligence running 200-1,000,000 times faster seems very difficult, and at worst, appears to introduce a degree of incommensurability (see <span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span>, pp. 64-65, 337n3-6).</p>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">From a programmer’s perspective, an interesting feature of certain game engines (including UE) is its reflexive platform: users are provided with source code for the engine (as opposed to an un-modifiable executable) to enable extension or customisation. Speculatively, the unified source code of the game engine and the game (as in UE) seems brings to mind the possibilities of games (and software more generally) dynamically re-writing themselves in response to pre-specified criteria<a href="#fn44" class="footnote-ref" id="fnref44"><sup>44</sup></a>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Closely related to recursion is the notion of virtuality: layers of simulations that are all running ‘on top of’ each other, which are ultimately executed on the same underlying physical substrate<a href="#fn45" class="footnote-ref" id="fnref45"><sup>45</sup></a>. Each layer of the simulation, existing as it does entirely in code, can be subtly different from the layers above and below, for instance with elastic notions of time or physical laws<a href="#fn46" class="footnote-ref" id="fnref46"><sup>46</sup></a>. The 2020 title <em>Death Stranding</em> features a rain known as ‘Timefall’: everything ages faster during the rainstorm, plants grow and wither visibly, objects undergo entropic decay. Yet there appear to be practical limits: we don’t speed up time in a videogame to the point where human players cannot perceive the action clearly<a href="#fn47" class="footnote-ref" id="fnref47"><sup>47</sup></a>, nor are games slowed down to the point of boredom<a href="#fn48" class="footnote-ref" id="fnref48"><sup>48</sup></a>. Returning to the Simulation Hypothesis, one can imagine simulations-within-simulations, operating on stacked virtual machines, one of which we happen to inhabit <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_SIM" data-tippy-content="<p>Bostrom 2003</p>">&bull;</span>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Virtual machines can also be a useful metaphor for conceptualising how human cognition actually works<span class="citation annotation-counter annotation-counter-inner" data-cites="NEGARESTANI_2018" data-tippy-content="<p>Negarestani 2018, pp. 135-139</p>">&bull;</span>, specifically for applying different algorithms at different scales within human perception and cognition, so our ‘reptile brain’, visual cortex, and higher cognitive functions are each specialised, through an evolutionary process, to handle specific tasks<span class="citation annotation-counter annotation-counter-inner" data-cites="YUD_2007" data-tippy-content="<p>The Virtual Machine Formalism models these as dedicated, layered processes, that nevertheless have protocols for sharing information. a point raised in a slightly different way in Yudkowsky 2007, pp. 15-23</p>">&bull;</span>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Tranhumanism, AGI, and reflexivity within videogames share a deeper philosophical connection through the concept of recursion<span class="citation annotation-counter annotation-counter-inner" data-cites="HUI_OBJECTS" data-tippy-content="<p>Hui 2016, pp. 235-240</p>">&bull;</span> in theoretical computer science and mathematics<a href="#fn49" class="footnote-ref" id="fnref49"><sup>49</sup></a>. To put it simply, recursion, deferring the resolution of a computation to some final state<a href="#fn50" class="footnote-ref" id="fnref50"><sup>50</sup></a>, that depends on all prior computations in the process, which are retained within a record known as the call stack<a href="#fn51" class="footnote-ref" id="fnref51"><sup>51</sup></a>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Recursion’s utilisation of deferral and retention, as Hui theorises, is what places digital objects within time, orienting them towards the future, while also remaining possessed of a certain autonomy by virtue of recursions self-reference <span class="citation annotation-counter annotation-counter-inner" data-cites="HUI_2019" data-tippy-content="<p>Hui 2019, pp. 132-136</p>">&bull;</span>. Hui’s emphasis on time as it pertains to digital objects recalls, albeit starting from completely different bases, the fascinating treatment of time as an elastic, subjective, diversely-experienced phenomenon for emulations <span class="citation annotation-counter annotation-counter-inner" data-cites="HANSON_2014" data-tippy-content="<p>Hanson 2014</p>">&bull;</span>, and the rapidly widening gulf that would presumably emerge between humans, still running on their evolution-endowed wetware, and emulations (or AGIs), whose perception of time might be a thousandfold faster than ours. In a year of human time, a millenium might have passed for these agents, with everything that implies: technological progress, normative frameworks that diverge from ours, world-ending conflicts. Predicting the relations between a human running at a clock speed of 200Hz <span class="citation annotation-counter annotation-counter-inner" data-cites="YUD_2007" data-tippy-content="<p>Yudkowsky 2007, pp. 22-26</p>">&bull;</span> and a superintelligence running 200-1,000,000 times faster seems very difficult, and at worst, appears to introduce a degree of incommensurability<span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>See Bostrom 2017, pp. 64-65, 337n3-6</p>">&bull;</span>.</div></div>
 
 <div data-v-fb2bae8a="" data-v-10799180=""><div data-v-fb2bae8a="" class="relative max-w-xl mx-auto mb-6" id="conclusion"><strong>Conclusion</strong></div></div>
 
 
-<p>This essay has tried to unpick what a future dominated by AGI might look like, particularly based on the work at Oxford’s FHI. It has had a specific angle, namely that an entertainment apparatus, for instance a game engine<a href="#fn52" class="footnote-ref" id="fnref52"><sup>52</sup></a>, will become critical as a surveillance and control tool, but also as a primary portal in which humans, increasingly automated out of employment, spend time. The online/offline hybrid character of this apparatus seems to fit into the Stack metaphor articulated by Bratton, who adopts a significant geopolitical slant, specifically, an engagement with Carl Schmitt. In this context, the rise, and increasing assertiveness of China, characterised by a cohesive ideological, control and technological strategy, is interesting. The Chinese Communist Party (CCP) theoreticians have long had a curious fascination with <a href="https://palladiummag.com/2020/02/05/jiang-shigongs-vision-of-a-new-chinese-world-order/">Carl Schmitt</a> (for a more historical view, see <span class="citation" data-cites="MITCHELL_2020">(Mitchell 2020)</span>), whose thought has been used to justify China’s contemporary internal political arrangements, but also an external posture reminiscent of a <a href="https://palladiummag.com/2020/07/08/the-theory-of-history-that-guides-xi-jinping/">benevolent hegemon</a>.</p>
-<p>Hence, to end on another speculative scenario, again from Bostrom: the notion of a singleton (<span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span> pp. 106-9, 216-25) as a possible outcome for global governance, that becomes necessary to handle global challenges such as climate change, pandemic resistance, or nuclear disarmament. The singleton could be (a) a benign ‘world government’ (an appropriately constituted UN, as proposed by the U.S. post-1945); (b) a takeover by one state (which could espouse nominally ‘liberal’ i.e. Western views, or have a radically different world-view i.e. China under the CCP); or (c) an AGI, which may or may not be <a href="https://www.lesswrong.com/posts/ToNNGwqNS5kecZaNQ/elites-and-ai-stated-opinions">human-friendly</a>.</p>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">This essay has tried to unpick what a future dominated by AGI might look like, particularly based on the work at Oxford’s FHI. It has had a specific angle, namely that an entertainment apparatus, for instance a game engine<a href="#fn52" class="footnote-ref" id="fnref52"><sup>52</sup></a>, will become critical as a surveillance and control tool, but also as a primary portal in which humans, increasingly automated out of employment, spend time. The online/offline hybrid character of this apparatus seems to fit into the Stack metaphor articulated by Bratton, who adopts a significant geopolitical slant, specifically, an engagement with Carl Schmitt. In this context, the rise, and increasing assertiveness of China, characterised by a cohesive ideological, control and technological strategy, is interesting. The Chinese Communist Party (CCP) theoreticians have long had a curious fascination with <a href="https://palladiummag.com/2020/02/05/jiang-shigongs-vision-of-a-new-chinese-world-order/">Carl Schmitt</a><span class="citation annotation-counter annotation-counter-inner" data-cites="MITCHELL_2020" data-tippy-content="<p>For a more historical view, see [Mitchell 2020], whose thought has been used to justify China’s contemporary internal political arrangements, but also an external posture reminiscent of a <a href='https://palladiummag.com/2020/07/08/the-theory-of-history-that-guides-xi-jinping/''>benevolent hegemon</a>">&bull;</span>.</div></div>
+<div data-v-fb2bae8a data-v-10799180><div data-v-fb2bae8a class="relative max-w-xl mx-auto mb-6">Hence, to end on another speculative scenario, again from Bostrom: the notion of a singleton <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>Bostrom 2017, pp. 106-9, 216-25</p>">&bull;</span> as a possible outcome for global governance, that becomes necessary to handle global challenges such as climate change, pandemic resistance, or nuclear disarmament. The singleton could be (a) a benign ‘world government’ (an appropriately constituted UN, as proposed by the U.S. post-1945); (b) a takeover by one state (which could espouse nominally ‘liberal’ i.e. Western views, or have a radically different world-view i.e. China under the CCP); or (c) an AGI, which may or may not be <a href="https://www.lesswrong.com/posts/ToNNGwqNS5kecZaNQ/elites-and-ai-stated-opinions">human-friendly</a>.</div></div>
 
 
 
-<div id="refs" class="references">
-<div id="ref-AGAMBEN_2009">
-<p>Agamben, Giorgio. 2009. <em>What Is an Apparatus, and Other Essays</em>. Stanford University Press.</p>
-</div>
-<div id="ref-Baum_2020">
-<p>Baum, SD. 2020. “Medium-Term Artificial Intelligence and Society.” <em>Information</em> 11 (6): 290. <a href="https://doi.org/https://doi.org/10.3390/info11060290">https://doi.org/https://doi.org/10.3390/info11060290</a>.</p>
-</div>
-<div id="ref-BOGOST_2012">
-<p>Bogost, Ian. 2012. <em>Alien Phenomenology or What It’s Like to Be a Thing</em>. University of Minnesota Press.</p>
-</div>
-<div id="ref-BOSTROM_SIM">
-<p>Bostrom, Nick. 2003. “Are You Living in a Computer Simulation?” <em>Philosophical Quarterly</em> 53 (211): 243–55.</p>
-</div>
-<div id="ref-BOSTROM_2017">
-<p>———. 2017. <em>Superintelligence: Paths, Dangers, Strategies</em>. Oxford University Press.</p>
-</div>
-<div id="ref-BOSTROM_2011">
-<p>Bostrom, Nick, and Eliezer Yudkowsky. 2014. “The Ethics of Artificial Intelligence.” In <em>Cambridge Handbook of Artificial Intelligence</em>, 316–34. Cambridge University Press. <a href="https://doi.org/https://www.fhi.ox.ac.uk/publications/bostrom-n-yudkowsky-e-2014-the-ethics-of-artificial-intelligence-the-cambridge-handbook-of-artificial-intelligence-316-334/">https://doi.org/https://www.fhi.ox.ac.uk/publications/bostrom-n-yudkowsky-e-2014-the-ethics-of-artificial-intelligence-the-cambridge-handbook-of-artificial-intelligence-316-334/</a>.</p>
-</div>
-<div id="ref-BOWN_2018">
-<p>Bown, Alfie. 2018. <em>The Playstation Dreamworld</em>. Polity Press.</p>
-</div>
-<div id="ref-BRAIDOTTI_2018">
-<p>Braidotti, Rosi. 2018. “A Theoretical Framework for the Critical Posthumanities.” <em>Theory, Culture &amp; Society</em> 36 (6): 31–61. <a href="https://doi.org/https://doi.org/10.1177%2F0263276418771486">https://doi.org/https://doi.org/10.1177%2F0263276418771486</a>.</p>
-</div>
-<div id="ref-BRATTON_2015">
-<p>Bratton, Benjamin H. 2015. <em>The Stack: On Software and Sovereignty</em>. The MIT Press. <a href="https://doi.org/http://thestack.org/">https://doi.org/http://thestack.org/</a>.</p>
-</div>
-<div id="ref-BULUT_2014">
-<p>Bulut, Ergin. 2014. “Creativity and Its Discontents: A Case Study of Precarious Playbour in the Video Game Industry.” <em>PhD Thesis, University of Illinois at Urbana-Champaign</em>. <a href="https://doi.org/https://www.ideals.illinois.edu/bitstream/handle/2142/50379/Ergin_Bulut.pdf?sequence=1&amp;isAllowed=y">https://doi.org/https://www.ideals.illinois.edu/bitstream/handle/2142/50379/Ergin_Bulut.pdf?sequence=1&amp;isAllowed=y</a>.</p>
-</div>
-<div id="ref-CHALMERS_2016">
-<p>Chalmers, David. 2016. “The Virtual and the Real.” <em>Disputatio</em> IX (46): 309–52. <a href="https://doi.org/ 10.1515/disp-2017-0009">https://doi.org/ 10.1515/disp-2017-0009</a>.</p>
-</div>
-<div id="ref-CYBULSKI_2014">
-<p>Cybulski, Alex Dean. 2014. “Enclosures at Play: Surveillance in the Code and Culture of Videogames.” <em>Surveillance &amp; Society</em> 12 (3): 427–32. <a href="https://doi.org/http://www.surveillance-and-society.org">https://doi.org/http://www.surveillance-and-society.org</a>.</p>
-</div>
-<div id="ref-FISHER_2009">
-<p>Fisher, Mark. 2009. <em>Capitalist Realism: Is There No Alternative?</em> Zero Books.</p>
-</div>
-<div id="ref-GALIC_2017">
-<p>Galic̆, M., T. Timan, and B. Koops. 2017. “Bentham, Deleuze and Beyond: An Overview of Surveillance Theories.” <em>Philosophy &amp; Technology</em> 30: 9–37. <a href="https://doi.org/https://doi.org/10.1007/s13347-016-0219-1">https://doi.org/https://doi.org/10.1007/s13347-016-0219-1</a>.</p>
-</div>
-<div id="ref-GALLOWAY_2006">
-<p>Galloway, Alexander R. 2006. <em>Gaming: Essays on Algorithmic Culture</em>. University of Minnesota Press. <a href="https://doi.org/http://art.yale.edu/file_columns/0000/1536/galloway_ar_-_gaming_-_essays_on_algorithmic_culture.pdf">https://doi.org/http://art.yale.edu/file_columns/0000/1536/galloway_ar_-_gaming_-_essays_on_algorithmic_culture.pdf</a>.</p>
-</div>
-<div id="ref-HANSON_1994">
-<p>Hanson, Robin. 1994. “If Uploads Come First.” <em>Extropy</em> 6 (2). <a href="https://doi.org/http://mason.gmu.edu/~rhanson/uploads.html">https://doi.org/http://mason.gmu.edu/~rhanson/uploads.html</a>.</p>
-</div>
-<div id="ref-HANSON_HOW_LIVE_SIM">
-<p>———. 2001. “How to Live in a Simulation.” <em>Journal of Evolution and Technology</em> 7 (1).</p>
-</div>
-<div id="ref-HANSON_2014">
-<p>———. 2014. “What Will It Be Like to Be an Emulation?” In <em>Intelligence Unbound: The Future of Uploaded and Machine Minds</em>. Wiley. <a href="https://doi.org/http://intelligence.org/files/AIPosNegFactor.pdf">https://doi.org/http://intelligence.org/files/AIPosNegFactor.pdf</a>.</p>
-</div>
-<div id="ref-HUI_OBJECTS">
-<p>Hui, Yuk. 2016. <em>On the Existence of Digital Objects</em>. University of Minnesota Press.</p>
-</div>
-<div id="ref-HUI_NEOREACTION">
-<p>———. 2017. “On the Unhappy Consciousness of Neoreactionaries.” <em>E-Flux</em> 81. <a href="https://doi.org/https://www.e-flux.com/journal/81/125815/on-the-unhappy-consciousness-of-neoreactionaries/">https://doi.org/https://www.e-flux.com/journal/81/125815/on-the-unhappy-consciousness-of-neoreactionaries/</a>.</p>
-</div>
-<div id="ref-HUI_2019">
-<p>———. 2019. <em>Recursivity and Contingency</em>. Rowman &amp; Littlefield.</p>
-</div>
-<div id="ref-JUUL_2019">
-<p>Juul, Jesper. 2019. “Virtual Reality: Fictional All the Way down (and That’s Ok).” <em>Disputatio</em>. <a href="https://doi.org/https://doi.org/10.2478/disp-2019-0010">https://doi.org/https://doi.org/10.2478/disp-2019-0010</a>.</p>
-</div>
-<div id="ref-KUNZELMAN_2014">
-<p>Kunzelman, Cameron. 2014. “The Nonhuman Lives of Videogames.” <em>Thesis, Georgia State University</em>. <a href="https://doi.org/https://scholarworks.gsu.edu/communication_theses/110">https://doi.org/https://scholarworks.gsu.edu/communication_theses/110</a>.</p>
-</div>
-<div id="ref-MITCHELL_2020">
-<p>Mitchell, Ryan Martinez. 2020. “Chinese Receptions of Carl Schmitt Since 1929.” <em>Penn State Journal of Law &amp; International Affairs</em> 8 (1): 181–263. <a href="https://doi.org/https://ssrn.com/abstract=3400946">https://doi.org/https://ssrn.com/abstract=3400946</a>.</p>
-</div>
-<div id="ref-NEGARESTANI_2018">
-<p>Negarestani, Reza. 2018. <em>Intelligence and Spirit</em>. Urbanomic Press.</p>
-</div>
-<div id="ref-PARIZOT_2016">
-<p>Parizot, Cedric, and Douglas Edric Stanley. 2016. “Research, Art and Videogames: Ethnography of an Extra-Disciplinary Exploration.” <em>antiAtlas Journal</em> 1. <a href="https://doi.org/https://www.antiatlas-journal.net/01-research-art-and-video-games/">https://doi.org/https://www.antiatlas-journal.net/01-research-art-and-video-games/</a>.</p>
-</div>
-<div id="ref-WBE_ROADMAP">
-<p>Sandberg, Anders, and Nick Bostrom. 2008. <em>Whole Brain Emulation: A Roadmap</em>. Future of Humanity Institute.</p>
-</div>
-<div id="ref-WARK_2005">
-<p>Wark, McKenzie. 2005. “Securing Security.” <em>Kritikos: An International and Interdisciplinary Journal of Postmodern Cultural Sound, Text and Image</em> 2. <a href="https://doi.org/https://intertheory.org/security.htm">https://doi.org/https://intertheory.org/security.htm</a>.</p>
-</div>
-<div id="ref-WARK_2007">
-<p>———. 2007. <em>Gamer Theory</em>. Harvard University Press. <a href="https://doi.org/http://www.futureofthebook.org/gamertheory2.0/index.html">https://doi.org/http://www.futureofthebook.org/gamertheory2.0/index.html</a>.</p>
-</div>
-<div id="ref-WOLFENDALE">
-<p>Wolfendale, Peter. n.d. “The Reformatting of Homo Sapiens.” <a href="https://doi.org/https://www.academia.edu/26697963/The_Reformatting_of_Homo_Sapiens">https://doi.org/https://www.academia.edu/26697963/The_Reformatting_of_Homo_Sapiens</a>.</p>
-</div>
-<div id="ref-YUD_2007">
-<p>Yudkowsky, Eliezer. 2007. “Levels of Organization in General Intelligence.” In <em>Artificial General Intelligence</em>, 389–501. Cognitive Technologies. <a href="https://doi.org/http://dx.doi.org/10.1007/ 978-3-540-68677-4_12">https://doi.org/http://dx.doi.org/10.1007/ 978-3-540-68677-4_12</a>.</p>
-</div>
-<div id="ref-YUD_2008">
-<p>———. 2008. “Artificial Intelligence as a Positive and Negative Factor in Global Risk.” In <em>Global Catastrophic Risks</em>, 308–45. Oxford University Press. <a href="https://doi.org/http://intelligence.org/files/AIPosNegFactor.pdf">https://doi.org/http://intelligence.org/files/AIPosNegFactor.pdf</a>.</p>
-</div>
-</div>
-<section class="footnotes">
+<section id="refs" class="references max-w-3xl word-break mt-16 md:mt-24 text-sm px-0 mb-4 mx-auto"><strong>References</strong>
+  
+  <span class="annotation">
+    <div id="ref-AGAMBEN_2009">
+      <p>Agamben, Giorgio. 2009. <em>What Is an Apparatus, and Other Essays</em>. Stanford University Press.</p>
+    </div>
+  </span>
+
+
+  <span class="annotation">
+    <div id="ref-Baum_2020">
+      <p>Baum, SD. 2020. “Medium-Term Artificial Intelligence and Society.” <em>Information</em> 11 (6): 290. <a href="https://doi.org/https://doi.org/10.3390/info11060290">https://doi.org/https://doi.org/10.3390/info11060290</a>.</p>
+    </div>
+  </span>
+
+    <span class="annotation">
+      <div id="ref-BOGOST_2012">
+        <p>Bogost, Ian. 2012. <em>Alien Phenomenology or What It’s Like to Be a Thing</em>. University of Minnesota Press.</p>
+      </div>
+    </span>
+
+    <span class="annotation">
+      <div id="ref-BOSTROM_SIM">
+        <p>Bostrom, Nick. 2003. “Are You Living in a Computer Simulation?” <em>Philosophical Quarterly</em> 53 (211): 243–55.</p>
+      </div>
+    </span>
+
+      <span class="annotation">
+        <div id="ref-BOSTROM_2017">
+          <p>———. 2017. <em>Superintelligence: Paths, Dangers, Strategies</em>. Oxford University Press.</p>
+        </div></span>
+    </span>
+
+
+      <span class="annotation">
+        <div id="ref-BOSTROM_2011">
+          <p>Bostrom, Nick, and Eliezer Yudkowsky. 2014. “The Ethics of Artificial Intelligence.” In <em>Cambridge Handbook of Artificial Intelligence</em>, 316–34. Cambridge University Press. <a href="https://doi.org/https://www.fhi.ox.ac.uk/publications/bostrom-n-yudkowsky-e-2014-the-ethics-of-artificial-intelligence-the-cambridge-handbook-of-artificial-intelligence-316-334/">https://doi.org/https://www.fhi.ox.ac.uk/publications/bostrom-n-yudkowsky-e-2014-the-ethics-of-artificial-intelligence-the-cambridge-handbook-of-artificial-intelligence-316-334/</a>.</p>
+        </div>
+    </span>
+
+        <span class="annotation">
+          <div id="ref-BOWN_2018">
+            <p>Bown, Alfie. 2018. <em>The Playstation Dreamworld</em>. Polity Press.</p>
+          </div>
+        </span>
+
+      <span class="annotation">
+        <div id="ref-BRAIDOTTI_2018">
+          <p>Braidotti, Rosi. 2018. “A Theoretical Framework for the Critical Posthumanities.” <em>Theory, Culture &amp; Society</em> 36 (6): 31–61. <a href="https://doi.org/https://doi.org/10.1177%2F0263276418771486">https://doi.org/https://doi.org/10.1177%2F0263276418771486</a>.</p>
+        </div>
+    </span>
+
+        <span class="annotation">
+          <div id="ref-BRATTON_2015">
+            <p>Bratton, Benjamin H. 2015. <em>The Stack: On Software and Sovereignty</em>. The MIT Press. <a href="https://doi.org/http://thestack.org/">https://doi.org/http://thestack.org/</a>.</p>
+          </div>
+        </span>
+
+      <span class="annotation">
+        <div id="ref-BULUT_2014">
+          <p>Bulut, Ergin. 2014. “Creativity and Its Discontents: A Case Study of Precarious Playbour in the Video Game Industry.” <em>PhD Thesis, University of Illinois at Urbana-Champaign</em>. <a href="https://doi.org/https://www.ideals.illinois.edu/bitstream/handle/2142/50379/Ergin_Bulut.pdf?sequence=1&amp;isAllowed=y">https://doi.org/https://www.ideals.illinois.edu/bitstream/handle/2142/50379/Ergin_Bulut.pdf?sequence=1&amp;isAllowed=y</a>.</p>
+        </div>
+    </span>
+
+        <span class="annotation">
+          <div id="ref-CHALMERS_2016">
+            <p>Chalmers, David. 2016. “The Virtual and the Real.” <em>Disputatio</em> IX (46): 309–52. <a href="https://doi.org/ 10.1515/disp-2017-0009">https://doi.org/ 10.1515/disp-2017-0009</a>.</p>
+          </div>
+        </span>
+
+      <span class="annotation">
+        <div id="ref-CYBULSKI_2014">
+          <p>Cybulski, Alex Dean. 2014. “Enclosures at Play: Surveillance in the Code and Culture of Videogames.” <em>Surveillance &amp; Society</em> 12 (3): 427–32. <a href="https://doi.org/http://www.surveillance-and-society.org">https://doi.org/http://www.surveillance-and-society.org</a>.</p>
+        </div>
+    </span>
+
+        <span class="annotation">
+          <div id="ref-FISHER_2009">
+            <p>Fisher, Mark. 2009. <em>Capitalist Realism: Is There No Alternative?</em> Zero Books.</p>
+          </div>
+        </span>
+
+      <span class="annotation">
+        <div id="ref-GALIC_2017">
+          <p>Galic̆, M., T. Timan, and B. Koops. 2017. “Bentham, Deleuze and Beyond: An Overview of Surveillance Theories.” <em>Philosophy &amp; Technology</em> 30: 9–37. <a href="https://doi.org/https://doi.org/10.1007/s13347-016-0219-1">https://doi.org/https://doi.org/10.1007/s13347-016-0219-1</a>.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-GALLOWAY_2006">
+          <p>Galloway, Alexander R. 2006. <em>Gaming: Essays on Algorithmic Culture</em>. University of Minnesota Press. <a href="https://doi.org/http://art.yale.edu/file_columns/0000/1536/galloway_ar_-_gaming_-_essays_on_algorithmic_culture.pdf">https://doi.org/http://art.yale.edu/file_columns/0000/1536/galloway_ar_-_gaming_-_essays_on_algorithmic_culture.pdf</a>.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-HANSON_1994">
+          <p>Hanson, Robin. 1994. “If Uploads Come First.” <em>Extropy</em> 6 (2). <a href="https://doi.org/http://mason.gmu.edu/~rhanson/uploads.html">https://doi.org/http://mason.gmu.edu/~rhanson/uploads.html</a>.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-HANSON_HOW_LIVE_SIM">
+          <p>———. 2001. “How to Live in a Simulation.” <em>Journal of Evolution and Technology</em> 7 (1).</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-HANSON_2014">
+          <p>———. 2014. “What Will It Be Like to Be an Emulation?” In <em>Intelligence Unbound: The Future of Uploaded and Machine Minds</em>. Wiley. <a href="https://doi.org/http://intelligence.org/files/AIPosNegFactor.pdf">https://doi.org/http://intelligence.org/files/AIPosNegFactor.pdf</a>.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-HUI_OBJECTS">
+          <p>Hui, Yuk. 2016. <em>On the Existence of Digital Objects</em>. University of Minnesota Press.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-HUI_NEOREACTION">
+          <p>———. 2017. “On the Unhappy Consciousness of Neoreactionaries.” <em>E-Flux</em> 81. <a href="https://doi.org/https://www.e-flux.com/journal/81/125815/on-the-unhappy-consciousness-of-neoreactionaries/">https://doi.org/https://www.e-flux.com/journal/81/125815/on-the-unhappy-consciousness-of-neoreactionaries/</a>.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-HUI_2019">
+          <p>———. 2019. <em>Recursivity and Contingency</em>. Rowman &amp; Littlefield.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-JUUL_2019">
+          <p>Juul, Jesper. 2019. “Virtual Reality: Fictional All the Way down (and That’s Ok).” <em>Disputatio</em>. <a href="https://doi.org/https://doi.org/10.2478/disp-2019-0010">https://doi.org/https://doi.org/10.2478/disp-2019-0010</a>.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-KUNZELMAN_2014">
+          <p>Kunzelman, Cameron. 2014. “The Nonhuman Lives of Videogames.” <em>Thesis, Georgia State University</em>. <a href="https://doi.org/https://scholarworks.gsu.edu/communication_theses/110">https://doi.org/https://scholarworks.gsu.edu/communication_theses/110</a>.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-MITCHELL_2020">
+          <p>Mitchell, Ryan Martinez. 2020. “Chinese Receptions of Carl Schmitt Since 1929.” <em>Penn State Journal of Law &amp; International Affairs</em> 8 (1): 181–263. <a href="https://doi.org/https://ssrn.com/abstract=3400946">https://doi.org/https://ssrn.com/abstract=3400946</a>.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-NEGARESTANI_2018">
+          <p>Negarestani, Reza. 2018. <em>Intelligence and Spirit</em>. Urbanomic Press.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-PARIZOT_2016">
+          <p>Parizot, Cedric, and Douglas Edric Stanley. 2016. “Research, Art and Videogames: Ethnography of an Extra-Disciplinary Exploration.” <em>antiAtlas Journal</em> 1. <a href="https://doi.org/https://www.antiatlas-journal.net/01-research-art-and-video-games/">https://doi.org/https://www.antiatlas-journal.net/01-research-art-and-video-games/</a>.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-WBE_ROADMAP">
+          <p>Sandberg, Anders, and Nick Bostrom. 2008. <em>Whole Brain Emulation: A Roadmap</em>. Future of Humanity Institute.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-WARK_2005">
+          <p>Wark, McKenzie. 2005. “Securing Security.” <em>Kritikos: An International and Interdisciplinary Journal of Postmodern Cultural Sound, Text and Image</em> 2. <a href="https://doi.org/https://intertheory.org/security.htm">https://doi.org/https://intertheory.org/security.htm</a>.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-WARK_2007">
+          <p>———. 2007. <em>Gamer Theory</em>. Harvard University Press. <a href="https://doi.org/http://www.futureofthebook.org/gamertheory2.0/index.html">https://doi.org/http://www.futureofthebook.org/gamertheory2.0/index.html</a>.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-WOLFENDALE">
+          <p>Wolfendale, Peter. n.d. “The Reformatting of Homo Sapiens.” <a href="https://doi.org/https://www.academia.edu/26697963/The_Reformatting_of_Homo_Sapiens">https://doi.org/https://www.academia.edu/26697963/The_Reformatting_of_Homo_Sapiens</a>.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-YUD_2007">
+          <p>Yudkowsky, Eliezer. 2007. “Levels of Organization in General Intelligence.” In <em>Artificial General Intelligence</em>, 389–501. Cognitive Technologies. <a href="https://doi.org/http://dx.doi.org/10.1007/ 978-3-540-68677-4_12">https://doi.org/http://dx.doi.org/10.1007/ 978-3-540-68677-4_12</a>.</p>
+        </div>
+      </span>
+
+
+
+      <span class="annotation">
+        <div id="ref-YUD_2008">
+          <p>———. 2008. “Artificial Intelligence as a Positive and Negative Factor in Global Risk.” In <em>Global Catastrophic Risks</em>, 308–45. Oxford University Press. <a href="https://doi.org/http://intelligence.org/files/AIPosNegFactor.pdf">https://doi.org/http://intelligence.org/files/AIPosNegFactor.pdf</a>.</p>
+        </div>
+      </span>
+
+</section>
+<section id="footnotes" class="max-w-3xl word-break mt-16 md:mt-24 text-sm px-0 mb-4 mx-auto"><strong>Footnotes</strong>
 <hr />
 <ol>
-<li id="fn1"><p>Aspects of the FHI’s research, that loosely come under the term ‘transhumanism’ or the more definitionally problematic ‘posthumanism’, attract considerable criticism, for instance in this <a href="https://lareviewofbooks.org/article/in-optimism-lies-urgency-toby-ord-future-humanity/">review</a> of a book by FHI Fellow Toby Ord, or in this <a href="https://www.youtube.com/watch?v=gNJPR78DptA">talk</a> and paper (<span class="citation" data-cites="BRAIDOTTI_2018">(Braidotti 2018)</span>) by theorist Rosi Braidotti, the latter interesting for its broad survey of currents in critical posthumanist thought. Some of the criticism seems to revolve around an (alleged) arrogation of a singular, privleged ‘we’ or ‘human’ position, without acknowledging the gender and race differences that are central to post-1968 post-colonial, social and cultural theory. There is also a potential perception of quasi-eugenicism that might stem from Hanson’s prediction that the first emulation(s) will be based on real humans specifically chosen for certain criteria, such as intelligence, health or docility(<span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span>, pp. 297-299). A slightly more balanced, philosophical view, on the issues surrounding evaluation of AGI from the our current state as mostly-biological humans can be found in <span class="citation" data-cites="NEGARESTANI_2018">(Negarestani 2018)</span>, pp. 95-98, as well as in <a href="https://www.amazon.com/Posthuman-Life-Philosophy-Edge-Human/dp/1844658066">David Roden’s</a> book. Lastly, an elegant summary of the varieties of ‘humanisms’ can be found in <span class="citation" data-cites="HUI_2019">(Hui 2019)</span>, pp. 245-247.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>WBE is one of the technological ways of achieving brain uploads, and the terms are used synonymously here.<a href="#fnref2" class="footnote-back">↩</a></p></li>
-<li id="fn3"><p><span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span> (pp. 35-43, 75-94) and <span class="citation" data-cites="WBE_ROADMAP">(Sandberg and Bostrom 2008)</span> summarise the neuro-computational issues involved in copying a human brain, and how that might be a more viable intermediate step to creating an AGI. The search for AGI, albeit for contested reasons, appears to be stuck, perhaps missing some <a href="https://aeon.co/essays/how-close-are-we-to-creating-artificial-intelligence">philosophical</a> or algorithmic insight, or simply lacking the <a href="https://www.kurzweilai.net/the-real-reasons-we-dont-have-agi-yet">computing power</a>. The theory is that WBE is a more achievable intermediate goal, because it does not rely on any major algorithmic hurdle, and once sufficient agents are available that function at near-human or super-human levels, across a broad range of tasks, these agents can try to work out a successful approach to ‘true’ AGI. <span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span>, pp. 291-293, 297-313, also sketches out the various dynamics of the path laid out above, control issues, and ethical-political considerations.<a href="#fnref3" class="footnote-back">↩</a></p></li>
-<li id="fn4"><p>More exciting, or alarming, is the idea of a ‘Seed AI’ (defined as ‘an AI designed for self-understanding, self-modification, and recursive self-improvement’ (<span class="citation" data-cites="YUD_2007">(Yudkowsky 2007)</span>, p. 96-110)). which, by virtue of its algorithmic improvements that approach or exceed human capabilities, combined with access and ability to process far more data, as well as much higher speed, allows it recursively improve its own performance and to explore architectures for other AIs.<a href="#fnref4" class="footnote-back">↩</a></p></li>
-<li id="fn5"><p>In this essay, I distinguish what is called AI today, more accurately termed machine learning (ML), which in some <a href="https://thegradient.pub/gpt2-and-the-nature-of-intelligence/">views</a> is an impressive act of data-fitting or multi-dimensional regression that relies more on massive datasets and compute, operating within extremely narrow problem domains, rather than any fundamentally new algorithmic innovation or basic ‘understanding’ of the domain (features that might be important for a <a href="https://www.openphilanthropy.org/blog/some-background-our-views-regarding-advanced-artificial-intelligence">true AGI</a>).<a href="#fnref5" class="footnote-back">↩</a></p></li>
-<li id="fn6"><p>See Alfie Bown, citing Jules Michelet in the quote above in <span class="citation" data-cites="BOWN_2018">(Bown 2018)</span>, pp. 56-57.<a href="#fnref6" class="footnote-back">↩</a></p></li>
-<li id="fn7"><p><span class="citation" data-cites="PARIZOT_2016">(Parizot and Stanley 2016)</span> also considers games as an apparatus, albeit from a rather different angle.<a href="#fnref7" class="footnote-back">↩</a></p></li>
-<li id="fn8"><p>Though the term <a href="https://en.wikipedia.org/wiki/Gamification">gamification</a> seems to be very promiscuously applied, and seems to get games theorists’ back up judging from this <a href="https://www.theatlantic.com/technology/archive/2011/08/gamification-is-bullshit/243338/">article</a> by Ian Bogost. Curiously, the overuse of gamification-as-buzzword mirrors how AI sprouted across the business landscape in the last few years.<a href="#fnref8" class="footnote-back">↩</a></p></li>
-<li id="fn9"><p>A stack is a fairly standard computer science term most commonly referring to the <a href="https://en.wikipedia.org/wiki/Internet_protocol_suite">TCP/IP networking protocol</a> that underlies the Internet.<a href="#fnref9" class="footnote-back">↩</a></p></li>
-<li id="fn10"><p>The intention here is not to over-state the centrality of game engines as the defining techno-capitalistic apparatus <em>par excellence</em>; after all, the WeChat or Facebook ecosystems arguably play similar roles at the moment, and such social media platforms are capable of (or already do) incorporate games. Yet, as the next section shows, companies often own multiple platforms and products that cross taxonomic borders.<a href="#fnref10" class="footnote-back">↩</a></p></li>
-<li id="fn11"><p>Though this <a href="https://www.gamesindustry.biz/articles/2020-07-03-amazon-and-google-are-in-games-for-the-wrong-reasons-opinion">article</a> presents the view that both Amazon and Google seem to be making unappealing games because their primary motivation is to monetise their existing investments in cloud servers, rather than simply make great games.<a href="#fnref11" class="footnote-back">↩</a></p></li>
-<li id="fn12"><p>A critical take on Libra is <a href="https://ourfinancialsecurity.org/2020/06/fact-sheet-banking-on-surveillance-the-libra-black-paper/">here</a>.<a href="#fnref12" class="footnote-back">↩</a></p></li>
-<li id="fn13"><p>The 2016 game <em>No Man’s Sky</em> had 18 quintillion unique planets, procedurally generated only as a player got near one.<a href="#fnref13" class="footnote-back">↩</a></p></li>
-<li id="fn14"><p>However, Bostrom argues that as a given civilisation (ours, for instance) becomes more advanced, it becomes more expensive to simulate. Thus, one is faced with the amusing, or alarming, prospect that our simulation (i.e. the world in which we exist) gets ‘shut down’ because we simply aren’t worth it: as we start poking around in particle accelerators, or begin forming off-world colonies, the amount of compute our simulation demands becomes too expensive for our descendants’ budget.<a href="#fnref14" class="footnote-back">↩</a></p></li>
-<li id="fn15"><p>See Harun Farocki’s <em>Parallel Games</em> series, available <a href="https://www.harunfarocki.de/installations/2010s/2012/parallel.html">here</a>, in which he explores the world, behaviours and logics of simulations, including videogames.<a href="#fnref15" class="footnote-back">↩</a></p></li>
-<li id="fn16"><p>The video embedded in this <a href="https://www.eurogamer.net/articles/digitalfoundry-2019-death-stranding-ps4-pro-tech-review">review</a>, about <em>Death Stranding</em> (2016-2019) describes the behaviour as ‘pop-in’.<a href="#fnref16" class="footnote-back">↩</a></p></li>
-<li id="fn17"><p>And this is partially written not from the perspective of a player, but rather that of someone who makes simulations, and hence sees these (sometimes hidden) sub-structures that Farocki highlighted.<a href="#fnref17" class="footnote-back">↩</a></p></li>
-<li id="fn18"><p>Much as scientists do today - testing falsifiable hypotheses against the reckonable environment, while philosophers construct thought-experiments that are tested against logic.<a href="#fnref18" class="footnote-back">↩</a></p></li>
-<li id="fn19"><p>The ethical issues involved with terminating or otherwise instrumentalising an artificial entity that is sentient, sapient, or even capable of near-human performance, are considered in <span class="citation" data-cites="BOSTROM_2011">(Bostrom and Yudkowsky 2014)</span>, and for objects-in-general in <span class="citation" data-cites="BOGOST_2012">(Bogost 2012)</span>, pp. 72-79.<a href="#fnref19" class="footnote-back">↩</a></p></li>
-<li id="fn20"><p>This is the hope: the control of a single emulation or clan is a subclass of the general control problem with respect to AGI that is a principal topic of <span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span>.<a href="#fnref20" class="footnote-back">↩</a></p></li>
-<li id="fn21"><p>Humans currently have differing chronological and phenomenological experiences of time, but somehow manage to agree on clock time, making any necessary adjustments. Some of these adjustments are mediated technically, through atomic clocks or a smartphone’s world time. Other adjustments are internal and occasionally jarring - that sense of ‘time flying’ when we are absorbed in a task or something pleasurable - the psychological state identified as <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2018.01682/full">‘flow’</a> in videogames.<a href="#fnref21" class="footnote-back">↩</a></p></li>
-<li id="fn22"><p>Indeed within game studies, there is a distinction between games with zero, single, and multiple players, with consequently different logics and aesthetics.<a href="#fnref22" class="footnote-back">↩</a></p></li>
-<li id="fn23"><p>Actors, agents, characters and objects are used somewhat promiscuously in this essay, but for context: actors is a term used in UE to refer to most potentially animate or active characters (including things we normally think of as inanimate like rocks, but that happen to move in-game); objects, besides the everyday definition implying an inanimate thing, is also used in the OOO literature; agents is used within the AI literature.<a href="#fnref23" class="footnote-back">↩</a></p></li>
-<li id="fn24"><p>This proliferation of addresses implies and necessitates a continuous process of translation, cross-referencing and consistency-checking of addresses (<span class="citation" data-cites="BRATTON_2015">(Bratton 2015)</span>, pp. 199-204).<a href="#fnref24" class="footnote-back">↩</a></p></li>
-<li id="fn25"><p>See also <a href="https://www.theverge.com/2019/3/6/18222203/video-game-ai-future-procedural-generation-deep-learning">here</a> for historical context on why the AI deployed in games is often not all that sophisticated.<a href="#fnref25" class="footnote-back">↩</a></p></li>
-<li id="fn26"><p><span id="NEGARESTANI_SAPIENCE" label="NEGARESTANI_SAPIENCE">[NEGARESTANI_SAPIENCE]</span>The difference between the two is discussed at length in <span class="citation" data-cites="BOSTROM_2011">(Bostrom and Yudkowsky 2014)</span> and <span class="citation" data-cites="NEGARESTANI_2018">(Negarestani 2018)</span> pp. 56-62, 155, but sentience, the weaker test, is the ability to have subjective perceptual experiences. Sapience, essentially a socio-linguistic and technological activity, allows us to abstract from our everyday experience. It gives us imagination, which lets us internally simulate possible states-of-the-world or conceive of new worlds. Sapience also allows us to bootstrap: to construct hypotheses, test them, and use the results of these tests to create theories or heuristics, which are in turn, added into our store of concepts which we can subsequently use to reason. See also Peter Wolfendale’s YouTube lecture from 2015, <a href="https://www.youtube.com/watch?v=1IpDTUhQA5U">here</a>, and the related paper <span class="citation" data-cites="WOLFENDALE">(Wolfendale, n.d.)</span>. Sentience, to say nothing of sapience, seems, at present, well beyond the abilities of agents within games, and so-called ’AI’ generally.<a href="#fnref26" class="footnote-back">↩</a></p></li>
-<li id="fn27"><p>There appears to be a curious border between ideas in this section and Bostrom’s Simulation Hypothesis. Namely, if a future computer is simulating our reality, is it also simulating a reality for the higher animals, who from a common-sense perspective, appear to have subjective experiences? What about the worms? And what then of the mimosa tree whose leaves droop at night, or the sunflower? Or are we privileged objects of interest whose reality is simulated with great care, while the others are just ‘fudged’, much as videogames do for the humble grass and the inanimate rock.<a href="#fnref27" class="footnote-back">↩</a></p></li>
-<li id="fn28"><p>A useful summary is in <span class="citation" data-cites="KUNZELMAN_2014">(Kunzelman 2014)</span>, and in more detail in Bogost’s book <em>Alien Phenomenology</em>. Also, see <span class="citation" data-cites="HUI_OBJECTS">(Hui 2016)</span>, pp. 17-18 for a concise explanation of the differences between Hui’s perspective and that of Harman.<a href="#fnref28" class="footnote-back">↩</a></p></li>
-<li id="fn29"><p>‘Material’ as a term that includes the realm of bits and code.<a href="#fnref29" class="footnote-back">↩</a></p></li>
-<li id="fn30"><p>Defined in 1991, and what most webpages were and are still written in, to a large extent.<a href="#fnref30" class="footnote-back">↩</a></p></li>
-<li id="fn31"><p>Hui discusses XML, RDF, and OWL in detail.<a href="#fnref31" class="footnote-back">↩</a></p></li>
-<li id="fn32"><p>In the sense that they can act upon other online or indeed physical objects, such as IoT consumer products, using APIs and HTTP calls.<a href="#fnref32" class="footnote-back">↩</a></p></li>
-<li id="fn33"><p>See <a href="https://en.wikipedia.org/wiki/Semantic_Web">semantic web</a> for a summary of why this merging of formatting, data, and code might lead to a vast, teeming web of autonomous objects going about executing algorithms. At present, bots do the dog-work for search, tracking and social media, accounting for greater than 50% of Internet traffic (<span class="citation" data-cites="BRATTON_2015">(Bratton 2015)</span>, pp. 277-279).<a href="#fnref33" class="footnote-back">↩</a></p></li>
-<li id="fn34"><p>Building upon the sentient/sapient distinction he describes in <span class="citation" data-cites="NEGARESTANI_2018">(Negarestani 2018)</span>, summarised in the note .<a href="#fnref34" class="footnote-back">↩</a></p></li>
-<li id="fn35"><p>See Note 1 for more on the flavours of hidden and decadent humanisms.<a href="#fnref35" class="footnote-back">↩</a></p></li>
-<li id="fn36"><p>The ideas on why humans might be retained and allowed to flourish seem somewhat unsatisfying, in part due to the speculative nature of the question, but also the lack of clarity on whether WBE or AGI come first (<span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span>, pp. 297-301). Specifically, if it comes first, the WBE era is projected to last one or two human years, hence would be a time of likely wrenching technological change, but possibly without immediate visible effects on employment. As for a ‘steady-state’ AGI era’s attitudes <em>vis a vis</em> humans, Bostrom’s writing axiomatically assumes that the AGI must be engineered to not be hostile, or rather, not be indifferent <em>pace</em> Eliezer Yudkowsky (<span class="citation" data-cites="YUD_2008">(Yudkowsky 2008)</span>) to humans. The cryptography researcher Wei Dai has engaged with Hanson, Bostrom, Yudkowsky, and others on these questions, which can be found in the comments and links at this <a href="https://causeprioritization.org/Wei_Dai%E2%80%99s_views_on_AI_safety">Cause Prioritization Wiki</a>.<a href="#fnref36" class="footnote-back">↩</a></p></li>
-<li id="fn37"><p>To paraphrase a title of an Agamben work upon the end of messianic time.<a href="#fnref37" class="footnote-back">↩</a></p></li>
-<li id="fn38"><p>Other major platforms, such as CryEngine and Unity, have similar arrangements.<a href="#fnref38" class="footnote-back">↩</a></p></li>
-<li id="fn39"><p>Which pre-dated the global, consumer internet, and strongly influenced the initial emancipatory, soaring dream of cyberspace...before the ‘crooked timber’ of capital and state control brought it back down to earth.<a href="#fnref39" class="footnote-back">↩</a></p></li>
-<li id="fn40"><p>Maurizio Lazzarato’s term, also used by Antonio Negri and Michael Hardt, to reference the heterotopic practices central to the informatic, flexible economy, characterised by a blurred division between work and play, as well as a certain libidinal cyclicality that works on the imaginations, tastes and perceived needs of consumers, who might also be producers (on Instagram or TikTok, for instance).<a href="#fnref40" class="footnote-back">↩</a></p></li>
-<li id="fn41"><p>Once again, Hanson points out that he is just extrapolating from current technology and understanding of economics, rather than making any normative judgement on the iniquities and general odiousness that such a society may carry for humans.<a href="#fnref41" class="footnote-back">↩</a></p></li>
-<li id="fn42"><p>Which may, in fact, be a reasonable one: the first emulations are, by construction, very similar to their human models, other than the differences pointed out above regarding substrate, copying, etc. Hence it may be the case that they will expect an environment that is familiar. After the initial upload, these same emulations, or further clones of them, might engage in a process of recursive self-improvement where they choose to leave behind such detritus of their human ancestors, or indeed, may choose to retain these artefacts. The word ‘choose’ is used loosely, as decisions on values and perspectives are bound up with the initial coding of the emulation’s values so as to remain aligned with certain human norms, as extensively discussed in <span class="citation" data-cites="BOSTROM_2017">(Bostrom 2017)</span>, pp. 226-253.<a href="#fnref42" class="footnote-back">↩</a></p></li>
-<li id="fn43"><p>Descends recursion chain until the stopping condition, which defines what the game <em>is</em>.<a href="#fnref43" class="footnote-back">↩</a></p></li>
-<li id="fn44"><p>At the moment this takes the form of <a href="https://arxiv.org/abs/1808.05377">neural architecture search</a> and automated machine learning, where machine learning is used to identify and design better AI algorithms<a href="#fnref44" class="footnote-back">↩</a></p></li>
-<li id="fn45"><p>The layering and scaling that virtuality and recursivity imply are central to the way software runs. For instance, high-level languages (LISP, C++, Java, Processing, Haskell, etc.) are compiled/interpreted down to assembly language, which is much closer to the ‘native code’ of a microprocessor. Operating systems routinely use virtual machines: Windows emulators running on OS X, Linux on Windows, etc.<a href="#fnref45" class="footnote-back">↩</a></p></li>
-<li id="fn46"><p>See <em>The Matrix</em> (1999), and this entry on <a href="https://en.wikipedia.org/wiki/Bullet_time">bullet time</a>.<a href="#fnref46" class="footnote-back">↩</a></p></li>
-<li id="fn47"><p>To state the obvious, even if player perceptions were ignored, no agent within the game could operate faster than the clock speed of the substrate, i.e. the console, PC, smartphone, or server upon which the game is playing. At a more banal level, technological issues such as network latency can cause games to <a href="https://www.wired.com/story/cloud-gaming-infrastructure-arms-race/">stutter</a>, much as a video download pauses unexpectedly.<a href="#fnref47" class="footnote-back">↩</a></p></li>
-<li id="fn48"><p>Though it might be conceptually interesting, if commercially daft, to write a simulation where one can experience the subjective time of an emulation, i.e. a vastly slowed down gameworld.<a href="#fnref48" class="footnote-back">↩</a></p></li>
-<li id="fn49"><p>One of the first examples of recursion one might learn in programming class is writing a LISP interpreter in LISP.<a href="#fnref49" class="footnote-back">↩</a></p></li>
-<li id="fn50"><p>The recursion continues until a stopping condition is hit.<a href="#fnref50" class="footnote-back">↩</a></p></li>
-<li id="fn51"><p>The call stack is not the same as that in Bratton’s writing referenced above.<a href="#fnref51" class="footnote-back">↩</a></p></li>
-<li id="fn52"><p>As pointed out above, the specific taxonomic label of such apparatus might not matter as online platforms continue to converge.<a href="#fnref52" class="footnote-back">↩</a></p></li>
-<li id="fn53"><p>‘drain the swamp, just not yet.’<a href="#fnref53" class="footnote-back">↩</a></p></li>
+  
+  <span class="annotation">
+    <li id="fn1"><p>Aspects of the FHI’s research, that loosely come under the term ‘transhumanism’ or the more definitionally problematic ‘posthumanism’, attract considerable criticism, for instance in this <a href="https://lareviewofbooks.org/article/in-optimism-lies-urgency-toby-ord-future-humanity/">review</a> of a book by FHI Fellow Toby Ord, or in this <a href="https://www.youtube.com/watch?v=gNJPR78DptA">talk</a> and paper <span class="citation annotation-counter annotation-counter-inner" data-cites="BRAIDOTTI_2018" data-tippy-content="<p>Braidotti 2018</p>">&bull;</span> by theorist Rosi Braidotti, the latter interesting for its broad survey of currents in critical posthumanist thought. Some of the criticism seems to revolve around an (alleged) arrogation of a singular, privleged ‘we’ or ‘human’ position, without acknowledging the gender and race differences that are central to post-1968 post-colonial, social and cultural theory. There is also a potential perception of quasi-eugenicism that might stem from Hanson’s prediction that the first emulation(s) will be based on real humans specifically chosen for certain criteria, such as intelligence, health or docility<span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>Bostrom 2017</p>">&bull;</span>, pp. 297-299). A slightly more balanced, philosophical view, on the issues surrounding evaluation of AGI from the our current state as mostly-biological humans can be found in <span class="citation annotation-counter annotation-counter-inner" data-cites="NEGARESTANI_2018" data-tippy-content="<p>Negarestani 2018</p>">&bull;</span>, pp. 95-98, as well as in <a href="https://www.amazon.com/Posthuman-Life-Philosophy-Edge-Human/dp/1844658066">David Roden’s</a> book. Lastly, an elegant summary of the varieties of ‘humanisms’ can be found in <span class="citation annotation-counter annotation-counter-inner" data-cites="HUI_2019" data-tippy-content="<p>Hui 2019</p>">&bull;</span>, pp. 245-247.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+  <span class="annotation">
+    <li 
+    id="fn2"><p>WBE is one of the technological ways of achieving brain uploads, and the terms are used synonymously here.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn3"><p><span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>Bostrom 2017</p>">&bull;</span> (pp. 35-43, 75-94) and <span class="citation annotation-counter annotation-counter-inner" data-cites="WBE_ROADMAP" data-tippy-content="<p>Sandberg and Bostrom 2008</p>">&bull;</span> summarise the neuro-computational issues involved in copying a human brain, and how that might be a more viable intermediate step to creating an AGI. The search for AGI, albeit for contested reasons, appears to be stuck, perhaps missing some <a href="https://aeon.co/essays/how-close-are-we-to-creating-artificial-intelligence">philosophical</a> or algorithmic insight, or simply lacking the <a href="https://www.kurzweilai.net/the-real-reasons-we-dont-have-agi-yet">computing power</a>. The theory is that WBE is a more achievable intermediate goal, because it does not rely on any major algorithmic hurdle, and once sufficient agents are available that function at near-human or super-human levels, across a broad range of tasks, these agents can try to work out a successful approach to ‘true’ AGI. <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>Bostrom 2017</p>">&bull;</span>, pp. 291-293, 297-313, also sketches out the various dynamics of the path laid out above, control issues, and ethical-political considerations.<a href="#fnref3" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn4"><p>More exciting, or alarming, is the idea of a ‘Seed AI’ (defined as ‘an AI designed for self-understanding, self-modification, and recursive self-improvement’ <span class="citation annotation-counter annotation-counter-inner" data-cites="YUD_2007" data-tippy-content="<p>Yudkowsky 2007</p>">&bull;</span>, p. 96-110)). which, by virtue of its algorithmic improvements that approach or exceed human capabilities, combined with access and ability to process far more data, as well as much higher speed, allows it recursively improve its own performance and to explore architectures for other AIs.<a href="#fnref4" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn5"><p>In this essay, I distinguish what is called AI today, more accurately termed machine learning (ML), which in some <a href="https://thegradient.pub/gpt2-and-the-nature-of-intelligence/">views</a> is an impressive act of data-fitting or multi-dimensional regression that relies more on massive datasets and compute, operating within extremely narrow problem domains, rather than any fundamentally new algorithmic innovation or basic ‘understanding’ of the domain (features that might be important for a <a href="https://www.openphilanthropy.org/blog/some-background-our-views-regarding-advanced-artificial-intelligence">true AGI</a>).<a href="#fnref5" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn6"><p>See Alfie Bown, citing Jules Michelet in the quote above in <span class="citation annotation-counter annotation-counter-inner" data-cites="BOWN_2018" data-tippy-content="<p>Bown 2018</p>">&bull;</span>, pp. 56-57.<a href="#fnref6" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn7"><p><span class="citation annotation-counter annotation-counter-inner" data-cites="PARIZOT_2016" data-tippy-content="<p>Parizot and Stanley 2016</p>">&bull;</span> also considers games as an apparatus, albeit from a rather different angle.<a href="#fnref7" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn8"><p>Though the term <a href="https://en.wikipedia.org/wiki/Gamification">gamification</a> seems to be very promiscuously applied, and seems to get games theorists’ back up judging from this <a href="https://www.theatlantic.com/technology/archive/2011/08/gamification-is-bullshit/243338/">article</a> by Ian Bogost. Curiously, the overuse of gamification-as-buzzword mirrors how AI sprouted across the business landscape in the last few years.<a href="#fnref8" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn9"><p>A stack is a fairly standard computer science term most commonly referring to the <a href="https://en.wikipedia.org/wiki/Internet_protocol_suite">TCP/IP networking protocol</a> that underlies the Internet.<a href="#fnref9" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn10"><p>The intention here is not to over-state the centrality of game engines as the defining techno-capitalistic apparatus <em>par excellence</em>; after all, the WeChat or Facebook ecosystems arguably play similar roles at the moment, and such social media platforms are capable of (or already do) incorporate games. Yet, as the next section shows, companies often own multiple platforms and products that cross taxonomic borders.<a href="#fnref10" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn11"><p>Though this <a href="https://www.gamesindustry.biz/articles/2020-07-03-amazon-and-google-are-in-games-for-the-wrong-reasons-opinion">article</a> presents the view that both Amazon and Google seem to be making unappealing games because their primary motivation is to monetise their existing investments in cloud servers, rather than simply make great games.<a href="#fnref11" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn12"><p>A critical take on Libra is <a href="https://ourfinancialsecurity.org/2020/06/fact-sheet-banking-on-surveillance-the-libra-black-paper/">here</a>.<a href="#fnref12" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn13"><p>The 2016 game <em>No Man’s Sky</em> had 18 quintillion unique planets, procedurally generated only as a player got near one.<a href="#fnref13" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn14"><p>However, Bostrom argues that as a given civilisation (ours, for instance) becomes more advanced, it becomes more expensive to simulate. Thus, one is faced with the amusing, or alarming, prospect that our simulation (i.e. the world in which we exist) gets ‘shut down’ because we simply aren’t worth it: as we start poking around in particle accelerators, or begin forming off-world colonies, the amount of compute our simulation demands becomes too expensive for our descendants’ budget.<a href="#fnref14" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn15"><p>See Harun Farocki’s <em>Parallel Games</em> series, available <a href="https://www.harunfarocki.de/installations/2010s/2012/parallel.html">here</a>, in which he explores the world, behaviours and logics of simulations, including videogames.<a href="#fnref15" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn16"><p>The video embedded in this <a href="https://www.eurogamer.net/articles/digitalfoundry-2019-death-stranding-ps4-pro-tech-review">review</a>, about <em>Death Stranding</em> (2016-2019) describes the behaviour as ‘pop-in’.<a href="#fnref16" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn17"><p>And this is partially written not from the perspective of a player, but rather that of someone who makes simulations, and hence sees these (sometimes hidden) sub-structures that Farocki highlighted.<a href="#fnref17" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn18"><p>Much as scientists do today - testing falsifiable hypotheses against the reckonable environment, while philosophers construct thought-experiments that are tested against logic.<a href="#fnref18" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn19"><p>The ethical issues involved with terminating or otherwise instrumentalising an artificial entity that is sentient, sapient, or even capable of near-human performance, are considered in <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2011" data-tippy-content="<p>Bostrom and Yudkowsky 2014</p>">&bull;</span>, and for objects-in-general in <span class="citation annotation-counter annotation-counter-inner" data-cites="BOGOST_2012" data-tippy-content="<p>Bogost 2012</p>">&bull;</span>, pp. 72-79.<a href="#fnref19" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn20"><p>This is the hope: the control of a single emulation or clan is a subclass of the general control problem with respect to AGI that is a principal topic of <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>Bostrom 2017</p>">&bull;</span>.<a href="#fnref20" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn21"><p>Humans currently have differing chronological and phenomenological experiences of time, but somehow manage to agree on clock time, making any necessary adjustments. Some of these adjustments are mediated technically, through atomic clocks or a smartphone’s world time. Other adjustments are internal and occasionally jarring - that sense of ‘time flying’ when we are absorbed in a task or something pleasurable - the psychological state identified as <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2018.01682/full">‘flow’</a> in videogames.<a href="#fnref21" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn22"><p>Indeed within game studies, there is a distinction between games with zero, single, and multiple players, with consequently different logics and aesthetics.<a href="#fnref22" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn23"><p>Actors, agents, characters and objects are used somewhat promiscuously in this essay, but for context: actors is a term used in UE to refer to most potentially animate or active characters (including things we normally think of as inanimate like rocks, but that happen to move in-game); objects, besides the everyday definition implying an inanimate thing, is also used in the OOO literature; agents is used within the AI literature.<a href="#fnref23" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn24"><p>This proliferation of addresses implies and necessitates a continuous process of translation, cross-referencing and consistency-checking of addresses <span class="citation annotation-counter annotation-counter-inner" data-cites="BRATTON_2015" data-tippy-content="<p>Bratton 2015</p>">&bull;</span>, pp. 199-204).<a href="#fnref24" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn25"><p>See also <a href="https://www.theverge.com/2019/3/6/18222203/video-game-ai-future-procedural-generation-deep-learning">here</a> for historical context on why the AI deployed in games is often not all that sophisticated.<a href="#fnref25" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn26"><p><span id="NEGARESTANI_SAPIENCE" label="NEGARESTANI_SAPIENCE">[NEGARESTANI_SAPIENCE]</span>The difference between the two is discussed at length in <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2011" data-tippy-content="<p>Bostrom and Yudkowsky 2014</p>">&bull;</span> and <span class="citation annotation-counter annotation-counter-inner" data-cites="NEGARESTANI_2018" data-tippy-content="<p>Negarestani 2018</p>">&bull;</span> pp. 56-62, 155, but sentience, the weaker test, is the ability to have subjective perceptual experiences. Sapience, essentially a socio-linguistic and technological activity, allows us to abstract from our everyday experience. It gives us imagination, which lets us internally simulate possible states-of-the-world or conceive of new worlds. Sapience also allows us to bootstrap: to construct hypotheses, test them, and use the results of these tests to create theories or heuristics, which are in turn, added into our store of concepts which we can subsequently use to reason. See also Peter Wolfendale’s YouTube lecture from 2015, <a href="https://www.youtube.com/watch?v=1IpDTUhQA5U">here</a>, and the related paper <span class="citation annotation-counter annotation-counter-inner" data-cites="WOLFENDALE" data-tippy-content="<p>Wolfendale, n.d.</p>">&bull;</span>. Sentience, to say nothing of sapience, seems, at present, well beyond the abilities of agents within games, and so-called ’AI’ generally.<a href="#fnref26" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn27"><p>There appears to be a curious border between ideas in this section and Bostrom’s Simulation Hypothesis. Namely, if a future computer is simulating our reality, is it also simulating a reality for the higher animals, who from a common-sense perspective, appear to have subjective experiences? What about the worms? And what then of the mimosa tree whose leaves droop at night, or the sunflower? Or are we privileged objects of interest whose reality is simulated with great care, while the others are just ‘fudged’, much as videogames do for the humble grass and the inanimate rock.<a href="#fnref27" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn28"><p>A useful summary is in <span class="citation annotation-counter annotation-counter-inner" data-cites="KUNZELMAN_2014" data-tippy-content="<p>Kunzelman 2014</p>">&bull;</span>, and in more detail in Bogost’s book <em>Alien Phenomenology</em>. Also, see <span class="citation annotation-counter annotation-counter-inner" data-cites="HUI_OBJECTS" data-tippy-content="<p>Hui 2016</p>">&bull;</span>, pp. 17-18 for a concise explanation of the differences between Hui’s perspective and that of Harman.<a href="#fnref28" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn29"><p>‘Material’ as a term that includes the realm of bits and code.<a href="#fnref29" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn30"><p>Defined in 1991, and what most webpages were and are still written in, to a large extent.<a href="#fnref30" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn31"><p>Hui discusses XML, RDF, and OWL in detail.<a href="#fnref31" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn32"><p>In the sense that they can act upon other online or indeed physical objects, such as IoT consumer products, using APIs and HTTP calls.<a href="#fnref32" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn33"><p>See <a href="https://en.wikipedia.org/wiki/Semantic_Web">semantic web</a> for a summary of why this merging of formatting, data, and code might lead to a vast, teeming web of autonomous objects going about executing algorithms. At present, bots do the dog-work for search, tracking and social media, accounting for greater than 50% of Internet traffic <span class="citation annotation-counter annotation-counter-inner" data-cites="BRATTON_2015" data-tippy-content="<p>Bratton 2015</p>">&bull;</span>, pp. 277-279).<a href="#fnref33" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn34"><p>Building upon the sentient/sapient distinction he describes in <span class="citation annotation-counter annotation-counter-inner" data-cites="NEGARESTANI_2018" data-tippy-content="<p>Negarestani 2018</p>">&bull;</span>, summarised in the note .<a href="#fnref34" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn35"><p>See Note 1 for more on the flavours of hidden and decadent humanisms.<a href="#fnref35" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn36"><p>The ideas on why humans might be retained and allowed to flourish seem somewhat unsatisfying, in part due to the speculative nature of the question, but also the lack of clarity on whether WBE or AGI come first <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>Bostrom 2017</p>">&bull;</span>, pp. 297-301). Specifically, if it comes first, the WBE era is projected to last one or two human years, hence would be a time of likely wrenching technological change, but possibly without immediate visible effects on employment. As for a ‘steady-state’ AGI era’s attitudes <em>vis a vis</em> humans, Bostrom’s writing axiomatically assumes that the AGI must be engineered to not be hostile, or rather, not be indifferent <em>pace</em> Eliezer Yudkowsky <span class="citation annotation-counter annotation-counter-inner" data-cites="YUD_2008" data-tippy-content="<p>Yudkowsky 2008</p>">&bull;</span> to humans. The cryptography researcher Wei Dai has engaged with Hanson, Bostrom, Yudkowsky, and others on these questions, which can be found in the comments and links at this <a href="https://causeprioritization.org/Wei_Dai%E2%80%99s_views_on_AI_safety">Cause Prioritization Wiki</a>.<a href="#fnref36" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn37"><p>To paraphrase a title of an Agamben work upon the end of messianic time.<a href="#fnref37" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn38"><p>Other major platforms, such as CryEngine and Unity, have similar arrangements.<a href="#fnref38" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn39"><p>Which pre-dated the global, consumer internet, and strongly influenced the initial emancipatory, soaring dream of cyberspace...before the ‘crooked timber’ of capital and state control brought it back down to earth.<a href="#fnref39" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn40"><p>Maurizio Lazzarato’s term, also used by Antonio Negri and Michael Hardt, to reference the heterotopic practices central to the informatic, flexible economy, characterised by a blurred division between work and play, as well as a certain libidinal cyclicality that works on the imaginations, tastes and perceived needs of consumers, who might also be producers (on Instagram or TikTok, for instance).<a href="#fnref40" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn41"><p>Once again, Hanson points out that he is just extrapolating from current technology and understanding of economics, rather than making any normative judgement on the iniquities and general odiousness that such a society may carry for humans.<a href="#fnref41" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn42"><p>Which may, in fact, be a reasonable one: the first emulations are, by construction, very similar to their human models, other than the differences pointed out above regarding substrate, copying, etc. Hence it may be the case that they will expect an environment that is familiar. After the initial upload, these same emulations, or further clones of them, might engage in a process of recursive self-improvement where they choose to leave behind such detritus of their human ancestors, or indeed, may choose to retain these artefacts. The word ‘choose’ is used loosely, as decisions on values and perspectives are bound up with the initial coding of the emulation’s values so as to remain aligned with certain human norms, as extensively discussed in <span class="citation annotation-counter annotation-counter-inner" data-cites="BOSTROM_2017" data-tippy-content="<p>Bostrom 2017</p>">&bull;</span>, pp. 226-253.<a href="#fnref42" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn43"><p>Descends recursion chain until the stopping condition, which defines what the game <em>is</em>.<a href="#fnref43" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn44"><p>At the moment this takes the form of <a href="https://arxiv.org/abs/1808.05377">neural architecture search</a> and automated machine learning, where machine learning is used to identify and design better AI algorithms<a href="#fnref44" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn45"><p>The layering and scaling that virtuality and recursivity imply are central to the way software runs. For instance, high-level languages (LISP, C++, Java, Processing, Haskell, etc.) are compiled/interpreted down to assembly language, which is much closer to the ‘native code’ of a microprocessor. Operating systems routinely use virtual machines: Windows emulators running on OS X, Linux on Windows, etc.<a href="#fnref45" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn46"><p>See <em>The Matrix</em> (1999), and this entry on <a href="https://en.wikipedia.org/wiki/Bullet_time">bullet time</a>.<a href="#fnref46" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn47"><p>To state the obvious, even if player perceptions were ignored, no agent within the game could operate faster than the clock speed of the substrate, i.e. the console, PC, smartphone, or server upon which the game is playing. At a more banal level, technological issues such as network latency can cause games to <a href="https://www.wired.com/story/cloud-gaming-infrastructure-arms-race/">stutter</a>, much as a video download pauses unexpectedly.<a href="#fnref47" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn48"><p>Though it might be conceptually interesting, if commercially daft, to write a simulation where one can experience the subjective time of an emulation, i.e. a vastly slowed down gameworld.<a href="#fnref48" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn49"><p>One of the first examples of recursion one might learn in programming class is writing a LISP interpreter in LISP.<a href="#fnref49" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn50"><p>The recursion continues until a stopping condition is hit.<a href="#fnref50" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn51"><p>The call stack is not the same as that in Bratton’s writing referenced above.<a href="#fnref51" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn52"><p>As pointed out above, the specific taxonomic label of such apparatus might not matter as online platforms continue to converge.<a href="#fnref52" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
+
+  <span class="annotation">
+    <li 
+    id="fn53"><p>‘drain the swamp, just not yet.’<a href="#fnref53" class="footnote-back">↩</a></p></li>
+  </span>
+
+
+
 </ol>
 </section>
 </div>
+
+
+  <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+<script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+<script>tippy('[data-tippy-content]',
+{
+          theme: 'cosmism',
+          arrow: false,
+          allowHTML: true
+        });
+</script>
 </body>
 </html>
