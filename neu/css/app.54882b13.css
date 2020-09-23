@@ -41,8 +41,9 @@
 }
 
 #splash[data-v-9311eee0] {
-    color: #91919b
-}
+    color: rgb(255,225,225); 
+    /*UKC change colour so it works on dark back*/
+    }
 
 .line-v[data-v-9311eee0] {
     width: 1px;
@@ -57,23 +58,24 @@
 }
 
 input[data-v-9311eee0]::-webkit-input-placeholder {
-    color: #969696
+    /*color: #969696*/
+    color: rgb(255,225,225);
 }
 
 input[data-v-9311eee0]::-moz-placeholder {
-    color: #969696
+    color: rgb(255,225,225);
 }
 
 input[data-v-9311eee0]:-ms-input-placeholder {
-    color: #969696
+    color: rgb(255,225,225);
 }
 
 input[data-v-9311eee0]::-ms-input-placeholder {
-    color: #969696
+    color: rgb(255,225,225);
 }
 
 input[data-v-9311eee0]::placeholder {
-    color: #969696
+    color: rgb(255,225,225);
 }
 
 .searchwrapper[data-v-7205f1e9] {
@@ -3010,15 +3012,18 @@ html {
 }
 
 body {
-    /*background-color: rgb(100,200,255);*/
-    background-image: linear-gradient(rgb(100,200,255),rgb(0,10,20));
+    background-color: rgb(100,200,255);
+    background-image: linear-gradient(rgb(0,20,30),rgb(100,200,255));
     font-family: Unicorn, Helvetica, sans-serif
+    margin: 0;
 }
 
 /*UKC addition to make the navigation uniform*/
+
 #nav {
-    background-color: rgb(100,200,255);
+    /*background-color: rgb(0,20,30);*/
 }
+
 
 .transition {
     -webkit-transition: background-color 1s, color 1s;
@@ -3327,11 +3332,11 @@ html {
     line-height: 1.15;
     -webkit-text-size-adjust: 100%
 }
-
+/*
 body {
     margin: 0
 }
-
+*/
 main {
     display: block
 }
@@ -5800,6 +5805,9 @@ video {
     width: 25%
 }
 
+.w-1\/8 {
+    width: 12.5%;
+}
 .w-full {
     width: 100%
 }
