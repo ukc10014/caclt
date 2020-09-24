@@ -3,12 +3,19 @@
     height: 20px;
     width: 20px;
     /*background-color: var(--color);*/
-    background-color: #e44c3df7;
+    background-color: #e44c3df7;   
     border-radius: 50%;
     display: inline-block;
 }
 .dot:hover { filter: blur(5px); opacity: 1; }
 
+#bugcanv {
+    position: fixed;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
 
 @-webkit-keyframes fadeIn {
     0% {
@@ -44,6 +51,27 @@
     color: rgb(255,225,225); 
     /*UKC change colour so it works on dark back*/
     }
+
+#splash0[data-v-9311eee0] {
+    color: rgb(255,225,225); 
+    /*UKC change colour so it works on dark back*/
+    }
+
+#splash1[data-v-9311eee0] {
+    color: rgb(255,225,225); 
+    /*UKC change colour so it works on dark back*/
+    }
+
+#splash2[data-v-9311eee0] {
+    color: rgb(255,225,225); 
+    /*UKC change colour so it works on dark back*/
+    }
+
+#splash3[data-v-9311eee0] {
+    color: rgb(255,225,225); 
+    /*UKC change colour so it works on dark back*/
+    }
+
 
 .line-v[data-v-9311eee0] {
     width: 1px;
