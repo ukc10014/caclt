@@ -3692,7 +3692,8 @@ video {
 }
 
 img,
-video {
+video,
+canvas {
     max-width: 100%;
     height: auto
 }
