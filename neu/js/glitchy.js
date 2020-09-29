@@ -169,7 +169,7 @@ function setup() {
   myApp.make_masterBuf(); //Create the mastebufffer
 
 
-  myApp.dpr = window.devicePixelRatio;  
+  myApp.dpr = window.devicePixelRatio*0 + 1;  
   myApp.kludge_w = windowWidth * myApp.dpr; //Supposedly helps Retina displays
   myApp.kludge_h  = windowHeight * myApp.dpr;
 
