@@ -1,10 +1,10 @@
 precision mediump float;
 
-//#define BLACK_AND_WHITE
+#define BLACK_AND_WHITE
 #define LINES_AND_FLICKER
 #define BLOTCHES
 #define GRAIN
-//#define VIGNETTE
+#define VIGNETTE
 
 #define FREQUENCY 15.0
 
@@ -68,8 +68,6 @@ void main()
 	uv.y = 1.0 - uv.y;
 	
 	
-	if(iTime > 30.) //UKC: for now, eventually will just have the filter on all the time
-	{		
 		float vI = 1.0 ; //UKC: used for vignetting	
 
 		// Set frequency of global effect to 15 variations per second
@@ -139,11 +137,6 @@ void main()
 		#ifdef GRAIN
 	        gl_FragColor.xyz *= (1.0+(rand(uv+t*.01)-.2)*.15);		
         #endif		
-		
-	}
-	else
-	{
-		gl_FragColor = texture2D(tex0, uv );
-	}
+	
 
 }

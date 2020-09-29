@@ -15,6 +15,12 @@ class App {
     /*These kludges allow the display width/height to be overriden through URL, to accommodate resolution isues (eg Retina disps)*/
     this.kludge_w;
     this.kludge_h;
+
+    this.first_time = true;
+
+    /*Pixel ratio for Retina*/
+    this.dpr;
+
   }
 
   make_masterBuf() 
@@ -33,8 +39,6 @@ class Glitch {
 
     /*Cinematic vignette/scratch shader*/
     this.sCine = loadShader(myApp.shadpath + 'cinematic.vert',myApp.shadpath + 'cinematic.frag');
-
-
   }
 
 }
@@ -98,10 +102,27 @@ class Content {
       glich.sCine.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
       glich.sCine.setUniform("iTime",second());
       myApp.masterBuf.rect(0,0,imgWidth,imgHeight);
-        
+      
       //image(myApp.masterBuf,-myApp.offsetw/2,-myApp.offseth/2-150,imgWidth*0.25,imgHeight*0.25);
-      image(myApp.masterBuf,ulx,uly,imgWidth,imgHeight);
+      //image(myApp.masterBuf,ulx,uly,imgWidth,imgHeight);
+      //image(myApp.masterBuf,0,0,imgWidth*windowHeight/windowWidth,windowHeight);
+      //image(myApp.masterBuf,0,0,drawingContext.canvas.width,drawingContext.canvas.height*imgHeight/imgWidth*0.5);
 
+
+     //Some weird shit to accommodate phone portrait, landscape, etc.
+     let dw = drawingContext.canvas.width;
+     let dh = drawingContext.canvas.height;
+     
+      if(dh>=dw) {
+        /*Need to multiply by pixelratio in case Retina displays*/
+        ulx = -1 * imgWidth / (2 * myApp.dpr); 
+        uly = -1 * imgHeight / (2 * myApp.dpr); 
+        image(myApp.masterBuf,ulx,uly,dw * imgWidth/imgHeight,dh * imgWidth/imgHeight * dw / dh * 0.8);
+      } else {
+        ulx = -1 * imgWidth / (2 * myApp.dpr);
+        uly = -1 * imgHeight / (2 * myApp.dpr); 
+        image(myApp.masterBuf,ulx,uly,dw * imgWidth/imgHeight,dh*imgWidth/imgHeight);
+      }
 
     }
 
@@ -111,7 +132,7 @@ class Content {
 
 
   function preload() {
-    myApp = new App();
+    myApp = new App();  
 
     /*Bring in image files*/
     load_Content();
@@ -148,18 +169,21 @@ function setup() {
   myApp.make_masterBuf(); //Create the mastebufffer
 
 
- let pdensity = window.devicePixelRatio;  
-  myApp.kludge_w = windowWidth * pdensity; //Supposedly helps Retina displays
-  myApp.kludge_h  = windowHeight * pdensity;
+  myApp.dpr = window.devicePixelRatio;  
+  myApp.kludge_w = windowWidth * myApp.dpr; //Supposedly helps Retina displays
+  myApp.kludge_h  = windowHeight * myApp.dpr;
 
 }
 
 function draw() {
 
+  if(myApp.first_time = true) {
+    windowResized();
+    myApp.first_time = false;
+  } 
+
   //if(imgs.curr_img < imgs.num_ue4img) {imgs.makeimgbuf_noisy();}
   imgs.makeimgbuf_noisy();
-
-
 
 }
 
@@ -167,4 +191,44 @@ function padLeadingZeros(num, size) {
     var s = num+"";
     while (s.length < size) s = "0" + s;
     return s;
+}
+
+
+function windowResized(){
+  
+  var canvas = document.querySelector("#defaultCanvas0");
+  //var gl = canvas.getContext("webgl");
+  if(typeof  drawingContext !== 'undefined') {
+    
+    var gl = drawingContext;
+  
+    resize(gl);
+
+} else {return;}
+
+}
+
+function resize(gl) 
+{
+  var realToCSSPixels = window.devicePixelRatio;
+
+  // Lookup the size the browser is displaying the canvas in CSS pixels
+  // and compute a size needed to make our drawingbuffer match it in
+  // device pixels.
+  var displayWidth  = Math.floor(gl.canvas.clientWidth  * realToCSSPixels);
+  var displayHeight = Math.floor(gl.canvas.clientHeight * realToCSSPixels);
+
+  // Check if the canvas is not the same size.
+  if (gl.canvas.width  !== displayWidth ||
+      gl.canvas.height !== displayHeight) {
+
+    // Make the canvas the same size
+    gl.canvas.width  = displayWidth;
+    gl.canvas.height = displayHeight;
+
+   
+  }
+
+  //gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
 }
