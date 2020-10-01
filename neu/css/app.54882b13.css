@@ -2,12 +2,25 @@
 .dot {
     height: 20px;
     width: 20px;
-    /*background-color: var(--color);*/
     background-color: #e44c3df7;   
     border-radius: 50%;
     display: inline-block;
 }
 .dot:hover { filter: blur(5px); opacity: 1; }
+
+.dot.s1 {
+    height: 25px;
+    width: 25px;
+    background-color: hsla(200,50%,30%,.4);
+}
+
+.dot.s2 {
+    height: 25px;
+    width: 25px;
+    background-color: hsla(100,70%,100%,.9);
+}
+
+
 
 #bugcanv {
     position: fixed;
