@@ -17,6 +17,7 @@ function setup() {
   let canvas = createCanvas(windowWidth,windowHeight - navh,WEBGL);
   canvas.parent('app');
   dpr = window.devicePixelRatio;
+  colorMode(HSB);
 }
 
 function draw() {
@@ -40,19 +41,20 @@ function makefunstuff() {
       ambientLight(190,70,70);
       directionalLight(2, 100, 50, 0.25, 0.25, 0);
       pointLight(300, 100, 100, locX, locY, 250);
-
+      stroke(0,50,50);
       push();
       translate(0, 100, 0);
       rotateZ(frameCount * 0.02);
       rotateX(frameCount * 0.02);
-      specularMaterial(250);
+      specularMaterial(20,50,50);
       //box(50, 50, 50);
+      shininess(100);
       model(mel);
       pop();
 
       push();
       translate(width / 4, map(sin(millis()/60000),0,1,-dh,dh), 0);
-      ambientMaterial(250);
+      ambientMaterial(100,50,80);
       sphere(25, 25);
       pop();
     /*End fun stuff*/
@@ -64,7 +66,7 @@ function makefunstuff() {
     let xoff = 0; // Option #1: 2D Noise
     
     // Iterate over horizontal pixels
-    for (let x = 0; x <= dw; x += 10) {
+    for (let x = -dw; x <= dw; x += 10) {
       // Calculate a y value according to noise, map to
 
       // Option #1: 2D Noise

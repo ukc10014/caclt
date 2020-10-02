@@ -106,11 +106,17 @@ class Content {
 
   drawtext() {
     let ulx,uly;
+    /*
     let dw = drawingContext.canvas.width;
     let dh = drawingContext.canvas.height;
+    */
+
+    let dw = width;
+    let dh = height;
+
     if(dh >= dw) {
-      ulx = -dw / 4;
-      uly = -dh / 4;
+      ulx = -dw / 2;
+      uly = -dh / 2;
 } else {
       ulx = -dw / 2;
       uly = -dh / 2;
@@ -119,7 +125,7 @@ class Content {
     textFont(myApp.fonty);
     textSize(50);
     fill(0,10,100,1);
-    textAlign(CENTER,CENTER);
+    textAlign(RIGHT,TOP);
     text(this.textcont[this.line],ulx,uly,width,height);
 
   }
@@ -333,7 +339,7 @@ function draw() {
       imgs.textcounter = imgs.holdtext * frameRate(); //Reset counter based on realised framerate
       imgs.line++; //Increment line of the text
     } else {
-      background(202,59,20,1);
+      //background(202,59,20,1);
       imgs.drawtext();
       //imgs.makefunstuff(); This now moved to standalone file
       imgs.textcounter--;
