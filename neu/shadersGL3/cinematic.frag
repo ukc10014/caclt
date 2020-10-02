@@ -1,7 +1,7 @@
 precision mediump float;
 
 //#define BLACK_AND_WHITE
-//#define LINES_AND_FLICKER
+#define LINES_AND_FLICKER
 //#define BLOTCHES
 //#define GRAIN
 #define VIGNETTE
