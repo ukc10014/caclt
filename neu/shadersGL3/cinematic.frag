@@ -4,7 +4,7 @@ precision mediump float;
 //#define LINES_AND_FLICKER
 //#define BLOTCHES
 //#define GRAIN
-//#define VIGNETTE
+#define VIGNETTE
 
 #define FREQUENCY 15.0
 
