@@ -85,7 +85,7 @@ class Content {
 
     for(let i=0;i<this.num_ue4img;i++) 
     {
-      fn = myApp.medpath+"ue4/img" + padLeadingZeros(tmpnum,imgs.sizename_ue4img) + ".png"; //Need to pad the zeroes to find the file
+      fn = myApp.medpath+"ue4pics_smol/img" + padLeadingZeros(tmpnum,imgs.sizename_ue4img) + ".jpg"; //Need to pad the zeroes to find the file
       tmpnum++;
 
       this.ue4img[i] = loadImage(fn);
@@ -190,7 +190,7 @@ class Content {
   }
 
   makeimgbuf_noisy() {
-
+    
      /*Stuff to get images to stutter and randomly hold rather than incrementing*/
       if(this.nextimg == 0) { //Do all gubbins below only if inner loop is completed (i.e. image is up for specified num frames)
         if(random()<0.2 && this.nextimgp == 1) { //So smol prob of time, outer loop will be set to [60] frames of hold
@@ -263,6 +263,10 @@ class Content {
 
 
   function preload() {
+    /*Placeholder message*/
+    document.getElementById("placeholder").innerHTML = "Please wait ...loading media.";
+
+
     myApp = new App();  
 
     /*Bring in image files*/
@@ -276,8 +280,6 @@ class Content {
 
     /*Load font*/
     myApp.fonty = loadFont(myApp.fontpath + 'Inconsolata.otf');
-
-
   }
 
   function load_Content() {
@@ -316,14 +318,15 @@ function setup() {
   /*Set up textcounter*/
   colorMode(HSB);
   imgs.setfirstline();
-
-
 }
 
 function draw() {      
 
   if(myApp.first_time === true) {
     windowResized();
+    /*Remove placeholder*/
+    document.getElementById("placeholder").parentElement.remove();
+
     myApp.first_time = false;
   } 
 
@@ -339,6 +342,7 @@ function draw() {
       imgs.textcounter = imgs.holdtext * frameRate(); //Reset counter based on realised framerate
       imgs.line++; //Increment line of the text
     } else {
+      /*Uncomment this to get brief glimpse of images*/
       //background(202,59,20,1);
       imgs.drawtext();
       //imgs.makefunstuff(); This now moved to standalone file

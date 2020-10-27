@@ -20,7 +20,10 @@
     background-color: hsla(100,70%,100%,.9);
 }
 
-
+#placeholder {
+    color: rgb(255,225,225); 
+    /*UKC change colour so it works on dark back*/
+}
 
 #bugcanv {
     position: fixed;
@@ -2004,6 +2007,8 @@ a.plyr__control:before {
     text-decoration: underline
 }
 
+
+
 #footnotes .annotation,
 .footnotes .annotation {
     display: block;
@@ -3055,8 +3060,12 @@ html {
 body {
     background-color: rgb(100,200,255);
     background-image: linear-gradient(rgb(0,20,30),rgb(100,200,255));
-    font-family: Unicorn, Helvetica, sans-serif
     margin: 0;
+}
+
+body.essai {
+    /*background-color: rgb(0,20,30);*/
+    background-image: linear-gradient(rgb(120,220,255),rgb(0,20,30));
 }
 
 /*UKC addition to make the navigation uniform*/
@@ -5581,7 +5590,7 @@ canvas {
     color: #cbd5e0
 }
 
-.text-gray-500 {
+.text-gray-500, .annotation, .footnote-back {
     color: #91919b
 }
 
