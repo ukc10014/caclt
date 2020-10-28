@@ -1,10 +1,10 @@
 precision mediump float;
 
-//#define BLACK_AND_WHITE
-#define LINES_AND_FLICKER
+#define BLACK_AND_WHITE
+//#define LINES_AND_FLICKER
 //#define BLOTCHES
-#define GRAIN
-#define VIGNETTE
+//#define GRAIN
+//#define VIGNETTE
 
 #define FREQUENCY 15.0
 
@@ -15,6 +15,14 @@ uniform vec2 iResolution;
 uniform float iTime;
 
 vec2 uv;
+
+/*
+uniform float BLACK_AND_WHITE;
+uniform bool LINES_AND_FLICKER; 
+uniform bool BLOTCHES; 
+uniform bool GRAIN; 
+uniform bool VIGNETTE;
+*/
 
 float rand(vec2 co){
     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
@@ -80,11 +88,13 @@ void main()
 		vec3 image = texture2D(tex0, vec2(suv.x, suv.y) ).xyz;
 		
 		
+		
+
 		#ifdef BLACK_AND_WHITE
 			// Convert it to B/W
 			float luma = dot( vec3(0.2126, 0.7152, 0.0722), image );
 			vec3 oldImage = luma * vec3(0.7, 0.7, 0.7);
-			#else
+		#else
 			vec3 oldImage = image;
 		#endif
 		

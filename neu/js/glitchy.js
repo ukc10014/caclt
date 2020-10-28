@@ -218,6 +218,11 @@ class Content {
       glich.sCine.setUniform("iResolution",[myApp.kludge_w,myApp.kludge_h]);
       glich.sCine.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
       glich.sCine.setUniform("iTime",second());
+      glich.sCine.setUniform("BLACK_AND_WHITE",0.0);
+      /*glich.sCine.setUniform("LINES_AND_FLICKER",'false');
+      glich.sCine.setUniform("BLOTCHES",'false');
+      glich.sCine.setUniform("GRAIN",'false');
+      glich.sCine.setUniform("VIGNETTE",'false');*/
       myApp.masterBuf.rect(0,0,imgWidth,imgHeight);
       
       //image(myApp.masterBuf,-myApp.offsetw/2,-myApp.offseth/2-150,imgWidth*0.25,imgHeight*0.25);
