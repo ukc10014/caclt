@@ -24,6 +24,7 @@ class App {
     this.navh = 73;
 
     this.first_time = true;
+    this.runtime; //How long app running
 
     /*Pixel ratio for Retina*/
     this.dpr;
@@ -124,7 +125,7 @@ class Content {
 
     textFont(myApp.fonty);
     textSize(50);
-    fill(0,10,100,1);
+    fill(0,100,100,1);
     textAlign(RIGHT,TOP);
     text(this.textcont[this.line],ulx,uly,width,height);
 
@@ -218,8 +219,8 @@ class Content {
       glich.sCine.setUniform("iResolution",[myApp.kludge_w,myApp.kludge_h]);
       glich.sCine.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
       glich.sCine.setUniform("iTime",second());
-      glich.sCine.setUniform("BLACK_AND_WHITE",0.0);
-      /*glich.sCine.setUniform("LINES_AND_FLICKER",'false');
+      /*glich.sCine.setUniform("BLACK_AND_WHITE",0.0);
+      glich.sCine.setUniform("LINES_AND_FLICKER",'false');
       glich.sCine.setUniform("BLOTCHES",'false');
       glich.sCine.setUniform("GRAIN",'false');
       glich.sCine.setUniform("VIGNETTE",'false');*/
@@ -326,6 +327,8 @@ function setup() {
 }
 
 function draw() {      
+  myApp.runtime = millis();
+
 
   if(myApp.first_time === true) {
     windowResized();
@@ -348,9 +351,8 @@ function draw() {
       imgs.line++; //Increment line of the text
     } else {
       /*Uncomment this to get brief glimpse of images*/
-      background(202,59,20,1);
+      myApp.runtime < 10000 ? background(202,59,0,1) : (sin(myApp.runtime) > 0.8 ? background(202,59,2,1) : {});
       imgs.drawtext();
-      //imgs.makefunstuff(); This now moved to standalone file
       imgs.textcounter--;
     }
     

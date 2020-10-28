@@ -3059,13 +3059,21 @@ html {
 
 body {
     background-color: rgb(100,200,255);
-    background-image: linear-gradient(rgb(0,20,30),rgb(100,200,255));
+    /*background-image: linear-gradient(rgb(0,20,30),rgb(100,200,255));*/
+    background-image: url('../media/Enewetak.png');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
     margin: 0;
 }
 
 body.essai {
     /*background-color: rgb(0,20,30);*/
-    background-image: linear-gradient(rgb(120,220,255),rgb(0,20,30));
+    background-image: linear-gradient(rgb(100,200,255),rgb(0,20,30));
+}
+
+body.mimoid {
+    background-image: linear-gradient(rgb(0,20,30),rgb(100,200,255));
 }
 
 /*UKC addition to make the navigation uniform*/
@@ -5587,27 +5595,27 @@ canvas {
 }
 
 .text-gray-400 {
-    color: #cbd5e0
+    color: rgb(130,150,130)
 }
 
 .text-gray-500, .annotation, .footnote-back {
-    color: #91919b
+    color: rgb(110,130,110)
 }
 
 .text-gray-600 {
-    color: #717171
+    color: rgb(100,120,100)
 }
 
 .text-gray-700 {
-    color: #4a4a4a
+    color: rgb(80,110,80)
 }
 
 .text-gray-800 {
-    color: #2d2d2d
+    color: rgb(70,110,70)
 }
 
 .text-gray-900 {
-    color: #1a1a1a
+    color: rgb(50,70,50)
 }
 
 .text-gray-base {
