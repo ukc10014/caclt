@@ -60,9 +60,37 @@
 	<!-- Utility JS and d3 package which has good time formatting. Used to put time on screen. -->
 	<script src="js/d3.min.js"></script>
 	<script src="js/ukcutil.js"></script> 
+    <script type="text/javascript" src="js/html2canvas.min.js"></script>
 	<script>
 		//Update time
 		setInterval(updt,929,"splash0");
+
+        let queryString = new URL(window.location.href);
+        let urlParams = new URLSearchParams(queryString.search.slice(1)); 
+        if(urlParams.has('frame') === true) {
+            /*const screenshotTarget = document.body; html2canvas(screenshotTarget).then((canvas) => { const base64image = canvas.toDataURL("image/png"); window.open(base64image); });*/
+            cheapDoc();
+        }
+
+
+        function cheapDoc() {
+            let win = window.open("", "TITLE", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=474,"+"height=480,"+"top=0,left=0");
+            //win.document.write('<title>Holding frame for MIT CAST app</title>');
+            
+            let _img = win.document.createElement("IMG");
+
+            var newImg = new Image;
+            newImg.onload = function() {
+                _img.src = this.src;
+                let h = win.document.head.id; //Note this does not work !
+                h.innerHTML = "<title>Holding frame for MIT CAST app</title>";
+                win.document.body.appendChild(_img);
+            }
+            newImg.src = 'media/Enewetak.png';
+}
+
+
+       
 	</script>
 
     <div id="error"></div>

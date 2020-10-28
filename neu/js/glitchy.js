@@ -343,7 +343,7 @@ function draw() {
       imgs.line++; //Increment line of the text
     } else {
       /*Uncomment this to get brief glimpse of images*/
-      //background(202,59,20,1);
+      background(202,59,20,1);
       imgs.drawtext();
       //imgs.makefunstuff(); This now moved to standalone file
       imgs.textcounter--;

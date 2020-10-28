@@ -5,6 +5,9 @@ let medpath = '../media/';
 let navh = 73;
 let dpr;
 let yoff = 0.0;
+let coordpSol1 = [0,0]; //Sun 1 coordinates in spherical
+let coordpSol2 = [170,40]; //Sun 2 coordinates in spherical
+let bg = 0; //Flag for flashing background
 
 function preload() {
 	
@@ -25,29 +28,59 @@ function draw() {
 }
 
 
-function makefunstuff() {
+var getPolar = function(x, y, z, r, theta, phi) {
+	// Get as radians
+	var fa = theta * (PI/180);
+	var fb = phi * (PI/180);
 	
+	// Convert coordinates
+	var dx = r * sin(fa) * cos(fb);
+	var dy = r * sin(fa) * sin(fb);
+	var dz = r * cos(fa);
+	
+	// Add origin values (not necessary)
+	var fx = x + dx;
+	var fy = y + dy;
+	var fz = z + dz;
+
+	return [fx, fy, dz];
+}
+
+function makefunstuff() {
+	 if(second()%37 == 0) {
+   if(bg == 0) {
+      background(0,0,0,100); 
+      bg=1;
+    } else {
+      background(100,100,100,0);
+      bg = 0;
+    }
+  }
 
     let dw = drawingContext.canvas.width / dpr;
     let dh = drawingContext.canvas.height / dpr;
 
-    
-  
+	let coordcSol1 = getPolar(0,0,0,1000,coordpSol1[0],coordpSol1[1]);
+	let coordcSol2 = getPolar(0,0,0,500,coordpSol2[0],coordpSol2[1]);
     /*Fun stuff*/
     
       let locX = mouseX - dh / 2;
       let locY = mouseY - dw / 2;
 
-      ambientLight(190,70,70);
-      directionalLight(2, 100, 50, 0.25, 0.25, 0);
-      pointLight(300, 100, 100, locX, locY, 250);
+      ambientLight(70);
+	  pointLight(300, 100, 100, coordcSol1[0],coordcSol1[1],coordcSol1[2]);
+	pointLight(250, 100, 80, coordcSol2[0],coordcSol2[1],coordcSol2[2]);     	
       stroke(0,50,50);
+  		
+ 	coordpSol1[0]++;coordpSol1[1]++;
+ 	coordpSol2[0]++;coordpSol2[1]++;
+
       push();
       translate(0, 100, 0);
       rotateZ(frameCount * 0.02);
       rotateX(frameCount * 0.02);
       specularMaterial(20,50,50);
-      //box(50, 50, 50);
+      
       shininess(100);
       model(mel);
       pop();
