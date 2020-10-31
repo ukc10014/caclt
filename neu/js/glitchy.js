@@ -4,6 +4,7 @@
 let myApp;
 let imgs;
 let glich;
+let imgs_context; //Needed for radiation async function to work
 
 class App {
 
@@ -23,6 +24,7 @@ class App {
     /*Height of the 'nav' element at top of all pages on the site (with date counter and red dot)*/
     this.navh = 73;
 
+    /*Timings*/
     this.first_time = true;
     this.runtime; //How long app running
 
@@ -75,6 +77,22 @@ class Content {
     /*Fun stuff*/
     this.yoff = 0.0;
     this.melancolia; //Load with obj file for Durer melancolia
+
+    /*Radiation stuff*/
+    this.cpmrange = {
+      /*Range of CPM sensor*/
+      min: 3,
+      max: 50
+    };
+
+    this.cpmdata = {
+      /*Stuff from CPM sensor*/
+      ts: 0,
+      cpm: 10,
+      altitude: 0,
+      latitude: 21.50,
+      longitude: 138.50
+    };
 
   }
 
@@ -131,7 +149,7 @@ class Content {
 
   }
    
-   
+  
 
   makefunstuff() {
     let dw = drawingContext.canvas.width / myApp.dpr;
@@ -264,6 +282,85 @@ class Content {
     }
 
 
+    getRadD() {
+      let devID = 82000034;
+      let uid = '6323';
+      let key = '69a1a09c0471ae355092f4d4f2da5548';
+      let sensor = 'cpm';
+      let startinterval = '0'; //time from present moment to get data
+      const url = '//data.uradmonitor.com/api/v1/devices/' + devID + '/' + sensor + '/' + startinterval;
+      const ehr = new XMLHttpRequest();
+      ehr.open('GET',url,true);
+      ehr.setRequestHeader('X-User-id',uid);
+      ehr.setRequestHeader('X-User-hash',key);
+      ehr.onerror = function(ehr) {console.log( 'error: unable to get radiation data, using defaults', ehr  );} ;
+      ehr.onprogress = function(ehr) {console.log( 'bytes loaded:', ehr.loaded  );};
+      ehr.onload = ecallback;
+      ehr.send(null);
+
+    function ecallback(ehr) {
+      let eresponse, radjson, elines;
+
+      eresponse = ehr.target.response;
+            //divContents.innerText = response;
+
+            radjson = JSON.parse( eresponse );
+            //document.getElementById('output').textContent += "\n Radiation sensor data --> time / CPM / lat & long   " + radjson[0]['time'] + "    " + radjson[0]['cpm'] + "    " + radjson[0]['latitude'] + "    " + radjson[0]['longitude'];
+
+
+            /*Assign the global data var*/
+            imgs_context.cpmdata.ts = radjson[0]['time'];
+            imgs_context.cpmdata.altitude = radjson[0]['altitude'];
+            imgs_context.cpmdata.latitude = radjson[0]['latitude'];
+            imgs_context.cpmdata.longitude = radjson[0]['longitude'];
+            imgs_context.cpmdata.cpm = radjson[0]['cpm'];
+          }
+        }
+
+    drawCPM() {
+          /*Put CPM reading on screen*/
+          let ulx,uly;
+
+          let dw = width;
+          let dh = height;
+
+          if(dh >= dw) {
+            ulx = -dw / 2;
+            uly = -dh / 2;
+          } else {
+            ulx = -dw / 2;
+            uly = -dh / 2;
+          }
+
+          ulx = dw/2; uly = dh/2;
+
+          textFont(myApp.fonty);
+          textSize(400);
+          fill(0,max(0,100*sin(frameCount/80)),max(0,100*cos(frameCount/100)),1*sin(frameCount/110));
+          textAlign(CENTER,CENTER);
+          
+          if(minute()%2 == 0) {
+            text(this.cpmdata.cpm.toString(),0,0);
+          } else {          
+            text(this.persian_unicode(this.cpmdata.cpm),0,0);
+          }
+          
+
+          //text("\u06F5",0,0);
+                  }
+
+    persian_digit(input){
+        let inputs = ""+input;
+        let new_val = inputs.replace(/0/g, '۰').replace(/1/g, '۱').replace(/2/g, '۲').replace(/3/g, '۳').replace(/4/g, '۴').replace(/5/g, '۵').replace(/6/g, '۶').replace(/7/g, '۷').replace(/8/g, '۸').replace(/9/g, '۹').replace(/٤/g, '۴').replace(/٥/g, '۵').replace(/٦/g, '۶');
+        return new_val;
+    }
+
+    persian_unicode(input) {
+        let inputs = ""+input;
+        let new_val = inputs.replace(/0/g, '\u06F0').replace(/1/g, '\u06F1').replace(/2/g, '\u06F2').replace(/3/g, '\u06F3').replace(/4/g, '\u06F4').replace(/5/g, '\u06F5').replace(/6/g, '\u06F6').replace(/7/g, '\u06F7').replace(/8/g, '\u06F8').replace(/9/g, '\u06F9').replace(/٤/g, '۴').replace(/٥/g, '۵').replace(/٦/g, '۶');
+        return new_val;
+    } 
+
   }
 
 
@@ -285,13 +382,17 @@ class Content {
     imgs.maketext();
 
     /*Load font*/
-    myApp.fonty = loadFont(myApp.fontpath + 'Inconsolata.otf');
+    //myApp.fonty = loadFont(myApp.fontpath + 'Inconsolata.otf');
+    myApp.fonty = loadFont(myApp.fontpath + 'MarkaziText-VariableFont_wght.ttf');
   }
 
   function load_Content() {
     /*Create Content class and load up files*/
     /*Need this to ensure the images load before anything else happens*/
     imgs = new Content();
+
+    /*This is unsatisfactory, but imgs_context is a Global that lets us access 'imgs' inside async in getRadD*/
+    imgs_context = imgs; 
 
     /*All stuff for UE4 images below this*/
     imgs.img_type = 1; /*Type of img: 0 mosaic; 1 series; 2 none*/
@@ -334,9 +435,10 @@ function draw() {
     windowResized();
     /*Remove placeholder*/
     document.getElementById("placeholder").parentElement.remove();
-
+    imgs.getRadD(); //Get radiation data on first time around
     myApp.first_time = false;
   } 
+
 
 
   //if(imgs.curr_img < imgs.num_ue4img) {imgs.makeimgbuf_noisy();}
@@ -352,7 +454,11 @@ function draw() {
     } else {
       /*Uncomment this to get brief glimpse of images*/
       myApp.runtime < 10000 ? background(202,59,0,1) : (sin(myApp.runtime) > 0.8 ? background(202,59,2,1) : {});
-      imgs.drawtext();
+      
+      /*Uncomment below to do Solaris text*/
+      //imgs.drawtext(); //If we want to do the Solaris text
+      if(frameCount%6000 == 0) {imgs.getRadD()}; //Get radiation data, this is probably too many calls
+      imgs.drawCPM(); //To put CPM readings on screen
       imgs.textcounter--;
     }
     

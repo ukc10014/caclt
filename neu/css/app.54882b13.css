@@ -3058,22 +3058,73 @@ html {
 }
 
 body {
-    background-color: rgb(100,200,255);
-    /*background-image: linear-gradient(rgb(0,20,30),rgb(100,200,255));*/
+    /*UKC addition of background image*/
+    background-color: rgb(0,20,50);
+    //background-image: linear-gradient(rgb(0,20,30),rgb(100,200,255));
+    background-image: url('../media/Enewetak.png');
+    background-position: center; 
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    margin: 0;
+}
+
+
+
+/*Testing spinning background*/
+body.spinner {
     background-image: url('../media/Enewetak.png');
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover;
     margin: 0;
+    animation: spin 36s linear infinite;    
+
 }
 
-body.essai {
+/*UKC testing*/
+/*#app {
+    z-index: 10;
+    animation: revspin 36s linear infinite;
+}*/
+
+
+@keyframes spin{
+    /*UKC referenced above on background animation*/
+    from{transform:rotate(0deg)}
+    to{transform:rotate(360deg)}    
+}
+
+@keyframes revspin{
+    from{transform:rotate(360deg)}
+    to{transform:rotate(0deg)}   
+}
+
+body.essai{
+    background-image: linear-gradient(rgb(250,20,30),rgb(100,200,255));;
+}
+
+div.essai {
     /*background-color: rgb(0,20,30);*/
-    background-image: linear-gradient(rgb(100,200,255),rgb(0,20,30));
+    background-image: url('../media/Enewetak.png');
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-size: cover;
+    margin: 0;
+    animation: spin 86400s linear infinite;
+}
+
+div.essaitop {
+   animation: revspin 86400s linear infinite; 
 }
 
 body.mimoid {
     background-image: linear-gradient(rgb(0,20,30),rgb(100,200,255));
+}
+
+body.melancolia {
+    animation: spin 36s linear infinite;
+
 }
 
 /*UKC addition to make the navigation uniform*/
@@ -4089,7 +4140,7 @@ canvas {
 }
 
 .border-green {
-    border-color: #0a6e3c
+    border-color: rgb(0,255,0)
 }
 
 .border-gray-100 {
@@ -4130,6 +4181,10 @@ canvas {
 
 .border-gray-base {
     border-color: #91919b
+}
+
+.border-blue-light {
+    border-color: rgb(20,50,70);
 }
 
 .border-gray-light {
