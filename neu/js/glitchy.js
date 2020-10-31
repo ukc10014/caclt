@@ -52,6 +52,7 @@ class Glitch {
 
     /*Cinematic vignette/scratch shader*/
     this.sCine = loadShader(myApp.shadpath + 'cinematic.vert',myApp.shadpath + 'cinematic.frag');
+    this.sCine2 = loadShader(myApp.shadpath + 'cinematic_colour.vert',myApp.shadpath + 'cinematic_colour.frag');
   }
 
 }
@@ -93,6 +94,8 @@ class Content {
       latitude: 21.50,
       longitude: 138.50
     };
+
+    this.cpmthreshold = 12; //Used to choose between b&w and funky glitchy shader
 
   }
 
@@ -232,8 +235,9 @@ class Content {
 
       //myApp.masterBuf.clear();
       
+      /*cpmthreshold is the cpm level below/above which we pick between two different shaders*/
+      if(this.cpmdata.cpm < this.cpmthreshold) {
       myApp.masterBuf.shader(glich.sCine);
-
       glich.sCine.setUniform("iResolution",[myApp.kludge_w,myApp.kludge_h]);
       glich.sCine.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
       glich.sCine.setUniform("iTime",second());
@@ -242,6 +246,15 @@ class Content {
       glich.sCine.setUniform("BLOTCHES",'false');
       glich.sCine.setUniform("GRAIN",'false');
       glich.sCine.setUniform("VIGNETTE",'false');*/
+
+      } else {
+        myApp.masterBuf.shader(glich.sCine2);
+        glich.sCine2.setUniform("iResolution",[myApp.kludge_w,myApp.kludge_h]);
+        glich.sCine2.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
+        glich.sCine2.setUniform("iTime",second());
+
+    }
+
       myApp.masterBuf.rect(0,0,imgWidth,imgHeight);
       
       //image(myApp.masterBuf,-myApp.offsetw/2,-myApp.offseth/2-150,imgWidth*0.25,imgHeight*0.25);
@@ -453,7 +466,7 @@ function draw() {
       imgs.line++; //Increment line of the text
     } else {
       /*Uncomment this to get brief glimpse of images*/
-      myApp.runtime < 10000 ? background(202,59,0,1) : (sin(myApp.runtime) > 0.8 ? background(202,59,2,1) : {});
+      (myApp.runtime < 10000 && imgs.cpmdata.cpm < imgs.cpmthreshold) ? background(202,59,0,1) : (sin(myApp.runtime) > 0.8 ? background(202,59,2,1) : {});
       
       /*Uncomment below to do Solaris text*/
       //imgs.drawtext(); //If we want to do the Solaris text
