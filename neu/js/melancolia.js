@@ -49,7 +49,7 @@ var getPolar = function(x, y, z, r, theta, phi) {
 function makefunstuff() {
 	 if(second()%37 == 0) {
    if(bg == 0) {
-      background(0,0,0,100); 
+      background(0,0,0,.2); 
       bg=1;
     } else {
       background(100,100,100,0);
