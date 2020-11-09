@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+    <meta charset=utf-8>
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <link rel=icon href=/favicon.png> <title>U. Kanad Chakrabarti</title>
+    <script>
+    window.prerenderReady = false;
+    </script>
+ <!--   <link href=css/app.54882b13.css rel=preload as=style> -->
+<!--    <link href=js/app.8c27b911.js rel=preload as=script> -->
+    <link href=js/d3.min.js rel=preload as=script>
+    <link href=js/ukcutil.js rel=preload as=script>
+    <link href=css/app.54882b13.css rel=stylesheet> 
+
+    <!-- <script src="js/p5.min.js" type="text/javascript"></script> -->
+
+</head>
+
+
+
+    <body id="indexbg" class="indexbg">
+      <!-- <div id="indxdiv"> -->
+        <noscript>Please turn on Javascript to view this project by U. Kanad Chakrabarti.</noscript>
+
+        <div data-v-3c4263c1="" id="app" class="transition flex flex-col min-h-screen">
+        <!---->
+        <!-- <div data-v-3c4263c1="" id="nav" class="z-10 uppercase transition sticky top-0 flex justify-between py-3 px-3 md:px-6 bg-gray-300" style="background-color: rgb(145, 145, 155);"> -->
+        	<div data-v-3c4263c1="" id="nav" class="z-10 uppercase transition sticky top-0 flex justify-between py-3 px-3 md:px-6">
+        	<!-- LHS spacer -->
+            <div data-v-3c4263c1="" class="w-1/4"><a data-v-3c4263c1="" href="./index.html" class="hidden md:inline router-link-active"><p class="dot"></p></a><a data-v-3c4263c1="" href="./index.html" class="md:hidden"><p class="dot"></p></a></div>
+          
+<div data-v-9311eee0="" class="flex fixed left-0 right-0 justify-center z-20"><div data-v-9311eee0="" class="border-current serif uppercase text-sm border flex items-center mb-4 uppercase tracking-wider"><span data-v-9311eee0="" id="splash0"></span><span class="citation annotation-counter annotation-counter-inner credits" data-tippy-content="<center><b>Site Credits</b></center><br><br>Shaders: shadertoy.com/view/Xdl3D8 <br><br> Bug JS: github.com/Auz/Bug <br><br> Enewetak Atoll & Arii Matamoe images: Wikipedia <br><br> Solaris text by Stanislaw Lem <br><br> Fonts: Inconsolata & Markazi <br><br> Radiation sensor API: uradmonitor.com <br><br> Market data API: prediqtiv.github.io & Alpha Vantage <br><br>Some JS animations from processing.org & p5js.org <br><br> CSS derived from Alan Woo (alanwoo.ca/) file for e-flux.com & cosmos.art.">&bull;</span></div></div>
+
+            <div data-v-3c4263c1="" class="w-1/4 text-right"></div> 
+
+        </div>
+        
+        <div data-v-3c4263c1="" class="stars-wrapper">
+            <div data-v-3c4263c1="" class="stars"></div>
+        </div> 
+        <div data-v-7205f1e9="" data-v-3c4263c1="" class="z-30 searchwrapper" style="display: none;">
+            <div data-v-7205f1e9="" class="search">
+                <div data-v-7205f1e9="" class="relative text-white"><input data-v-7205f1e9="" id="search-input" autocomplete="off" type="text" placeholder="Search" tabindex="0">
+                    <div data-v-7205f1e9="" class="search-right absolute right-0 top-0 flex items-center h-full">
+                        <!---->
+                        <!---->
+                        <div data-v-7205f1e9="" class="mr-4 close-button cursor-pointer"><svg data-v-7205f1e9="" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <line data-v-7205f1e9="" x1="1.3306" y1="1.09957" x2="27.1254" y2="26.8944" stroke="currentColor" stroke-width="2"></line>
+                                <line data-v-7205f1e9="" x1="27.1255" y1="1.80668" x2="1.33074" y2="27.6015" stroke="currentColor" stroke-width="2"></line>
+                            </svg></div>
+                    </div>
+                </div>
+                <!---->
+            </div>
+        </div>
+        <div data-v-58c4ec38="" data-v-3c4263c1="" class="flex-1 flex flex-wrap border-blue-light uppercase"><a data-v-58c4ec38="" href="text/pr.html" class="text-center border-b flex items-center justify-center w-1/2 border-r border-blue-light px-2">sweeney</a><a data-v-58c4ec38 href="model/suns.html" class="text-center border-b border-r flex items-center justify-center w-1/2 border-blue-light"><p class="dot s1"></p></a><a data-v-58c4ec38="" href="game/moruroa.html" class="text-center border-b border-l flex items-center justify-center w-1/2 border-r border-blue-light"><p class="dot s2"></p></a><a data-v-58c4ec38="" href="text/essai.html" class="text-center flex items-center justify-center w-1/2 border-blue-light px-2">shoal</a></div>
+    </div>
+</div>
+
+	<!-- Utility JS and d3 package which has good time formatting. Used to put time on screen. -->
+	<script src="js/d3.min.js"></script>
+	<script src="js/ukcutil.js"></script> 
+    <script type="text/javascript" src="js/html2canvas.min.js"></script>
+	<script>
+		//Update time
+		setInterval(updt,929,"splash0");
+
+        let queryString = new URL(window.location.href);
+        let urlParams = new URLSearchParams(queryString.search.slice(1)); 
+        if(urlParams.has('frame') === true) {
+            /*const screenshotTarget = document.body; html2canvas(screenshotTarget).then((canvas) => { const base64image = canvas.toDataURL("image/png"); window.open(base64image); });*/
+            cheapDoc();
+        }
+
+
+        function cheapDoc() {
+            let win = window.open("", "TITLE", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=474,"+"height=480,"+"top=0,left=0");
+            //win.document.write('<title>Holding frame for MIT CAST app</title>');
+            
+            let _img = win.document.createElement("IMG");
+
+            var newImg = new Image;
+            newImg.onload = function() {
+                _img.src = this.src;
+                let h = win.document.head.id; //Note this does not work !
+                h.innerHTML = "<title>Holding frame for MIT CAST app</title>";
+                win.document.body.appendChild(_img);
+            }
+            newImg.src = 'media/Enewetak.png';
+}
+
+
+       
+	</script>
+
+<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+<script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+<script>tippy('[data-tippy-content]',
+{
+          theme: 'credits',
+          arrow: false,
+          allowHTML: true
+        });
+</script>
+
+
+<!-- Put up moruroa image in background -->
+<!-- <script>
+    
+    let img = document.createElement("IMG");
+    img.id = "indximg";
+    img.src = 'media/Enewetak.png';
+    img.style.transform = 'rotate(99deg)';
+    let target = document.getElementById("indxdiv");
+    target.appendChild(img);
+    */
+
+    /*p5js code to create rotating image in background*/
+    /*
+    let img;
+    let enclm = "indxdiv";
+    let imgw = 480;  //Hardwired for now
+    let imgh = 474;
+
+    function preload() {
+        img = loadImage('media/Enewetak.png');
+    }
+
+    function setup(){
+    let canvas = createCanvas(document.getElementById(enclm).clientWidth, document.getElementById(enclm).clientHeight);
+        canvas.parent('indxdiv');
+        
+            }
+            
+    function draw(){
+        translate(width / 2, height / 2);
+        rotate(PI / 180 * 0);
+  //      imageMode(CENTER);
+        if(width>height) {
+            image(img, 0, 0,width,height * width / imgw * (1 / window.devicePixelRatio));
+            } else {
+           image(img, 0,0,width * height / imgh * (1 / window.devicePixelRatio),height);
+            }
+        }
+</script>
+-->
+    <div id="error"></div>
+</body>
+
+</html>
