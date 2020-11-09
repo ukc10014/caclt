@@ -415,7 +415,7 @@ class Content {
     imgs.makeimgs(); //Make an array of images
 
     /*Load Durer model*/
-    imgs.melancolia = loadModel(myApp.medpath + 'melancolia.obj',true);
+    //imgs.melancolia = loadModel(myApp.medpath + 'melancolia.obj',true);
     } 
 
 function setup() {

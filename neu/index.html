@@ -9,17 +9,21 @@
     <script>
     window.prerenderReady = false;
     </script>
-    <link href=css/app.54882b13.css rel=preload as=style>
+ <!--   <link href=css/app.54882b13.css rel=preload as=style> -->
 <!--    <link href=js/app.8c27b911.js rel=preload as=script> -->
     <link href=js/d3.min.js rel=preload as=script>
     <link href=js/ukcutil.js rel=preload as=script>
-    <link href=css/app.54882b13.css rel=stylesheet>
+    <link href=css/app.54882b13.css rel=stylesheet> 
+
+    <!-- <script src="js/p5.min.js" type="text/javascript"></script> -->
+
 </head>
 
 
 
-    <body>
-    	<noscript>Please turn on Javascript to view this project by U. Kanad Chakrabarti.</noscript>
+    <body id="indexbg" class="indexbg">
+      <!-- <div id="indxdiv"> -->
+        <noscript>Please turn on Javascript to view this project by U. Kanad Chakrabarti.</noscript>
 
         <div data-v-3c4263c1="" id="app" class="transition flex flex-col min-h-screen">
         <!---->
@@ -28,7 +32,7 @@
         	<!-- LHS spacer -->
             <div data-v-3c4263c1="" class="w-1/4"><a data-v-3c4263c1="" href="./index.html" class="hidden md:inline router-link-active"><p class="dot"></p></a><a data-v-3c4263c1="" href="./index.html" class="md:hidden"><p class="dot"></p></a></div>
           
-<div data-v-9311eee0="" class="flex fixed left-0 right-0 justify-center z-20"><div data-v-9311eee0="" class="border-current serif uppercase text-sm border flex items-center mb-4 uppercase tracking-wider"><span data-v-9311eee0="" id="splash0"></span></div></div>
+<div data-v-9311eee0="" class="flex fixed left-0 right-0 justify-center z-20"><div data-v-9311eee0="" class="border-current serif uppercase text-sm border flex items-center mb-4 uppercase tracking-wider"><span data-v-9311eee0="" id="splash0"></span><span class="citation annotation-counter annotation-counter-inner credits" data-tippy-content="<center><b>Site Credits</b></center><br><br>Shaders: shadertoy.com/view/Xdl3D8 <br><br> Bug JS: github.com/Auz/Bug <br><br> Enewetak Atoll & Arii Matamoe images: Wikipedia <br><br> Solaris text by Stanislaw Lem <br><br> Fonts: Inconsolata & Markazi <br><br> Radiation sensor API: uradmonitor.com <br><br> Market data API: prediqtiv.github.io & Alpha Vantage <br><br>Some JS animations from processing.org & p5js.org <br><br> CSS derived from Alan Woo (alanwoo.ca/) file for e-flux.com & cosmos.art.">&bull;</span></div></div>
 
             <div data-v-3c4263c1="" class="w-1/4 text-right"></div> 
 
@@ -54,7 +58,7 @@
         </div>
         <div data-v-58c4ec38="" data-v-3c4263c1="" class="flex-1 flex flex-wrap border-blue-light uppercase"><a data-v-58c4ec38="" href="text/pr.html" class="text-center border-b flex items-center justify-center w-1/2 border-r border-blue-light px-2">sweeney</a><a data-v-58c4ec38 href="model/suns.html" class="text-center border-b border-r flex items-center justify-center w-1/2 border-blue-light"><p class="dot s1"></p></a><a data-v-58c4ec38="" href="game/moruroa.html" class="text-center border-b border-l flex items-center justify-center w-1/2 border-r border-blue-light"><p class="dot s2"></p></a><a data-v-58c4ec38="" href="text/essai.html" class="text-center flex items-center justify-center w-1/2 border-blue-light px-2">shoal</a></div>
     </div>
-
+</div>
 
 	<!-- Utility JS and d3 package which has good time formatting. Used to put time on screen. -->
 	<script src="js/d3.min.js"></script>
@@ -92,6 +96,57 @@
        
 	</script>
 
+<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+<script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+<script>tippy('[data-tippy-content]',
+{
+          theme: 'credits',
+          arrow: false,
+          allowHTML: true
+        });
+</script>
+
+
+<!-- Put up moruroa image in background -->
+<!-- <script>
+    
+    let img = document.createElement("IMG");
+    img.id = "indximg";
+    img.src = 'media/Enewetak.png';
+    img.style.transform = 'rotate(99deg)';
+    let target = document.getElementById("indxdiv");
+    target.appendChild(img);
+    */
+
+    /*p5js code to create rotating image in background*/
+    /*
+    let img;
+    let enclm = "indxdiv";
+    let imgw = 480;  //Hardwired for now
+    let imgh = 474;
+
+    function preload() {
+        img = loadImage('media/Enewetak.png');
+    }
+
+    function setup(){
+    let canvas = createCanvas(document.getElementById(enclm).clientWidth, document.getElementById(enclm).clientHeight);
+        canvas.parent('indxdiv');
+        
+            }
+            
+    function draw(){
+        translate(width / 2, height / 2);
+        rotate(PI / 180 * 0);
+  //      imageMode(CENTER);
+        if(width>height) {
+            image(img, 0, 0,width,height * width / imgw * (1 / window.devicePixelRatio));
+            } else {
+           image(img, 0,0,width * height / imgh * (1 / window.devicePixelRatio),height);
+            }
+        }
+</script>
+-->
     <div id="error"></div>
 </body>
 
