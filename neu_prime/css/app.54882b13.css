@@ -3087,8 +3087,8 @@ body {
 
 /*Turn off background image on index page in CSS (plan is to do it in JS)*/
 body.indexbg {
-  
-    animation: fade 60s linear infinite;
+  background-image: linear-gradient(rgb(0,20,30),rgb(100,200,255));
+    //animation: fade 60s linear infinite;
     margin: 0;
 }
 
@@ -3151,6 +3151,7 @@ body.indexbg {
 
 body.essai{
     background-image: linear-gradient(rgb(250,20,30),rgb(100,200,255));;
+    animation: fade 120s linear infinite;
 }
 
 div.essai {
@@ -3169,11 +3170,12 @@ div.essaitop {
 
 body.mimoid {
     background-image: linear-gradient(rgb(0,20,30),rgb(100,200,255));
+    animation: fade 60s ease-in-out infinite alternate;
 }
 
 body.melancolia {
     animation: revspin 3600s ease infinite;
-
+    animation: fade 30s ease-in-out infinite alternate;
 }
 
 /*UKC addition to make the navigation uniform*/

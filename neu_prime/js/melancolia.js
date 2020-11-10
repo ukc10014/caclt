@@ -9,6 +9,16 @@ let coordpSol1 = [0,0]; //Sun 1 coordinates in spherical
 let coordpSol2 = [170,40]; //Sun 2 coordinates in spherical
 let bg = 0; //Flag for flashing background
 
+
+/*Textfile material*/
+let fontpath = '../fonts/';
+let txtpath = '../text/';
+let fonty;
+let textcont;
+let holdtext = 2; //In seconds. This is persistent, used to reset textcounter after a countdown
+let textcounter = holdtext * 60; //In frames, how long to hold text on screen for
+let line; //What line of the text is being shown
+
 function preload() {
 	
 	/*Load Durer model*/
@@ -21,12 +31,67 @@ function setup() {
   canvas.parent('app');
   dpr = window.devicePixelRatio;
   colorMode(HSB);
+
+  /*Text stuff*/
+  fonty = loadFont(fontpath + 'Inconsolata.otf');
+  maketext();
+  setfirstline();
 }
 
 function draw() {
 	makefunstuff();
+
+  if(textcounter <= 0) {
+      textcounter = holdtext * frameRate(); //Reset counter based on realised framerate
+      line++; //Increment line of the text
+    } else {
+      
+      /*Uncomment below to do Solaris text*/
+      //drawtext(); //If we want to do the Solaris text
+      textcounter--;
+    }
 }
 
+function setfirstline() {
+    //this.line = int(random() * this.textcont.length); //Set up first line that the text generator displays 
+   line = 1;
+  }
+
+function maketext() {
+    /*Loads a text file*/
+    let fn;
+    fn = txtpath + "solaris.txt";
+    textcont = loadStrings(fn);    
+  }
+
+function drawtext() {
+    let ulx,uly;
+    /*
+    let dw = drawingContext.canvas.width;
+    let dh = drawingContext.canvas.height;
+    */
+
+    let dw = width;
+    let dh = height;
+
+    if(dh >= dw) {
+      ulx = -dw / 2;
+      uly = -dh / 2;
+} else {
+      ulx = -dw / 2;
+      uly = -dh / 2;
+    }
+
+    uly = uly + (line * 10)%100;
+
+    textFont(fonty);
+    textSize(50);
+    fill(line,int(sin(line)*100),int(cos(line)*100))
+    //fill(0,100,100,1);
+    textAlign(RIGHT,TOP);
+    text(textcont[line],ulx,uly,width,height);
+
+  }
 
 var getPolar = function(x, y, z, r, theta, phi) {
 	// Get as radians
