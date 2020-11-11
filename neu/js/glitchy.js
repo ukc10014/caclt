@@ -12,7 +12,6 @@ class App {
   {
     this.medpath = '../media/';
     this.shadpath = '../shadersGL3/';
-    this.txtpath = '../text/';
     this.fontpath = '../fonts/';
 
 
@@ -69,12 +68,6 @@ class Content {
     this.nextimg = 0; //Counter for when images are held on the screen rather than incrementing
     this.nextimgp = 2; //Outer counter, see makeimgbuf_noisy
 
-    /*Textfile material*/
-    this.textcont;
-    this.holdtext = 2; //In seconds. This is persistent, used to reset textcounter after a countdown
-    this.textcounter = this.holdtext * 60; //In frames, how long to hold text on screen for
-    this.line; //What line of the text is being shown
-
     /*Fun stuff*/
     this.yoff = 0.0;
     this.melancolia; //Load with obj file for Durer melancolia
@@ -85,6 +78,11 @@ class Content {
       min: 3,
       max: 50
     };
+
+    /*Text stuff*/
+    this.holdtext = 2; //In seconds. This is persistent, used to reset textcounter after a countdown
+    this.textcounter = this.holdtext * 60; //In frames, how long to hold text on screen for
+   
 
     this.cpmdata = {
       /*Stuff from CPM sensor*/
@@ -114,46 +112,9 @@ class Content {
     }
   }
 
-  maketext() {
-    /*Loads a text file*/
-    let fn;
-    fn = myApp.txtpath + "solaris.txt";
-    this.textcont = loadStrings(fn);    
-  } 
-
-  setfirstline() {
-    //this.line = int(random() * this.textcont.length); //Set up first line that the text generator displays 
-    this.line = 1;
-  } 
-
-  drawtext() {
-    let ulx,uly;
-    /*
-    let dw = drawingContext.canvas.width;
-    let dh = drawingContext.canvas.height;
-    */
-
-    let dw = width;
-    let dh = height;
-
-    if(dh >= dw) {
-      ulx = -dw / 2;
-      uly = -dh / 2;
-} else {
-      ulx = -dw / 2;
-      uly = -dh / 2;
-    }
-
-    textFont(myApp.fonty);
-    textSize(50);
-    fill(0,100,100,1);
-    textAlign(RIGHT,TOP);
-    text(this.textcont[this.line],ulx,uly,width,height);
-
-  }
    
-  
 
+ 
   makefunstuff() {
     let dw = drawingContext.canvas.width / myApp.dpr;
     let dh = drawingContext.canvas.height / myApp.dpr;
@@ -216,7 +177,7 @@ class Content {
      /*Stuff to get images to stutter and randomly hold rather than incrementing*/
       if(this.nextimg == 0) { //Do all gubbins below only if inner loop is completed (i.e. image is up for specified num frames)
         if(random()<0.2 && this.nextimgp == 1) { //So smol prob of time, outer loop will be set to [60] frames of hold
-          this.nextimgp = 60; //Maximum num frames to hold an image for 
+          this.nextimgp = (this.cpmdata.cpm < this.cpmthreshold) ? 60 : 120; //Maximum num frames to hold an image for 
         } else {
           this.nextimgp = max(1,this.nextimgp - 1);  //Smoothly decrement from max frames
         } //Outer counter that determines setting of inner counter
@@ -248,6 +209,7 @@ class Content {
       glich.sCine.setUniform("VIGNETTE",'false');*/
 
       } else {
+        /*Colour shader*/
         myApp.masterBuf.shader(glich.sCine2);
         glich.sCine2.setUniform("iResolution",[myApp.kludge_w,myApp.kludge_h]);
         glich.sCine2.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
@@ -296,11 +258,16 @@ class Content {
 
 
     getRadD() {
-      let devID = 82000034;
+      let devID = '82000034'; //Romania, Radu's default
+      //let devID = '12000037'; //Christchurch NZ
+      //let devID = '5100003A'; //Richmond Hill, NY, US
+      
       let uid = '6323';
       let key = '69a1a09c0471ae355092f4d4f2da5548';
       let sensor = 'cpm';
       let startinterval = '0'; //time from present moment to get data
+      //const url = '//data.uradmonitor.com/api/v1/devices/82000034/cpm/0';
+
       const url = '//data.uradmonitor.com/api/v1/devices/' + devID + '/' + sensor + '/' + startinterval;
       const ehr = new XMLHttpRequest();
       ehr.open('GET',url,true);
@@ -391,9 +358,7 @@ class Content {
     /*Create new Glitch object*/
     glich = new Glitch();
 
-    /*Load text file*/
-    imgs.maketext();
-
+    
     /*Load font*/
     //myApp.fonty = loadFont(myApp.fontpath + 'Inconsolata.otf');
     myApp.fonty = loadFont(myApp.fontpath + 'MarkaziText-VariableFont_wght.ttf');
@@ -437,7 +402,6 @@ function setup() {
 
   /*Set up textcounter*/
   colorMode(HSB);
-  imgs.setfirstline();
 }
 
 function draw() {      
@@ -468,8 +432,6 @@ function draw() {
       /*Uncomment this to get brief glimpse of images*/
       (myApp.runtime < 10000 && imgs.cpmdata.cpm < imgs.cpmthreshold) ? background(202,59,0,1) : (sin(myApp.runtime) > 0.8 ? background(202,59,2,1) : {});
       
-      /*Uncomment below to do Solaris text*/
-      //imgs.drawtext(); //If we want to do the Solaris text
       if(frameCount%6000 == 0) {imgs.getRadD()}; //Get radiation data, this is probably too many calls
       imgs.drawCPM(); //To put CPM readings on screen
       imgs.textcounter--;

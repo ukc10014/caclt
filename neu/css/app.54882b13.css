@@ -3075,20 +3075,16 @@ html {
 
 body {
     /*UKC addition of background image*/
-    background-color: rgb(0,20,50);
+    //background-color: rgb(0,20,50);
     //background-image: linear-gradient(rgb(0,20,30),rgb(100,200,255));
-    background-image: url('../media/Enewetak.png');
-    background-position: center; 
-    background-repeat: no-repeat;
-    background-size: cover;
     
     margin: 0;
 }
 
 /*Turn off background image on index page in CSS (plan is to do it in JS)*/
 body.indexbg {
-  
-    animation: fade 60s linear infinite;
+  background-image: linear-gradient(rgb(0,20,30),rgb(100,200,255));
+    //animation: fade 60s linear infinite;
     margin: 0;
 }
 
@@ -3120,23 +3116,6 @@ body.indexbg {
     
 }
 
-/*Testing spinning background*/
-/*body.spinner {
-    background-image: url('../media/Enewetak.png');
-    background-position: center; 
-    background-repeat: no-repeat; 
-    background-size: cover;
-    margin: 0;
-    animation: spin 36s linear infinite;    
-
-}*/
-
-/*UKC testing*/
-/*#app {
-    z-index: 10;
-    animation: revspin 36s linear infinite;
-}*/
-
 
 @keyframes spin{
     /*UKC referenced above on background animation*/
@@ -3150,7 +3129,16 @@ body.indexbg {
 }
 
 body.essai{
+//    background-image: url('../media/Enewetak.png');
     background-image: linear-gradient(rgb(250,20,30),rgb(100,200,255));;
+    animation: fade 120s linear infinite;
+}
+
+body.pr{
+    background-image: url('../media/Enewetak.png');
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-size: cover;    
 }
 
 div.essai {
@@ -3169,12 +3157,25 @@ div.essaitop {
 
 body.mimoid {
     background-image: linear-gradient(rgb(0,20,30),rgb(100,200,255));
+    //animation: fade 15s ease-in-out infinite alternate;
 }
 
 body.melancolia {
-    animation: revspin 3600s ease infinite;
-
+        background-image: url('../media/Enewetak.png');
+        background-position: center; 
+        background-repeat: no-repeat; 
+        background-size: cover;
+        animation: 
+            fade 30s ease-in-out infinite alternate,
+            revspin 3600s ease infinite;
 }
+
+/*Animation to flip background image*/
+@keyframes flipbg{
+    0% {background-image: url('../media/Enewetak.png') center no-repeat cover;}
+    100% {background-image: linear-gradient(rgb(0,255,20),rgb(0,200,20)); }
+}
+
 
 /*UKC addition to make the navigation uniform*/
 
