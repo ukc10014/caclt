@@ -3083,7 +3083,7 @@ body {
 
 /*Turn off background image on index page in CSS (plan is to do it in JS)*/
 body.indexbg {
-  background-image: linear-gradient(rgb(0,20,30),rgb(100,200,255));
+  background-image: linear-gradient(rgb(0,30,50),rgb(120,120,125));
     //animation: fade 60s linear infinite;
     margin: 0;
 }
