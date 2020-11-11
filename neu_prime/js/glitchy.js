@@ -259,12 +259,13 @@ class Content {
 
     getRadD() {
       //let devID = '82000034';
-      let devID = '4100000A';
+      //let devID = '12000037'; //Christchurch NZ
+      let devID = '5100003A'; //Richmond Hill, NY, US
       let uid = '6323';
       let key = '69a1a09c0471ae355092f4d4f2da5548';
       let sensor = 'cpm';
       let startinterval = '0'; //time from present moment to get data
-      //const url = '//data.uradmonitor.com/api/v1/devices';
+      //const url = '//data.uradmonitor.com/api/v1/devices/82000034/cpm/0';
 
       const url = '//data.uradmonitor.com/api/v1/devices/' + devID + '/' + sensor + '/' + startinterval;
       const ehr = new XMLHttpRequest();
@@ -287,11 +288,11 @@ class Content {
 
 
             /*Assign the global data var*/
-            imgs_context.cpmdata.ts = radjson[0]['timelast'];
+            imgs_context.cpmdata.ts = radjson[0]['time'];
             imgs_context.cpmdata.altitude = radjson[0]['altitude'];
             imgs_context.cpmdata.latitude = radjson[0]['latitude'];
             imgs_context.cpmdata.longitude = radjson[0]['longitude'];
-            imgs_context.cpmdata.cpm = radjson[0]['avg_cpm'];
+            imgs_context.cpmdata.cpm = radjson[0]['cpm'];
           }
         }
 
