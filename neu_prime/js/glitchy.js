@@ -177,7 +177,7 @@ class Content {
      /*Stuff to get images to stutter and randomly hold rather than incrementing*/
       if(this.nextimg == 0) { //Do all gubbins below only if inner loop is completed (i.e. image is up for specified num frames)
         if(random()<0.2 && this.nextimgp == 1) { //So smol prob of time, outer loop will be set to [60] frames of hold
-          this.nextimgp = 60; //Maximum num frames to hold an image for 
+          this.nextimgp = (this.cpmdata.cpm < this.cpmthreshold) ? 60 : 120; //Maximum num frames to hold an image for 
         } else {
           this.nextimgp = max(1,this.nextimgp - 1);  //Smoothly decrement from max frames
         } //Outer counter that determines setting of inner counter
@@ -209,6 +209,7 @@ class Content {
       glich.sCine.setUniform("VIGNETTE",'false');*/
 
       } else {
+        /*Colour shader*/
         myApp.masterBuf.shader(glich.sCine2);
         glich.sCine2.setUniform("iResolution",[myApp.kludge_w,myApp.kludge_h]);
         glich.sCine2.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
@@ -257,11 +258,14 @@ class Content {
 
 
     getRadD() {
-      let devID = 82000034;
+      //let devID = '82000034';
+      let devID = '4100000A';
       let uid = '6323';
       let key = '69a1a09c0471ae355092f4d4f2da5548';
       let sensor = 'cpm';
       let startinterval = '0'; //time from present moment to get data
+      //const url = '//data.uradmonitor.com/api/v1/devices';
+
       const url = '//data.uradmonitor.com/api/v1/devices/' + devID + '/' + sensor + '/' + startinterval;
       const ehr = new XMLHttpRequest();
       ehr.open('GET',url,true);
@@ -283,11 +287,11 @@ class Content {
 
 
             /*Assign the global data var*/
-            imgs_context.cpmdata.ts = radjson[0]['time'];
+            imgs_context.cpmdata.ts = radjson[0]['timelast'];
             imgs_context.cpmdata.altitude = radjson[0]['altitude'];
             imgs_context.cpmdata.latitude = radjson[0]['latitude'];
             imgs_context.cpmdata.longitude = radjson[0]['longitude'];
-            imgs_context.cpmdata.cpm = radjson[0]['cpm'];
+            imgs_context.cpmdata.cpm = radjson[0]['avg_cpm'];
           }
         }
 
