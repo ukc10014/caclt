@@ -49,10 +49,13 @@ class App {
 class Glitch {
   constructor() {
 
+    this.simplex_df = 0; //0-10 inclusive, Feeds into simplex shader, should ultimately be time linked
+
     /*Cinematic vignette/scratch shader*/
     this.sCine = loadShader(myApp.shadpath + 'cinematic.vert',myApp.shadpath + 'cinematic.frag');
     this.sCine2 = loadShader(myApp.shadpath + 'cinematic_colour.vert',myApp.shadpath + 'cinematic_colour.frag');
-  }
+    this.sSimplex = loadShader(myApp.shadpath + 'simplex.vert',myApp.shadpath + 'simplex.frag');
+  } 
 
 }
 
@@ -66,7 +69,7 @@ class Content {
     this.sizename_ue4img; //Bodge for how long image filenames are
 
     this.nextimg = 0; //Counter for when images are held on the screen rather than incrementing
-    this.nextimgp = 2; //Outer counter, see makeimgbuf_noisy
+    this.nextimgp = 120; //Outer counter, see makeimgbuf_noisy
 
     /*Fun stuff*/
     this.yoff = 0.0;
@@ -94,7 +97,8 @@ class Content {
     };
 
     this.cpmthreshold = 12; //Used to choose between b&w and funky glitchy shader
-
+    this.cpmthreshold1 = 20; //Next threshold for funkier shader 
+    this.cpm_test = 25; //Override datafeed with test level
   }
 
 
@@ -208,22 +212,26 @@ class Content {
       glich.sCine.setUniform("GRAIN",'false');
       glich.sCine.setUniform("VIGNETTE",'false');*/
 
-      } else {
+      } else if(this.cpmdata.cpm >= this.cpmthreshold && this.cpmdata.cpm < this.cpmthreshold1) {
         /*Colour shader*/
         myApp.masterBuf.shader(glich.sCine2);
         glich.sCine2.setUniform("iResolution",[myApp.kludge_w,myApp.kludge_h]);
         glich.sCine2.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
         glich.sCine2.setUniform("iTime",second());
 
+    } else if(this.cpmdata.cpm >= this.cpmthreshold1) {
+        myApp.masterBuf.shader(glich.sSimplex);
+        glich.simplex_df = millis()/3.6e4;
+        //glich.simplex_df = random()*5;
+        glich.sSimplex.setUniform("iResolution",[myApp.kludge_w,myApp.kludge_h]);
+        glich.sSimplex.setUniform("iTime", millis());
+        glich.sSimplex.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
+        glich.sSimplex.setUniform("uDayFrac",glich.simplex_df); //Pass the fraction of interval (bp1-ease,bp2+ease)
+      
     }
 
       myApp.masterBuf.rect(0,0,imgWidth,imgHeight);
-      
-      //image(myApp.masterBuf,-myApp.offsetw/2,-myApp.offseth/2-150,imgWidth*0.25,imgHeight*0.25);
-      //image(myApp.masterBuf,ulx,uly,imgWidth,imgHeight);
-      //image(myApp.masterBuf,0,0,imgWidth*windowHeight/windowWidth,windowHeight);
-      //image(myApp.masterBuf,0,0,drawingContext.canvas.width,drawingContext.canvas.height*imgHeight/imgWidth*0.5);
-
+      //myApp.masterBuf.rect(0,0,windowWidth,windowHeight);
 
      //Some weird shit to accommodate phone portrait, landscape, etc.
      let dw = drawingContext.canvas.width;
@@ -258,9 +266,10 @@ class Content {
 
 
     getRadD() {
-      //let devID = '82000034';
+      //let devID = '82000034'; //Romania, Radu's default
       //let devID = '12000037'; //Christchurch NZ
       let devID = '5100003A'; //Richmond Hill, NY, US
+      
       let uid = '6323';
       let key = '69a1a09c0471ae355092f4d4f2da5548';
       let sensor = 'cpm';
@@ -413,29 +422,34 @@ function draw() {
     document.getElementById("placeholder").parentElement.remove();
     imgs.getRadD(); //Get radiation data on first time around
     myApp.first_time = false;
-  } 
+  }
+
+//imgs.cpmdata.cpm = 21;
+  if(imgs.cpmdata.cpm > imgs.cpmthreshold1) {
+    imgs.makeimgbuf_noisy();
+    imgs.drawCPM(); 
+  } else {
 
 
-
-  //if(imgs.curr_img < imgs.num_ue4img) {imgs.makeimgbuf_noisy();}
   if(myApp.showimg == 0) { //Alternate between showing images and text
     imgs.makeimgbuf_noisy();
     myApp.showimg = 1;
     
   } else {
-    if(imgs.textcounter <= 0) {
-      myApp.showimg = 0;
-      imgs.textcounter = imgs.holdtext * frameRate(); //Reset counter based on realised framerate
-      imgs.line++; //Increment line of the text
-    } else {
-      /*Uncomment this to get brief glimpse of images*/
-      (myApp.runtime < 10000 && imgs.cpmdata.cpm < imgs.cpmthreshold) ? background(202,59,0,1) : (sin(myApp.runtime) > 0.8 ? background(202,59,2,1) : {});
-      
-      if(frameCount%6000 == 0) {imgs.getRadD()}; //Get radiation data, this is probably too many calls
-      imgs.drawCPM(); //To put CPM readings on screen
-      imgs.textcounter--;
-    }
+      if(imgs.textcounter <= 0) {
+        myApp.showimg = 0;
+        imgs.textcounter = imgs.holdtext * frameRate(); //Reset counter based on realised framerate
+        imgs.line++; //Increment line of the text
+      } else {
+        //Uncomment this to get brief glimpse of images
+        //(myApp.runtime < 10000 && imgs.cpmdata.cpm < imgs.cpmthreshold) ? background(202,59,0,1) : (sin(myApp.runtime) > 0.8 ? background(202,59,2,1) : {});
+        
+        if(frameCount%6000 == 0) {imgs.getRadD()}; //Get radiation data, this is probably too many calls
+        imgs.drawCPM(); //To put CPM readings on screen
+        imgs.textcounter--;
+      }
     
+    } 
   }
 }
 
