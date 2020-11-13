@@ -82,11 +82,7 @@ class Content {
       max: 50
     };
 
-    /*Text stuff*/
-    this.holdtext = 2; //In seconds. This is persistent, used to reset textcounter after a countdown
-    this.textcounter = this.holdtext * 60; //In frames, how long to hold text on screen for
-   
-
+    
     this.cpmdata = {
       /*Stuff from CPM sensor*/
       ts: 0,
@@ -99,6 +95,16 @@ class Content {
     this.cpmthreshold = 12; //Used to choose between b&w and funky glitchy shader
     this.cpmthreshold1 = 20; //Next threshold for funkier shader 
     this.cpm_test = 25; //Override datafeed with test level
+
+    this.devices = ['82000034','5100003A','11000010','8200006E','820000FF'];
+    this.devnames = ['Alba Iulia, RO','New York, US','Auckland, NZ','Auckland, NZ','Auckland, NZ'];
+
+    /*Text stuff*/
+    this.holdtext = 2; //In seconds. This is persistent, used to reset textcounter after a countdown
+    this.textcounter = this.holdtext * 60; //In frames, how long to hold text on screen for
+   
+
+
   }
 
 
@@ -199,7 +205,7 @@ class Content {
       var ulx,uly;
 
       //myApp.masterBuf.clear();
-      
+      this.cpmdata.cpm = 13;
       /*cpmthreshold is the cpm level below/above which we pick between two different shaders*/
       if(this.cpmdata.cpm < this.cpmthreshold) {
       myApp.masterBuf.shader(glich.sCine);
@@ -264,15 +270,15 @@ class Content {
 
     }
 
+    /*Pick randomly from list of uRad devices, 34 is Romania, 3A is UKC own, others are Auckland*/
+    randuRad() {
+      return this.devices[Math.floor(Math.random() * this.devices.length)];
+    }
 
     getRadD() {
-      //let devID = '82000034'; //Romania, Radu's default
-      //let devID = '12000037'; //Christchurch NZ
-      //let devID = '5100003A'; //Richmond Hill, NY, US
       
       /*Randomly select a sensor*/
-      let r = random();
-      let devID = (r > 0.5 ? '82000034' : '5100003A');
+      let devID = this.randuRad();
 
       console.log("Sensor ID ",devID);
 
