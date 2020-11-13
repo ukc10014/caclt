@@ -205,7 +205,7 @@ class Content {
       var ulx,uly;
 
       //myApp.masterBuf.clear();
-      this.cpmdata.cpm = 13;
+      
       /*cpmthreshold is the cpm level below/above which we pick between two different shaders*/
       if(this.cpmdata.cpm < this.cpmthreshold) {
       myApp.masterBuf.shader(glich.sCine);
