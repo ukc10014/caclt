@@ -1922,6 +1922,12 @@ a.plyr__control:before {
 }
 
 .credits {
+    color: green;
+    border-style: ;
+    border-width: ;
+}
+
+.about {
     color: red;
     border-style: ;
     border-width: ;

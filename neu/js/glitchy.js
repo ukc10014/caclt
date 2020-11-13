@@ -273,6 +273,7 @@ class Content {
       /*Randomly select a sensor*/
       let r = random();
       let devID = (r > 0.5 ? '82000034' : '5100003A');
+
       console.log("Sensor ID ",devID);
 
       let uid = '6323';
