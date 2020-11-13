@@ -1922,13 +1922,13 @@ a.plyr__control:before {
 }
 
 .credits {
-    color: green;
+    color: red;
     border-style: ;
     border-width: ;
 }
 
 .about {
-    color: red;
+    color: green;
     border-style: ;
     border-width: ;
 }
