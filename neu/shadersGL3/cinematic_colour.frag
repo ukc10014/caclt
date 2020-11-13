@@ -147,7 +147,7 @@ void main()
 		//UKC 13/11: think it's GRAIN that is problem on iPhones
 		#ifdef GRAIN
 	        //gl_FragColor.xyz *= (1.0+(rand(uv+t*.01)-.2)*.15);
-	        gl_FragColor.xyz *= (1.0+(rand(uv/2.0+t*.01)-.2)*.15);		
+	        gl_FragColor.xyz *= (1.0+(rand(uv+t*.01)-.2)*rand(1.0/uv));		
         #endif		
 	
 
