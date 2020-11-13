@@ -3157,7 +3157,7 @@ div.essaitop {
 
 body.mimoid {
     background-image: linear-gradient(rgb(0,20,30),rgb(100,200,255));
-    //animation: fade 15s ease-in-out infinite alternate;
+    animation: fade 240s ease-in-out infinite alternate;
 }
 
 body.melancolia {
