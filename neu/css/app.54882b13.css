@@ -1,3 +1,19 @@
+/*UKC adds 19/11/20*/
+svg path{
+  stroke: #000;
+  stroke-width: 1px;
+  stroke: rgba(0,0,0,0.2);
+}
+svg{
+  border: 1px solid #DED8BF;
+  background-color: #f4f4d9;
+  width: 700px;
+  height: 400px;
+}
+
+
+
+
 /*UKC adds 21/9/20*/
 .dot {
     height: 20px;
