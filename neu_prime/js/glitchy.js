@@ -82,11 +82,7 @@ class Content {
       max: 50
     };
 
-    /*Text stuff*/
-    this.holdtext = 2; //In seconds. This is persistent, used to reset textcounter after a countdown
-    this.textcounter = this.holdtext * 60; //In frames, how long to hold text on screen for
-   
-
+    
     this.cpmdata = {
       /*Stuff from CPM sensor*/
       ts: 0,
@@ -99,6 +95,16 @@ class Content {
     this.cpmthreshold = 12; //Used to choose between b&w and funky glitchy shader
     this.cpmthreshold1 = 20; //Next threshold for funkier shader 
     this.cpm_test = 25; //Override datafeed with test level
+
+    this.devices = ['82000034','5100003A','11000010','8200006E','820000FF'];
+    this.devnames = ['Alba Iulia, RO','New York, US','Auckland, NZ','Auckland, NZ','Auckland, NZ'];
+
+    /*Text stuff*/
+    this.holdtext = 2; //In seconds. This is persistent, used to reset textcounter after a countdown
+    this.textcounter = this.holdtext * 60; //In frames, how long to hold text on screen for
+   
+
+
   }
 
 
@@ -264,12 +270,18 @@ class Content {
 
     }
 
+    /*Pick randomly from list of uRad devices, 34 is Romania, 3A is UKC own, others are Auckland*/
+    randuRad() {
+      return this.devices[Math.floor(Math.random() * this.devices.length)];
+    }
 
     getRadD() {
-      //let devID = '82000034'; //Romania, Radu's default
-      //let devID = '12000037'; //Christchurch NZ
-      let devID = '5100003A'; //Richmond Hill, NY, US
       
+      /*Randomly select a sensor*/
+      let devID = this.randuRad();
+
+      console.log("Sensor ID ",devID);
+
       let uid = '6323';
       let key = '69a1a09c0471ae355092f4d4f2da5548';
       let sensor = 'cpm';
@@ -425,11 +437,10 @@ function draw() {
   }
 
 //imgs.cpmdata.cpm = 21;
-  if(imgs.cpmdata.cpm > imgs.cpmthreshold1) {
+  if(imgs.cpmdata.cpm >= imgs.cpmthreshold1) {
     imgs.makeimgbuf_noisy();
     imgs.drawCPM(); 
   } else {
-
 
   if(myApp.showimg == 0) { //Alternate between showing images and text
     imgs.makeimgbuf_noisy();
@@ -442,7 +453,7 @@ function draw() {
         imgs.line++; //Increment line of the text
       } else {
         //Uncomment this to get brief glimpse of images
-        //(myApp.runtime < 10000 && imgs.cpmdata.cpm < imgs.cpmthreshold) ? background(202,59,0,1) : (sin(myApp.runtime) > 0.8 ? background(202,59,2,1) : {});
+        (myApp.runtime < 10000 && imgs.cpmdata.cpm < imgs.cpmthreshold) ? background(202,59,0,1) : (sin(myApp.runtime) > 0.8 ? background(202,59,2,1) : {});
         
         if(frameCount%6000 == 0) {imgs.getRadD()}; //Get radiation data, this is probably too many calls
         imgs.drawCPM(); //To put CPM readings on screen

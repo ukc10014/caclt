@@ -1,3 +1,89 @@
+/*UKC adds 19/11/20*/
+svg path{
+  stroke: #000;
+  stroke-width: 0px;
+  stroke: rgba(0,0,0,0.2);
+}
+svg{
+  border: 5px groove hsla(0,0%,100%,1);
+  background-color: hsla(100,10%,50%,0.5);
+  width: 300px;
+  height: 300px;
+  box-shadow: 100px;
+}
+
+label.bs {
+    color: hsla(300,50%,100%,1);
+}
+
+p.bs {
+    color: hsla(100,90%,50%,1);
+    background-color: hsla(0,0%,0%,1);
+    font-size: 12px;
+    line-height: 1;
+    padding: 3px 4px
+}
+
+div.bs {
+    width: 25%;
+    float: left;
+}
+
+div.bs .opt_out {
+    width: 75%;
+}
+
+p.opt_out {
+    color: hsla(0,100%,50%,1);
+    font-size: 150px;
+    font-size: var(--plyr-font-size-badge, 150px);
+    line-height: 1;
+    padding: 3px 4px
+}
+
+.bs_out_container {
+    width: 100%;
+}
+
+input.bs {
+    width: 2.5em;
+    color: hsla(220,100%,50%,1);
+    border: 3px groove hsla(0,0%,100%,1);
+    //background-color: hsla(100,70%,100%,0.5);
+    //box-shadow: 0px;
+}
+
+input.submit {
+    width: 3.5em;
+    height: 3.5em;
+    border: 6px groove hsla(0,90%,100%,1);
+}
+
+.gslidecontainer {
+    width: 100%;
+
+}
+
+.gslider {
+    -webkit-appearance: none;
+  appearance: none;
+  width: 80%; /* Full-width */
+  height: 25px; /* Specified height */
+  background: hsla(0,99%,50%,0.7); /* Grey background */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+  cursor: pointer;
+
+  color: hsla(220,100%,50%,1);
+  border: 3px groove hsla(0,0%,100%,1);
+
+}
+
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
 /*UKC adds 21/9/20*/
 .dot {
     height: 20px;
@@ -1927,6 +2013,12 @@ a.plyr__control:before {
     border-width: ;
 }
 
+.about {
+    color: green;
+    border-style: ;
+    border-width: ;
+}
+
 .content .annotation-counter-inner,
 .has-annotations .annotation-counter-inner {
     margin-left: -.25rem
@@ -3131,7 +3223,7 @@ body.indexbg {
 body.essai{
 //    background-image: url('../media/Enewetak.png');
     background-image: linear-gradient(rgb(250,20,30),rgb(100,200,255));;
-    animation: fade 120s linear infinite;
+    //animation: fade 120s linear infinite;
 }
 
 body.pr{
@@ -3148,16 +3240,16 @@ div.essai {
     background-repeat: no-repeat; 
     background-size: cover;
     margin: 0;
-    animation: spin 86400s linear infinite;
+    //animation: spin 86400s linear infinite;
 }
 
 div.essaitop {
-   animation: revspin 86400s linear infinite; 
+   //animation: revspin 86400s linear infinite; 
 }
 
 body.mimoid {
     background-image: linear-gradient(rgb(0,20,30),rgb(100,200,255));
-    //animation: fade 15s ease-in-out infinite alternate;
+    animation: fade 240s ease-in-out infinite alternate;
 }
 
 body.melancolia {

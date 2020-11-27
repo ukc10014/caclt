@@ -3,7 +3,7 @@ precision mediump float;
 //#define BLACK_AND_WHITE
 #define LINES_AND_FLICKER
 #define BLOTCHES
-#define GRAIN
+#define GRAIN /*UKC 13/11: I think GRAIN is what causes misbehaviour on iPhones*/
 #define VIGNETTE
 
 #define FREQUENCY 15.0
@@ -144,8 +144,11 @@ void main()
 		gl_FragColor = vec4(oldImage * vI,1.0);
 
 		// Add some grain (thanks, Jose!)
+		//UKC 13/11: think it's GRAIN that is problem on iPhones
 		#ifdef GRAIN
-	        gl_FragColor.xyz *= (1.0+(rand(uv+t*.01)-.2)*.15);		
+	        //gl_FragColor.xyz *= (1.0+(rand(uv+t*.01)-.2)*.15);
+	        //UKC 13/11: only call the grain fcn occasionally, the sin(rand...) seems to have taken care of artefacts on iPhone
+	        if(rand(t) >= 0.5) gl_FragColor.xyz *= (1.0+(rand(uv+t*.01)-.2)*sin(rand(1.0/uv.x)));		
         #endif		
 	
 
