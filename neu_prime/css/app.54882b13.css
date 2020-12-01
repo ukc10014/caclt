@@ -1,3 +1,36 @@
+/*UKC adds 30/11/20*/
+#text_base {
+    position: absolute;
+    z-index: 0;
+
+}
+
+#text_canvas {
+    position: absolute;
+    z-index: 0;
+}
+
+.essai_control {
+    position: sticky:
+    z-index: 10;
+}
+
+.right {
+    position: absolute;
+  right: 0px;
+  width: 300px;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
+
+.left {
+ position: absolute;
+  left: 0px;
+  width: 300px;
+  border: 3px solid #73AD21;
+  padding: 10px;   
+}
+
 /*UKC adds 19/11/20*/
 svg path{
   stroke: #000;
@@ -57,6 +90,7 @@ input.submit {
     width: 3.5em;
     height: 3.5em;
     border: 6px groove hsla(0,90%,100%,1);
+    background-color: hsla(183,49%,71%,1);
 }
 
 .gslidecontainer {
@@ -3240,11 +3274,12 @@ div.essai {
     background-repeat: no-repeat; 
     background-size: cover;
     margin: 0;
-    //animation: spin 86400s linear infinite;
+    color: white;
+    animation: spin 8640s linear infinite;
 }
 
 div.essaitop {
-   //animation: revspin 86400s linear infinite; 
+   animation: revspin 8640s linear infinite; 
 }
 
 body.mimoid {
