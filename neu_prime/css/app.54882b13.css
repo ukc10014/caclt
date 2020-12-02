@@ -1,13 +1,13 @@
 /*UKC adds 30/11/20*/
 #text_base {
     position: absolute;
-    z-index: 0;
+    z-index: -1;
 
 }
 
 #text_canvas {
     position: absolute;
-    z-index: 0;
+    z-index: 1;
 }
 
 .essai_control {
@@ -90,12 +90,14 @@ input.submit {
     width: 3.5em;
     height: 3.5em;
     border: 6px groove hsla(0,90%,100%,1);
-    background-color: hsla(183,49%,71%,1);
+    background-color: hsla(219,44%,15%,1);
+    color: hsla(205,78%,69%,1);
 }
 
 .gslidecontainer {
     width: 100%;
-
+    position: absolute;
+    z-index: 10;
 }
 
 .gslider {
