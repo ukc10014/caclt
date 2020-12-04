@@ -46,18 +46,18 @@
   
 
 
-   <p class='essai_control'>
+   <div class='essai_control'>
     <input id="submit" type="button" class="submit bg-gray-600 text-green" name="submit" value='۱' onclick="draw_text()">
 
-    <input id="submit2" type="button" class="submit bg-gray-600 text-green" name="submit2" value='۲ ' onclick="if(makeopt.checkUI() === true) {makeopt.refresh()}">
+    <input id="submit2" type="button" class="submit bg-gray-600 text-green" name="submit2" value='۲ ' onclick="cold_war()">
 
-    <input id="submit3" type="button" class="submit bg-gray-600 text-green" name="submit3" value='۳' onclick="if(makeopt.checkUI() === false) {makeopt.buildUI()} else {makeopt.deleteopt()}">
+    <input id="submit3" type="button" class="submit bg-gray-600 text-green" name="submit3" value='۳' onclick="if(makeopt.checkUI() === false) {makeopt.buildUI()} else {makeopt.refresh()}">
 
     <input id="submit5" type="button" class="submit bg-gray-600 text-green" name="submit5" value='۵' onclick="make_slider()">
 
     <input id="submit7" type="button" class="submit bg-gray-600 text-green" name="submit7" value='۷' onclick="handle_click()">
 
-   </p>
+   </div>
 
 
   
@@ -223,7 +223,11 @@
     document.getElementById('text_base').appendChild(t); 
 
 
-    line++; if(line > textcont.length) {console.log("draw_text: End of file reached\n");}
+    line++; 
+    if(line > textcont.length) {console.log("draw_text: End of file reached\n");}
+
+    /*Recurse in case its a blank line*/
+    if(textcont[line] == '') {draw_text();}
   }  
 </script>
 
@@ -237,9 +241,20 @@
   let friction = -0.9;
   let balls = [];
   let drawBalls = false;
+  
+  //Cold War stuff
+  let show_cw = false;
+  let num_cw = 55; //How many Cold War images?
+  let medpath = '../media/';
+  let sizenam_cw = 4; //How many digits in filename index number
+  let cw_img = []; //Holds images
+
+  //Counter for how many passes
+  let pass = 0;
 
     function preload() {
       maketext();
+      load_cw(); //Load up Cold War images
     }
 
     function setup() {
@@ -259,7 +274,7 @@
     function draw() {
         //background(100,.5,.2,.5);
         //clear();
-        console.log("draw ",drawBalls);
+        
         if(drawBalls == true) {
           balls.forEach(ball => {
           ball.collide();
@@ -267,7 +282,29 @@
           ball.display();
         });
       }
+
+        if(show_cw == true) {
+          image(cw_img[pass],random()*width,random()*height);
+        }
+
     }
+
+    /*Load Cold War images*/
+    function load_cw() {
+      let fn;
+      let tmpnum = 1;
+
+
+      for(let i=0;i<num_cw;i++) 
+      {
+        fn = medpath+"cwpics/img_" + tmpnum + ".jpg"; //Need to pad the zeroes to find the file
+        tmpnum++;
+
+        cw_img[i] = loadImage(fn);
+      }
+
+    }
+
 
     /*On every click, the num of balls is incremented until max is reached and the thing turns off */
    function handle_click() {
@@ -279,6 +316,13 @@
         drawBalls = false;
       }
     }
+   }
+
+   
+   /*Draw Cold War images*/
+   function cold_war() {
+      show_cw = true;
+      pass = (pass + 1)%cw_img.length;
    } 
 
    function makeBalls() {
@@ -295,6 +339,15 @@
     }
 
    }
+
+  function padLeadingZeros(num, size) {
+      var s = num+"";
+      while (s.length < size) s = "0" + s;
+      return s;
+  }
+
+
+
 
   class Ball {
     constructor(xin, yin, din, idin, oin) {

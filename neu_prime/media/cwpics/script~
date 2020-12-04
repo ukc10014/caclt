@@ -1,0 +1,6 @@
+count=1;
+for f in ./*;
+do
+	mv "$f" $(echo "$f" | sed 's/^*/img_${count}/g');
+	count = 'expr $count + 1';
+done

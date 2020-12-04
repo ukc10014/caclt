@@ -1,0 +1,12 @@
+#!/bin/bash
+
+count=1
+for f in ./*.jpg
+do
+	n="img_"$count".jpg"
+	echo "line " $count $n
+	cp $f $n
+	count=`expr $count + 1`
+done
+
+echo 'finished!'
