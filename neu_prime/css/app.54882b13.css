@@ -94,7 +94,8 @@ input.bs {
     border: 6px groove hsla(0,90%,100%,1);
     //background-color: hsla(219,44%,15%,1);
     //color: hsla(205,78%,69%,1);
-    background: linear-gradient(rgb(250,20,30),rgb(100,200,255));
+    //background: linear-gradient(rgb(250,20,30),rgb(100,200,255));
+    background: linear-gradient(hsla(346,24%,24%,1),hsla(41,79%,42%,1));
     color: white;
 
     position: -webkit-sticky; 
@@ -3268,7 +3269,8 @@ body.indexbg {
 
 body.essai{
 //    background-image: url('../media/Enewetak.png');
-    background-image: linear-gradient(rgb(250,20,30),rgb(100,200,255));;
+    //background-image: linear-gradient(rgb(250,20,30),rgb(100,200,255));;
+    background-image: linear-gradient(hsla(346,24%,24%,1),hsla(41,79%,42%,1));
     //animation: fade 120s linear infinite;
 }
 
