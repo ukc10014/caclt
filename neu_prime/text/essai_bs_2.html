@@ -248,6 +248,9 @@
   let medpath = '../media/';
   let sizenam_cw = 4; //How many digits in filename index number
   let cw_img = []; //Holds images
+  let offset = 0;
+  let offset2 = 0;
+  let easing = 0.05;
 
   //Counter for how many passes
   let pass = 0;
@@ -274,7 +277,7 @@
     function draw() {
         //background(100,.5,.2,.5);
         //clear();
-        
+        fill(219,55,95,0.5);
         if(drawBalls == true) {
           balls.forEach(ball => {
           ball.collide();
@@ -284,7 +287,13 @@
       }
 
         if(show_cw == true) {
-          image(cw_img[pass],random()*width,random()*height);
+          tint(200,50,100,1);
+          image(cw_img[pass],offset2,0);
+
+          let dx = mouseX - cw_img[pass].width / 2 - offset;
+          offset += dx * easing;
+          tint(0,50,50,0.5); // Display at half opacity
+          image(cw_img[pass], offset2, offset);
         }
 
     }
@@ -323,6 +332,7 @@
    function cold_war() {
       show_cw = true;
       pass = (pass + 1)%cw_img.length;
+      offset2 = (offset2 + 20)%width; //shift image by 20 pixels
    } 
 
    function makeBalls() {
