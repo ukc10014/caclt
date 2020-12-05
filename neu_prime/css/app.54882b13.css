@@ -1,14 +1,20 @@
 /*UKC adds 30/11/20*/
 #text_base {
     position: absolute;
-    z-index: -1;
+    z-index: 10;
     width: 100%;
     height: 100%;
 }
 
 #text_canvas {
     position: absolute;
-    z-index: 1;
+    z-index: 10;
+}
+
+/*For text inserted from essay that needs to be with high z-index so data-tippy can work*/
+.essaitxt {
+    position: relative;
+    z-index: 10;
 }
 
 .essai_control {
@@ -3270,7 +3276,8 @@ body.indexbg {
 body.essai{
 //    background-image: url('../media/Enewetak.png');
     //background-image: linear-gradient(rgb(250,20,30),rgb(100,200,255));;
-    background-image: linear-gradient(hsla(346,24%,24%,1),hsla(41,79%,42%,1));
+    //background-image: linear-gradient(hsla(346,24%,24%,1),hsla(41,79%,42%,1));
+    background-image: linear-gradient(hsla(204,90%,10%,1),hsla(240,2%,48%,1)); 
     //animation: fade 120s linear infinite;
 }
 
