@@ -159,22 +159,7 @@
 
 
 
-<div class='bs'><p class='opt_out' id="out_val"></p>
-
-<div id='delval'></div>
-
-<div id='delspotvol'></div>
-
-
-
-
-
-
-<!-- <div id="delvolt"></div> -->
-
-<div id="gamspotvol"></div>
-
-</div>
+<div class='bs' id='plot_container'></div>
 
 
 
@@ -222,7 +207,7 @@
       attr.value = 'essaitxt';
       t.setAttributeNode(attr);
       t.innerHTML = `<br><br><br><div data-v-10799180="" class="mx-auto max-w-3xl mt-24 text-center px-6 has-annotations"><h3 data-v-10799180="" class="serif text-sm">U. Kanad Chakrabarti</h3><h1 data-v-10799180="" class="uppercase">Leviathan<span class="citation annotation-counter annotation-counter-inner" data-tippy-content="<center><b>Tags</b></center><br> Giorgio Agamben, AGI, artificial intelligence, J.G. Ballard, Seth Baum, Ian Bogost, Nick Bostrom, Alfie Bown, Rosi Braidotti, Benjamin Bratton, David Chalmers, Death Stranding, Discord, emulation, Epic Games, existential risk, Mark Fisher, Alexander Galloway, GNU, Robin Hanson, Yuk Hui, IoT, Jesper Juul, inhuman, Nick Land, Stanislaw Lem, Metaverse, Reza Negarestani, No Man's Sky, Philips Hue, posthuman, recursion, Anders Sandberg, Carl Schmitt, simulation, singleton, superintelligence, Tim Sweeney, Tencent, transhuman, Unreal Engine, McKenzie Wark, Paul Virilio, virtual machines, WBE, WeChat, Peter Wolfendale, Eliezer Yudkowsky">&bull;</span>  Panoptes<span class="citation annotation-counter annotation-counter-inner" data-tippy-content="<b><center>Summary</center></b><br><p>Gaming, and game engines, as runway to an emulation society, connection via the Metaverse.  A heady fricasse of trendy name-checks and a lip-smacking foretaste of humanity's extinction: surveilance non-stop, eternal <em>ennui</em>, affective addiction. All under the gracious, loving eyes of the capital singleton.</p>">  TLDR;
-   </span></h1>`;
+   </span></h1><br><br><p><small>NB: a more readable version of this essay is available on <a href="http://halt.flatjournal.com/work/the-game-engine-as-transhumanist-sandbox/">Flat Journal</small></a></p> `;
 
       document.getElementById('text_base').appendChild(t); 
       maketext();
@@ -692,6 +677,32 @@ let surfaces=[
 /*Actually build the UI*/
 
 let buildUI = function() {
+
+  //Create plots
+  //let c = document.getElementById('text_canvas'); 
+  let d = document.createElement('div');
+  let str = ` <p class='opt_out' id="out_val"></p>
+
+              <div id='delval'></div>
+
+              <div id='delspotvol'></div>
+
+              <!-- <div id="delvolt"></div> -->
+
+              <div id="gamspotvol"></div>
+            `;
+  d.innerHTML = str;          
+
+
+  let c = document.getElementsByClassName('essaitxt');
+  if(c.length == 0) {
+    c = document.getElementById('plot_container');
+    c.appendChild(d);          
+
+  } else {
+    c[c.length - 1].appendChild(d);
+  }
+
   var ul=d3.select('#optval')
            .insert('ul');
   var svg=d3.select('#optval')
