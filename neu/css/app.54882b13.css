@@ -1,18 +1,141 @@
+/*UKC adds 30/11/20*/
+#text_base {
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+}
+
+#text_canvas {
+    position: absolute;
+    z-index: 10;
+}
+
+/*For text inserted from essay that needs to be with high z-index so data-tippy can work*/
+.essaitxt {
+    position: relative;
+    z-index: 10;
+}
+
+.essai_control {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.right {
+    position: absolute;
+  right: 0px;
+  width: 300px;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
+
+.left {
+ position: absolute;
+  left: 0px;
+  width: 300px;
+  border: 3px solid #73AD21;
+  padding: 10px;   
+}
+
 /*UKC adds 19/11/20*/
 svg path{
   stroke: #000;
-  stroke-width: 1px;
+  stroke-width: 0px;
   stroke: rgba(0,0,0,0.2);
 }
 svg{
-  border: 1px solid #DED8BF;
-  background-color: #f4f4d9;
-  width: 700px;
-  height: 400px;
+  border: 5px groove hsla(0,0%,100%,1);
+  background-color: hsla(100,10%,50%,0.5);
+  width: 300px;
+  height: 300px;
+  box-shadow: 100px;
 }
 
+label.bs {
+    color: hsla(300,50%,100%,1);
+}
 
+p.bs {
+    color: hsla(100,90%,50%,1);
+    background-color: hsla(0,0%,0%,1);
+    font-size: 12px;
+    line-height: 1;
+    padding: 3px 4px
+}
 
+div.bs {
+    width: 25%;
+    float: left;
+}
+
+div.bs .opt_out {
+    width: 75%;
+}
+
+p.opt_out {
+    color: hsla(0,100%,50%,1);
+    font-size: 150px;
+    font-size: var(--plyr-font-size-badge, 150px);
+    line-height: 1;
+    padding: 3px 4px
+}
+
+.bs_out_container {
+    width: 100%;
+}
+
+input.bs {
+    width: 2.5em;
+    color: hsla(220,100%,50%,1);
+    border: 3px groove hsla(0,0%,100%,1);
+    //background-color: hsla(100,70%,100%,0.5);
+    //box-shadow: 0px;
+}
+
+.submit {
+    width: 3.5em;
+    height: 3.5em;
+    border: 6px groove hsla(0,90%,100%,1);
+    //background-color: hsla(219,44%,15%,1);
+    //color: hsla(205,78%,69%,1);
+    //background: linear-gradient(rgb(250,20,30),rgb(100,200,255));
+    background: linear-gradient(hsla(346,24%,24%,1),hsla(41,79%,42%,1));
+    color: white;
+
+    position: -webkit-sticky; 
+    position: sticky;
+    z-index: 10;
+    bottom: 4rem;
+    align-self: flex-end;
+}
+
+.gslidecontainer {
+    width: 100%;
+    position: absolute;
+    z-index: 10;
+}
+
+.gslider {
+    -webkit-appearance: none;
+  appearance: none;
+  width: 80%; /* Full-width */
+  height: 25px; /* Specified height */
+  background: hsla(0,99%,50%,0.7); /* Grey background */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+  cursor: pointer;
+
+  color: hsla(220,100%,50%,1);
+  border: 3px groove hsla(0,0%,100%,1);
+
+}
+
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
 
 /*UKC adds 21/9/20*/
 .dot {
@@ -3152,8 +3275,10 @@ body.indexbg {
 
 body.essai{
 //    background-image: url('../media/Enewetak.png');
-    background-image: linear-gradient(rgb(250,20,30),rgb(100,200,255));;
-    animation: fade 120s linear infinite;
+    //background-image: linear-gradient(rgb(250,20,30),rgb(100,200,255));;
+    //background-image: linear-gradient(hsla(346,24%,24%,1),hsla(41,79%,42%,1));
+    background-image: linear-gradient(hsla(204,90%,10%,1),hsla(240,2%,48%,1)); 
+    //animation: fade 120s linear infinite;
 }
 
 body.pr{
@@ -3170,11 +3295,12 @@ div.essai {
     background-repeat: no-repeat; 
     background-size: cover;
     margin: 0;
-    animation: spin 86400s linear infinite;
+    color: hsl(100,50%,80%);
+    animation: spin 8640s linear infinite;
 }
 
 div.essaitop {
-   animation: revspin 86400s linear infinite; 
+   animation: revspin 8640s linear infinite; 
 }
 
 body.mimoid {

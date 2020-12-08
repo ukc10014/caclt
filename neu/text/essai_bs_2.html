@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <link href="../css/app.54882b13.css" rel=stylesheet>
+   <script src="../js/p5.min.js" type="text/javascript"></script>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Kanad Chakrabarti" />
+  <meta name="description" content="Giorgio Agamben, AGI, artificial intelligence, J.G. Ballard, Seth Baum, Ian Bogost, Nick Bostrom, Alfie Bown, Rosi Braidotti, Benjamin Bratton, David Chalmers, Death Stranding, Discord, emulation, Epic Games, existential risk, Mark Fisher, Alexander Galloway, GNU, Robin Hanson, Yuk Hui, IoT, Jesper Juul, inhuman, Nick Land, Stanislaw Lem, Metaverse, Reza Negarestani, No Man's Sky, Philips Hue, posthuman, recursion, Anders Sandberg, Carl Schmitt, simulation, singleton, superintelligence, Tim Sweeney, Tencent, transhuman, Unreal Engine, McKenzie Wark, Paul Virilio, virtual machines, WBE, WeChat, Peter Wolfendale, Eliezer Yudkowsky"/>
+  <title>The Game Engine as Transhumanist Sandbox</title>
+
+
+
+</head>
+<body class="essai">
+  <div class="essai">
+    <div class="essaitop">
+  <noscript>A project by U. Kanad Chakrabarti.</noscript>
+
+<!-- anchor for text stuff -->
+   <div data-v-10799180="" id='text_base' ></div>
+
+  <!-- Utility JS and d3 package (v4) which has good time formatting. Used to put time on screen.  The d3-selection needed for black scholes shite -->
+  <!-- <script src="../js/d3.min.js"></script> -->
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src= "https://d3js.org/d3-selection.v1.min.js"></script>
+
+  <script src="../js/surface3d.js"></script>
+    <!-- <div data-v-3c4263c1="" class="stars-wrapper">
+            <div data-v-3c4263c1="" class="stars"></div>
+        </div> -->
+        <!---->
+        <div data-v-3c4263c1="" id="nav" class="z-10 transition sticky top-0 flex justify-between uppercase py-3 px-3 md:px-6">
+            <div data-v-3c4263c1="" class="w-1/8"><a data-v-3c4263c1="" href="../index.html" class="hidden md:inline router-link-active"><p class="dot"></p></a><a data-v-3c4263c1="" href="../index.html" class="md:hidden"><p class="dot"></p></a></div>
+            
+            <div data-v-9311eee0="" class="flex left-0 right-0 justify-center z-20"><div data-v-9311eee0="" class="border-current serif uppercase text-sm border flex items-center mb-4 uppercase tracking-wider"><span data-v-9311eee0="" id="splash2"></span></div></div>
+
+            <div data-v-3c4263c2="" class="w-1/8 text-right"></div>
+        </div>
+</div>
+
+
+   <div class='essai_control'>
+    <input id="submit" type="button" class="submit bg-gray-600 text-green" name="submit" value='۱' onclick="draw_text()">
+
+    <input id="submit2" type="button" class="submit bg-gray-600 text-green" name="submit2" value='۲ ' onclick="cold_war()">
+
+    <input id="submit3" type="button" class="submit bg-gray-600 text-green" name="submit3" value='۳' onclick="if(makeopt.checkUI() === false) {makeopt.buildUI()} else {makeopt.refresh()}">
+
+    <input id="submit5" type="button" class="submit bg-gray-600 text-green" name="submit5" value='۵' onclick="make_slider()">
+
+    <input id="submit7" type="button" class="submit bg-gray-600 text-green" name="submit7" value='۷' onclick="handle_click()">
+
+   </div>
+
+
+  
+
+
+<div data-v-fb2bae8a="" data-v-10799180="" id="optval" class='right'></div>
+
+
+
+
+
+
+
+<div class='bs_out_container'>
+  
+
+  
+
+<div class='bs gslidecontainer' id='slidercontainer'>
+  <!--
+  <p class='bs'>Option params<p id="params" class="bs">
+
+    <div class="slidecontainer">
+  <input type="range" min="0.01" max="10.0" value="1" step="any" class="gslider" id="n3" name="n3" onchange="setup_opt()"><label class="bs">t</label>
+
+  <input type="range" min="0" max="100" value="50" step="any" class="gslider" id="n2" name="n2" onchange="setup_opt()"><label class="bs">S</label>
+
+  <input type="range" min="0" max="100" value="50" step="any"  class="gslider" id="n1" name="n1" onchange="setup_opt()"><label class="bs">K</label>
+
+  <input type="range" min="0.01" max="1" value="0.2" step="any"  class="gslider" id="n4" name="n4" onchange="setup_opt()"><label class="bs">&sigma;</label>
+
+  <input type="range" min="0.0001" max="0.30" value="0.02" step="any"  class="gslider" id="n5" name="n5" onchange="setup_opt()"><label class="bs">r<sub>f</sub></label>
+
+  <input type="range" min="0.0001" max="0.30" value="0.02" step="any"  class="gslider" id="n6" name="n6" onchange="setup_opt()"><label class="bs">r<sub>d</sub></label>
+
+<br>
+-->
+</div>
+
+  <script>
+    //Make sliders for BS stuff
+    make_slider = function() {
+      let anch = document.getElementById('slidercontainer');
+
+      //let str = '\<p class=\'bs\'\>Option params\<p id=\"params\" class=\"bs\"\>';
+
+      let str = ` <p class='bs'>Option params<p id="params" class="bs">
+
+    <div class="slidecontainer">
+  <input type="range" min="0.01" max="10.0" value="1" step="any" class="gslider" id="n3" name="n3" onchange="setup_opt()"><label class="bs">t</label>
+
+  <input type="range" min="0" max="100" value="50" step="any" class="gslider" id="n2" name="n2" onchange="setup_opt()"><label class="bs">S</label>
+
+  <input type="range" min="0" max="100" value="50" step="any"  class="gslider" id="n1" name="n1" onchange="setup_opt()"><label class="bs">K</label>
+
+  <input type="range" min="0.01" max="1" value="0.2" step="any"  class="gslider" id="n4" name="n4" onchange="setup_opt()"><label class="bs">&sigma;</label>
+
+  <input type="range" min="0.0001" max="0.30" value="0.02" step="any"  class="gslider" id="n5" name="n5" onchange="setup_opt()"><label class="bs">r<sub>f</sub></label>
+
+  <input type="range" min="0.0001" max="0.30" value="0.02" step="any"  class="gslider" id="n6" name="n6" onchange="setup_opt()"><label class="bs">r<sub>d</sub></label>`
+
+  anch.innerHTML = str;
+
+    }
+
+
+
+  </script>
+
+  <script>
+    setup_opt = function() {
+    let s = [], 
+      outstr = '',
+      labels = ['','K','S','t','&sigma;','r<sub>f</sub>','r<sub>d</sub>'], 
+      o = document.getElementById("params");; //elements in GUI and output tags
+    
+    let num_opt_params = 6; //Note param 0 is empty (there is no n0 in the page)
+    let t;
+    for(let i=1;i <= num_opt_params;i++) {
+      s[i] = document.getElementById("n"+i);
+      t = +(s[i].value);
+      outstr = outstr + "<br>" + labels[i] +" "+ t.toFixed(2);  
+      o.innerHTML = outstr;
+
+      s[i].oninput = function() {
+        let outstrp = '';
+        for(let j=1;j<= num_opt_params;j++) {
+          t = +(s[j].value);
+          outstrp = outstrp + "<br>" + labels[j] +"       "+ t.toFixed(2);  
+          o.innerHTML = outstrp;
+      }
+
+      
+      makeopt.calculate();
+      document.getElementById('out_val').innerHTML = 'Call:   ' + makeopt.option.p_c.toFixed(2)
+        + '<br><br><br><br>' + 'Put:   ' + makeopt.option.p_p.toFixed(2);
+    }
+  }
+}
+  </script>
+
+
+
+
+<div class='bs' id='plot_container'></div>
+
+
+
+
+
+
+<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+<script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+<script>tippy('[data-tippy-content]',
+{
+          theme: 'cosmism',
+          arrow: false,
+          allowHTML: true
+        });
+</script>
+
+  <script src="../js/ukcutil.js"></script> 
+
+  <script>
+    //Update time just once
+    updt("splash2");
+  </script>
+
+
+<!-- Stuff added 30 Nov to make transhumanism text snippets -->
+<script>
+  let line = -1; //Starting line of the text reading
+  let textcont = ''; //Holds all the HTML content
+
+
+  maketext = function() {
+    /*Loads a text file*/
+    let fn;
+    fn = "essai.html";
+    textcont = loadStrings(fn);    
+    }
+
+  draw_text = function() {
+    let t;
+    let attr;
+    if(textcont == '' && line == -1) {
+      /*First time through just put the header title/name*/
+      t = document.createElement('DIV');
+      attr = document.createAttribute('class');
+      attr.value = 'essaitxt';
+      t.setAttributeNode(attr);
+      t.innerHTML = `<br><br><br><div data-v-10799180="" class="mx-auto max-w-3xl mt-24 text-center px-6 has-annotations"><h3 data-v-10799180="" class="serif text-sm">U. Kanad Chakrabarti</h3><h1 data-v-10799180="" class="uppercase">Leviathan<span class="citation annotation-counter annotation-counter-inner" data-tippy-content="<center><b>Tags</b></center><br> Giorgio Agamben, AGI, artificial intelligence, J.G. Ballard, Seth Baum, Ian Bogost, Nick Bostrom, Alfie Bown, Rosi Braidotti, Benjamin Bratton, David Chalmers, Death Stranding, Discord, emulation, Epic Games, existential risk, Mark Fisher, Alexander Galloway, GNU, Robin Hanson, Yuk Hui, IoT, Jesper Juul, inhuman, Nick Land, Stanislaw Lem, Metaverse, Reza Negarestani, No Man's Sky, Philips Hue, posthuman, recursion, Anders Sandberg, Carl Schmitt, simulation, singleton, superintelligence, Tim Sweeney, Tencent, transhuman, Unreal Engine, McKenzie Wark, Paul Virilio, virtual machines, WBE, WeChat, Peter Wolfendale, Eliezer Yudkowsky">&bull;</span>  Panoptes<span class="citation annotation-counter annotation-counter-inner" data-tippy-content="<b><center>Summary</center></b><br><p>Gaming, and game engines, as runway to an emulation society, connection via the Metaverse.  A heady fricasse of trendy name-checks and a lip-smacking foretaste of humanity's extinction: surveilance non-stop, eternal <em>ennui</em>, affective addiction. All under the gracious, loving eyes of the capital singleton.</p>">  TLDR;
+   </span></h1><br><br><p><small>NB: a more readable version of this essay is available on <a href="http://halt.flatjournal.com/work/the-game-engine-as-transhumanist-sandbox/">Flat Journal</small></a></p> `;
+
+      document.getElementById('text_base').appendChild(t); 
+      maketext();
+      line++;
+      
+      //Need to call this once text is added to make data-tippy work
+      tippy('[data-tippy-content]',
+      {
+          theme: 'cosmism',
+          arrow: false,
+          allowHTML: true
+        });
+      return;
+    }
+
+
+    t = document.createElement('DIV');
+    t.innerHTML = textcont[line];
+    attr = document.createAttribute('class');
+    attr.value = 'essaitxt';
+    t.setAttributeNode(attr);
+    
+    document.getElementById('text_base').appendChild(t); 
+    //Need to call this once text is added to make data-tippy work
+    tippy('[data-tippy-content]',
+      {
+          theme: 'cosmism',
+          arrow: false,
+          allowHTML: true
+        });
+
+    line++; 
+    if(line > textcont.length) {console.log("draw_text: End of file reached\n");}
+
+    /*Recurse in case its a blank line*/
+    if(textcont[line] == '') {draw_text();}
+  }  
+</script>
+
+<!-- added 2/12/20 for JS ball animation -->
+<script>
+
+  let numBalls = 1;
+  let maxBalls = 13;
+  let spring = 0.05;
+  let gravity = 0.03;
+  let friction = -0.9;
+  let balls = [];
+  let drawBalls = false;
+  
+  //Cold War stuff
+  let show_cw = false;
+  let num_cw = 55; //How many Cold War images?
+  let medpath = '../media/';
+  let sizenam_cw = 4; //How many digits in filename index number
+  let cw_img = []; //Holds images
+  let offset = 0;
+  let offset2 = 0;
+  let easing = 0.05;
+
+  //Counter for how many passes
+  let pass = 0;
+
+    function preload() {
+      //maketext();
+      load_cw(); //Load up Cold War images
+    }
+
+    function setup() {
+      let navh = 73;
+      let dpr = 0;
+      let canvas = createCanvas(windowWidth,windowHeight - navh,P2D);
+      canvas.id('text_canvas');
+      canvas.parent('text_base');
+      dpr = window.devicePixelRatio;
+      colorMode(HSB);
+
+      makeBalls();
+
+    //noStroke();
+  }
+
+    function draw() {
+        //background(100,.5,.2,.5);
+        //clear();
+        
+        if(drawBalls == true) {
+          balls.forEach(ball => {
+          ball.collide();
+          ball.move();
+          ball.display();
+        });
+      }
+
+        if(show_cw == true) {
+          tint(200,50,100,1);
+          image(cw_img[pass],offset2,0);
+
+          let dx = mouseX - cw_img[pass].width / 2 - offset;
+          offset += dx * easing;
+          tint(0,50,50,0.5); // Display at half opacity
+          image(cw_img[pass], offset2, offset);
+        }
+
+    }
+
+    /*Load Cold War images*/
+    function load_cw() {
+      let fn;
+      let tmpnum = 1;
+
+
+      for(let i=0;i<num_cw;i++) 
+      {
+        fn = medpath+"cwpics/img_" + tmpnum + ".jpg"; //Need to pad the zeroes to find the file
+        tmpnum++;
+
+        cw_img[i] = loadImage(fn);
+      }
+
+    }
+
+
+    /*On every click, the num of balls is incremented until max is reached and the thing turns off */
+   function handle_click() {
+    if(drawBalls == false) {drawBalls = true;} else {
+      numBalls++;
+      makeBalls();
+      if(numBalls > maxBalls) {
+        numBalls = 1;
+        drawBalls = false;
+      }
+    }
+   }
+
+   
+   /*Draw Cold War images*/
+   function cold_war() {
+      show_cw = true;
+      pass = (pass + 1)%cw_img.length;
+      offset2 = (offset2 + 300)%width; //shift image by 20 pixels
+   } 
+
+   function makeBalls() {
+      /*Ball stuff*/
+      for (let i = 0; i < numBalls; i++) {
+        balls[i] = new Ball(
+          0,
+          0,
+          random(30, 70),
+          i,
+          balls
+        );
+
+    }
+
+   }
+
+  function padLeadingZeros(num, size) {
+      var s = num+"";
+      while (s.length < size) s = "0" + s;
+      return s;
+  }
+
+
+
+
+  class Ball {
+    constructor(xin, yin, din, idin, oin) {
+      this.x = xin;
+      this.y = yin;
+      this.vx = 0;
+      this.vy = 0;
+      this.diameter = din;
+      this.id = idin;
+      this.others = oin;
+    }
+
+    collide() {
+      for (let i = this.id + 1; i < numBalls; i++) {
+        // console.log(others[i]);
+        let dx = this.others[i].x - this.x;
+        let dy = this.others[i].y - this.y;
+        let distance = sqrt(dx * dx + dy * dy);
+        let minDist = this.others[i].diameter / 2 + this.diameter / 2;
+        //   console.log(distance);
+        //console.log(minDist);
+        if (distance < minDist) {
+          //console.log("2");
+          let angle = atan2(dy, dx);
+          let targetX = this.x + cos(angle) * minDist;
+          let targetY = this.y + sin(angle) * minDist;
+          let ax = (targetX - this.others[i].x) * spring;
+          let ay = (targetY - this.others[i].y) * spring;
+          this.vx -= ax;
+          this.vy -= ay;
+          this.others[i].vx += ax;
+          this.others[i].vy += ay;
+        }
+      }
+    }
+
+    move() {
+      this.vy += gravity;
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x + this.diameter / 2 > width) {
+        this.x = width - this.diameter / 2;
+        this.vx *= friction;
+      } else if (this.x - this.diameter / 2 < 0) {
+        this.x = this.diameter / 2;
+        this.vx *= friction;
+      }
+      if (this.y + this.diameter / 2 > height) {
+        this.y = height - this.diameter / 2;
+        this.vy *= friction;
+      } else if (this.y - this.diameter / 2 < 0) {
+        this.y = this.diameter / 2;
+        this.vy *= friction;
+      }
+    }
+
+    display() {
+      let h = map(this.x,0,width,41,346);
+      let s = map(this.y,0,height,24,79);
+      let b = map(this.diameter,30,70,24,42);
+
+      fill(h,s,b,0.7);
+      ellipse(this.x, this.y, this.diameter, this.diameter);
+    }
+
+    /*
+    scale(num, in_min, in_max, out_min, out_max) {
+      return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
+    */
+}
+
+</script>
+
+
+<!-- Stuff added 19 Nov to make option graph overlay -->
+  
+  <script>
+  
+  /*Makeopt is a module, see return() for methods/properties exposed to public*/
+  let makeopt = (function() {
+    'use strict';
+  var yaw=0.5,pitch=0.5, width=400, height=400, drag=false;
+
+  let _UIbuilt = 0; //Has the UI been built yet
+
+  /*UI elements*/
+  let md,md_delta,md_delta_S_vol,md_delta_vol_t,md_gamma_S_vol;
+
+
+  function checkUI() {
+    if(_UIbuilt == 1) {return true;} else {return false};
+  }
+
+
+  function dataFromFormular(func){
+    var output=[];
+    for(var x=-20;x<20;x++){
+      var f0=[];            
+      output.push(f0);
+      for(var y=-20;y<20;y++){
+          f0.push(func(x,y));
+      }
+    }
+    return output;
+  }
+
+  /*Overload above with abcissa range rather than hardwired range*/
+  function dataFromFormular(func,min_x,max_x,min_y,max_y){
+    //Use 100 as increment for graph/dataset
+    let x_incr = (max_x - min_x)/100;
+    let y_incr = (max_y - min_y)/100;
+    var output=[];
+    for(var i=min_x;i<max_x;i += x_incr){
+      var f0=[];            
+      output.push(f0);
+      for(var j=min_y;j<max_y;j += y_incr){
+          f0.push(func(i,j));
+      }
+    }
+    return output;
+  }  
+
+
+  /*Global option object*/
+  let option = {
+    S: 250,
+    K: 250,
+    t: 1,
+    r_f: .05,
+    r_d: .06,
+    vol: .2,
+    p_c: 0,
+    p_p: 0,
+    delta: 0,
+    gamma: 0,
+    vega: 0,
+    theta: 0,
+    rho: 0,
+
+    call: function() {
+      return Math.max(0,this.black_scholes(true,this.S,this.K,this.r_f,this.vol,this.t));
+    },
+
+
+    put: function() {
+      return Math.max(0,this.black_scholes(false,this.S,this.K,this.r_f,this.vol,this.t));
+    },
+
+    opt_val_S_t: function(spot,time) {
+      let tmp = Math.max(0,this.black_scholes(true,spot,this.K,this.r_f,this.vol,time));
+      //console.log("option result==> ",spot,this.K,this.r_f,time,this.vol,tmp);
+      
+      return tmp;
+    },
+
+    //Delta as f(S,t), the object-level delta is populated on each call of the function & also returned
+    opt_delta_S_t: function(spot,time) {
+      let tmp = Math.max(0,this.black_scholes(true,spot,this.K,this.r_f,this.vol,time));
+      //console.log("delta==> ",spot,this.K,this.r_f,time,this.vol,this.delta);
+      return this.delta;
+    },
+
+    opt_delta_S_vol: function(spot,vol) {
+      let tmp = Math.max(0,this.black_scholes(true,spot,this.K,this.r_f,vol,this.t));
+      return this.delta;
+    },
+
+
+    opt_delta_vol_t: function(vol,time) {
+      let tmp = Math.max(0,this.black_scholes(true,this.S,this.K,this.r_f,vol,time));
+      return this.delta;
+    },
+
+    opt_gamma_S_vol: function(spot,vol) {
+      let tmp = Math.max(0,this.black_scholes(true,spot,this.K,this.r_f,vol,this.t));
+      //console.log("gamma==> ",spot,this.K,this.r_f,this.t,vol,this.gamma);
+      let gammax = 1000, gammin = -1000;
+      if(this.gamma < 0) {
+        return Math.max(gammin,this.gamma);
+      } else {
+        return Math.min(gammax,this.gamma); 
+      }
+    },
+
+
+
+    black_scholes: function(call,S,X,r,v,t) { 
+      // call = Boolean (to calc call, call=True, put: call=false)
+      // S = stock prics, X = strike price, r = no-risk interest rate
+      // v = volitility (1 std dev of S for (1 yr? 1 month?, you pick)
+      // t = time to maturity
+
+      // define some temp vars, to minimize function calls
+      var sqt = Math.sqrt(t);
+        var Nd2;  //N(d2), used often
+        var nd1;  //n(d1), also used often
+        var ert;  //e(-rt), ditto
+        var del;  //The delta of the option
+
+        let d1 = (Math.log(S/X) + r*t)/(v*sqt) + 0.5*(v*sqt);
+        let d2 = d1 - (v*sqt);
+
+        ert = Math.exp(-r*t);
+        nd1 = this.ndist(d1);
+
+        if (call) {
+          del = this.N(d1);
+          Nd2 = this.N(d2);
+          this.p_c = S*del - X*ert * Nd2;
+        } else { //put
+          del = -this.N(-d1);
+          Nd2 = -this.N(-d2);
+          this.p_p = S*del - X*ert * Nd2;
+
+        }
+
+        this.delta = del;
+        this.gamma = nd1/(S*v*sqt);
+        this.vega = S*sqt*nd1;
+        this.theta = -(S*v*nd1)/(2*sqt) - r*X*ert*Nd2;
+        this.rho = X*t*ert*Nd2;
+
+        return ( S*del-X*ert *Nd2);
+
+      },
+
+
+      ndist: function(z) {
+        return (1.0/(Math.sqrt(2*Math.PI)))*Math.exp(-0.5*z);
+        //??  Math.exp(-0.5*z*z)
+      },
+ 
+      N: function(z) {
+        let b1 =  0.31938153;
+        let b2 = -0.356563782;
+        let b3 =  1.781477937;
+        let b4 = -1.821255978;
+        let b5 =  1.330274429;
+        let p  =  0.2316419;
+        let c2 =  0.3989423;
+        let a=Math.abs(z);
+        if (a>6.0) {return 1.0;} 
+        let t = 1.0/(1.0+a*p);
+        let b = c2*Math.exp((-z)*(z/2.0));
+        let n = ((((b5*t+b4)*t+b3)*t+b2)*t+b1)*t;
+        n = 1.0-b*n;
+        if (z < 0.0) {n = 1.0 - n;}
+        return n;
+      }
+};
+
+let calculate = function() {
+    option.S = document.getElementById("n2").value;
+    option.K = document.getElementById("n1").value;
+    option.t = document.getElementById("n3").value;
+    option.r_f = document.getElementById("n5").value;
+    option.r_d = document.getElementById("n6").value;
+    option.vol = document.getElementById("n4").value;
+
+    option.p_c = option.call();
+    option.p_p = option.put();
+
+    console.log("option result==> ",option.S,option.K,option.t,option.vol,option.call(),option.put());
+  }
+
+/*Note in Option value, we floor time at 0.01 to avoid NaN*/
+let surfaces=[
+    {
+      name: 'Option value',
+      data: dataFromFormular(function(x,y){
+          return option.opt_val_S_t(x,y);
+        },0.01,option.S*2,0.01,option.t)
+    },
+    {
+      name: 'Delta as f(S,t)',
+      data: dataFromFormular(function(x,y){
+        return option.opt_delta_S_t(x,y);
+      },0.01,option.S*2,0.01,option.t)
+    },
+    {
+      name: 'Delta as f(S,vol)',
+      data: dataFromFormular(function(x,y){
+        return option.opt_delta_S_vol(x,y);
+      },0.01,option.S*2,0.05,1.0)
+    },
+    {
+      name: 'Delta as f(vol,t)',
+      data: dataFromFormular(function(x,y){
+        return option.opt_delta_vol_t(x,y);
+      },0.05,1.0,0.01,option.t)
+    },
+    {
+      name: 'Gamma as f(S,vol)',
+      data: dataFromFormular(function(x,y){
+        return option.opt_gamma_S_vol(x,y);
+      },0.05,option.S*2,0.05,1.0)
+    }
+  ];
+
+/*Actually build the UI*/
+
+let buildUI = function() {
+
+  //Create plots
+  //let c = document.getElementById('text_canvas'); 
+  let d = document.createElement('div');
+  let str = ` <p class='opt_out' id="out_val"></p>
+
+              <div id='delval'></div>
+
+              <div id='delspotvol'></div>
+
+              <!-- <div id="delvolt"></div> -->
+
+              <div id="gamspotvol"></div>
+            `;
+  d.innerHTML = str;          
+
+
+  let c = document.getElementsByClassName('essaitxt');
+  if(c.length == 0) {
+    c = document.getElementById('plot_container');
+    c.appendChild(d);          
+
+  } else {
+    c[c.length - 1].appendChild(d);
+  }
+
+  var ul=d3.select('#optval')
+           .insert('ul');
+  var svg=d3.select('#optval')
+          .append('svg')
+            .attr('height',height)
+            .attr('width',width);
+
+ 
+  var group = svg.append("g")       
+    .attr('transform','translate(-100,-100)');
+
+
+  this.md=group.data([surfaces[0].data])
+    .surface3D(width,height)
+      .surfaceHeight(function(d){ 
+        return d;
+      }).surfaceColor(function(d){
+        var c=d3.hsl((d+100), 0.6, 0.5).rgb();
+        return "rgb("+parseInt(c.r)+","+parseInt(c.g)+","+parseInt(c.b)+")";
+      });
+   
+
+
+  let svg_del=d3.select('#delval')
+          .append('svg')
+            .attr('height',height)
+            .attr('width',width)
+            .attr('transform','translate('+document.body.clientWidth/3.5+',0)');    
+
+  let group_del = svg_del.append('g')
+        .attr('transform','translate(-100,-100)');
+
+  this.md_delta = group_del.data([surfaces[1].data])
+    .surface3D(width,height)
+      .surfaceHeight(function(d){ 
+        return d * 100;
+      }).surfaceColor(function(d){
+        var c=d3.hsl((d+300), d/10, d).rgb();
+        return "rgb("+parseInt(c.r)+","+parseInt(c.g)+","+parseInt(c.b)+")";
+      }); 
+
+
+  let svg_del_S_vol=d3.select('#delspotvol')
+          .append('svg')
+            .attr('height',height)
+            .attr('width',width)
+            .attr('transform','translate('+document.body.clientWidth/10+',0)');    
+
+  let group_del_S_vol = svg_del_S_vol.append('g')
+        .attr('transform','translate(-100,-100)');
+
+  this.md_delta_S_vol = group_del_S_vol.data([surfaces[2].data])
+    .surface3D(width,height)
+      .surfaceHeight(function(d){ 
+        return d * 100;
+      }).surfaceColor(function(d){
+        var c=d3.hsl((d+200), 0.8, 0.5).rgb();
+        return "rgb("+parseInt(c.r)+","+parseInt(c.g)+","+parseInt(c.b)+")";
+      }); 
+
+
+ /* let svg_del_vol_t=d3.select('#delvolt')
+          .append('svg')
+            .attr('height',height)
+            .attr('width',width)
+            .attr('transform','translate('+document.body.clientWidth/2.5+',0)');    
+
+  let group_del_vol_t = svg_del_vol_t.append('g')
+        .attr('transform','translate(-100,-100)');
+
+  this.md_delta_vol_t = group_del_vol_t.data([surfaces[3].data])
+    .surface3D(width,height)
+      .surfaceHeight(function(d){ 
+        return d * 100;
+      }).surfaceColor(function(d){
+        var c=d3.hsl((d+250), 0.6, 0.5).rgb();
+        return "rgb("+parseInt(c.r)+","+parseInt(c.g)+","+parseInt(c.b)+")";
+      }); */
+
+  let svg_gamma_S_vol=d3.select('#gamspotvol')
+          .append('svg')
+            .attr('height',height)
+            .attr('width',width);    
+
+  let group_gamma_S_vol = svg_gamma_S_vol.append('g')
+        .attr('transform','translate(-100,-100)');
+
+  this.md_gamma_S_vol = group_gamma_S_vol.data([surfaces[4].data])
+    .surface3D(width,height)
+      .surfaceHeight(function(d){ 
+        return d;
+      }).surfaceColor(function(d){
+        var c=d3.hsl(d, 0.9, 0.3).rgb();
+        return "rgb("+parseInt(c.r)+","+parseInt(c.g)+","+parseInt(c.b)+")";
+      }); 
+
+/*
+  svg.on('mousemove',function() {
+    refresh();
+  });
+
+  svg_del.on('mousemove',function() {
+    refresh();
+  });
+
+
+  svg_del_S_vol.on('mousemove',function() {
+    refresh();
+  });
+
+
+  svg_del_vol_t.on('mousemove',function() {
+    refresh();
+  });
+
+  svg_gamma_S_vol.on('mousemove',function() {
+    refresh();
+  });
+*/
+/*
+  setInterval(function() {//console.log("Refresh now "); 
+    refresh();},3000);
+    */
+  
+  _UIbuilt = 1; //Toggle UI built
+
+  }
+  
+  /*Once everythign loaded, then do a refresh to draw automatically*/
+  let refresh = function() {
+    let datmp = new Date();
+    
+    this.md.turntable(Math.sin(datmp.getSeconds()),Math.cos(datmp.getSeconds()));
+    this.md_delta.turntable(Math.cos(datmp.getSeconds()),Math.cos(datmp.getSeconds()));
+    this.md_delta_S_vol.turntable(Math.sin(datmp.getSeconds()),Math.cos(datmp.getSeconds()));
+    //this.md_delta_vol_t.turntable(Math.sin(datmp.getSeconds()),Math.cos(datmp.getSeconds()));
+    this.md_gamma_S_vol.turntable(Math.sin(datmp.getSeconds()),Math.cos(datmp.getSeconds()));
+  }
+
+
+  let deleteopt = function() {
+    /*
+    if(document.getElementById('optval') != '') {document.getElementById('optval').remove()};
+    document.getElementById('delval').remove();
+    document.getElementById('delspotvol').remove();
+    document.getElementById('delvolt').remove();
+    document.getElementById('gamspotvol').remove();
+*/
+    let x = document.querySelectorAll('svg');
+    for(let i=0;i<x.length;i++) {
+      x[i].remove();
+    }
+  }
+
+    /*These are the public functions*/
+    return {
+      calculate: calculate,
+      checkUI: checkUI,
+      buildUI: buildUI,
+      refresh: refresh,
+      deleteopt: deleteopt,
+      option: option
+    };
+
+  })();
+
+
+  </script>
+</div>
+</div>
+</body>
+</html>
