@@ -22,10 +22,13 @@ let pass = 0; //How many times we've been through this
 
 let glitchColour; //Colour object for the glitches
 
+function preload() {
+	movie = createVideo(['assets/bartleby.mp4'],vidLoad);	
+}
+
 function setup() {
 	createCanvas(windowWidth, windowHeight);
   // specify multiple formats for different browsers
-  	movie = createVideo(['assets/bartleby.mp4'],vidLoad);
   	movie.hide(); // by default video shows up in separate dom
  	moview = width; movieh = movie.height * width / movie.width;
  	moviex = 0 ; moviey = 0;
