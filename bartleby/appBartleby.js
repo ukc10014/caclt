@@ -29,9 +29,12 @@ function preload() {
 function setup() {
 	createCanvas(windowWidth, windowHeight);
   // specify multiple formats for different browsers
-  	movie.hide(); // by default video shows up in separate dom
+  	
+  	movie.showControls();
+  	movie.autoplay();
  	moview = width; movieh = movie.height * width / movie.width;
  	moviex = 0 ; moviey = 0;
+  	//movie.hide(); // by default video shows up in separate dom
   // element. hide it and draw it to the canvas
   // instead
 
