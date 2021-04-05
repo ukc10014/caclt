@@ -129,14 +129,17 @@ class Content {
       var ulx,uly;
 
         /*Colour shader*/
+        /*
         myApp.masterBuf.shader(glich.sCine2);
         glich.sCine2.setUniform("iResolution",[myApp.kludge_w,myApp.kludge_h]);
         glich.sCine2.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
         glich.sCine2.setUniform("iTime",second());
+		myApp.masterBuf.rect(0,0,imgWidth,imgHeight);
+		*/
+		myApp.masterBuf.image(imgshow,-100,-100);
 
 
-
-      myApp.masterBuf.rect(0,0,imgWidth,imgHeight);
+      
 
       //Some weird shit to accommodate phone portrait, landscape, etc.
      let dw = drawingContext.canvas.width;
