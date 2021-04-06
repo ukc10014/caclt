@@ -122,8 +122,8 @@ class Content {
       }
 
 
-      let imgWidth = this.ue4img[this.curr_img].width;
-      let imgHeight = this.ue4img[this.curr_img].height;
+      let imgWidth = this.ue4img[this.curr_img].width/4;
+      let imgHeight = this.ue4img[this.curr_img].height/4;
       let imgshow = this.ue4img[this.curr_img];
       
       var ulx,uly;
@@ -244,7 +244,6 @@ function draw() {
 
 	myApp.runtime = millis();
 
-
   	if(myApp.first_time === true) {
     	/*Remove placeholder*/
     	//document.getElementById("placeholder").parentElement.remove();
@@ -259,13 +258,14 @@ function draw() {
       if(imgs.textcounter <= 0) {
         myApp.showimg = 0;
         imgs.textcounter = imgs.holdtext * frameRate(); //Reset counter based on realised framerate
+        if(simhypoCount == simhypo.length-1) {pass++;console.log("pass ",pass);}
         simhypoCount = (simhypoCount + 1)%simhypo.length; //Increment line of the text
     } else {
         //Uncomment this to get brief glimpse of images
-        (myApp.runtime < 10000) ? background(202,59,0,1) : (sin(myApp.runtime) > 0.8 ? background(202,59,2,1) : {});
+        if(pass%2 == 0) {(myApp.runtime < 10000) ? background(202*sin(myApp.runtime),10,50,1) : (cos(myApp.runtime) > 0.8 ? background(202,10,40,1) : background(200,10,35,0.9))};
         
         //background(0);
-		fill(0,0,100,1);	
+		fill(0,20,10,1);	
 		text(simhypo[simhypoCount],textboxx,textboxy,textboxw,textboxh);
 
        	 imgs.textcounter--;
@@ -358,7 +358,37 @@ function init_simhypo() {
 
 	simhypo[6] = "2.1: \n \n \n  Is it a problem (that/if) funding for intergenerational public goods come from private philanthropy?";
 
-	simhypo[7] = "End";
+	simhypo[7] = "3.0: \n \n \n  How does one quantify very long-term questions in ER, such as the harm caused by future lives that would be lost (or rendered much less worth-living) if humanity went extinct?";
+
+	simhypo[8] = "3.1: \n \n \n  One of the assumptions in the analysis is that humanity eventually settles space, and therefore the maximum number of humans that may ever live is much higher than the Earth's current population.";
+
+	simhypo[9] = "3.2: \n \n \n  Should concrete action on space settlement be deferred until humans have \'fixed\' our current flawed condition on Earth, or is it all the more important that we develop species-level resilience to ER by spreading out (keeping in mind that any expansion off the planet could take decades or centuries).";
+
+	simhypo[10] = "4.0: \n \n \n A malevolent or misaligned Artificial General Intelligence (AGI) is a principal source of identified ER.";
+
+	simhypo[11] = "4.1: \n \n \n In addition, certain features closely associated with AGI, such as computers developing consciousness, are a central feature of the Simulation Argument.";
+
+	simhypo[12] = "4.1.1: \n \n \n How far away is an AGI (whether benevolent, malevolent, or indifferent)?";
+
+	simhypo[13] = "4.1.2: \n \n \n Is it an all-or-nothing thing, are there intermediate steps that we could watch for, such as whole-brain emulation?  Are there specific algorithmic advances (aside from the large dataset and massive-compute approaches of current machine-learning)?";
+
+	simhypo[14] = "4.2: \n \n \n Would any of these have an impact on relative probabilities of the Simulation Argument's three limbs?";
+
+	simhypo[15] = "5.0: \n \n \n Is it wise, from an ER perspective, to pursue some of the proposed tests for the Simulation Hypothesis?";
+
+	simhypo[16] = "5.1: \n \n \n We create characters within the simulated worlds of videogames, and don't worry too much about their suffering.";
+
+	simhypo[17] = "5.2: \n \n \n Does ancestor simulation present ethical issues, for instance: intentional suffering of conscious (simulated) beings; or identity-erasure when a simulation is shut down?";
+
+	simhypo[18] = "6.0: \n \n \n Why might our posthuman successors wish to simulate us at all?";
+
+	simhypo[19] = "7.0: \n \n \n The Simulation Hypothesis suggests the possibility of an infinity of nested (simulated) worlds.";
+
+	simhypo[20] = "7.1: \n \n \n What is the role of an Universal Turing Machine in handling this infinite regression?";
+
+	simhypo[21] = "7.2: \n \n \n Does the Simulation Hypothesis tell us anything about the problem of evil and the existence of God?";
+
+
 }
 
 function movieFrac() {
