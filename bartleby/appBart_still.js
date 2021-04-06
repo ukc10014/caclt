@@ -214,7 +214,7 @@ function setup() {
   	canvas.parent('app');
   	myApp.make_masterBuf();
 
-  	myApp.dpr = window.devicePixelRatio;  
+  	myApp.dpr = window.devicePixelRatio*0 + 1.0;  
 	myApp.kludge_w = windowWidth * myApp.dpr; //Supposedly helps Retina displays
   	myApp.kludge_h  = windowHeight * myApp.dpr;
 
