@@ -1,7 +1,7 @@
 "use strict";
 
 let SLOWGLITCH = true; //Movie pixels based glitching
-let GL_SHADERS = false; //Are we using GL rendering/shaders etc.
+let GL_SHADERS = true; //Are we using GL rendering/shaders etc.
 
 let myApp;
 let imgs;
@@ -190,7 +190,7 @@ function load_Content() {
 
 function preload() {
 	/*Placeholder message*/
-    //document.getElementById("placeholder").innerHTML = "Please wait ...loading media.";
+    document.getElementById("app").innerHTML = "Testing version 6/4/21: probably won't work on iPhone, but might on landscape mode.  Seems to work on Mac desktop.";
 
 
 	//movie = createVideo(['assets/bartleby.mp4'],vidLoad);	
@@ -215,7 +215,7 @@ function setup() {
   	canvas.parent('app');
   	myApp.make_masterBuf();
 
-  	myApp.dpr = window.devicePixelRatio*0 + 1.0;  
+  	myApp.dpr = window.devicePixelRatio;  
 	myApp.kludge_w = windowWidth * myApp.dpr; //Supposedly helps Retina displays
   	myApp.kludge_h  = windowHeight * myApp.dpr;
 
