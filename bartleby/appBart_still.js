@@ -1,7 +1,7 @@
 "use strict";
 
 let SLOWGLITCH = true; //Movie pixels based glitching
-let GL_SHADERS = true; //Are we using GL rendering/shaders etc.
+let GL_SHADERS = false; //Are we using GL rendering/shaders etc.
 
 let myApp;
 let imgs;
@@ -137,7 +137,7 @@ class Content {
 	        glich.sCine2.setUniform("iTime",second());
 			myApp.masterBuf.rect(0,0,imgWidth,imgHeight);
 		} else {
-			myApp.masterBuf.image(imgshow,-100,-100);
+			myApp.masterBuf.image(imgshow,-100,-100,windowWidth,windowHeight);
 		}
 
       
