@@ -1,6 +1,7 @@
 "use strict";
 
 let SLOWGLITCH = true; //Movie pixels based glitching
+let GL_SHADERS = false; //Are we using GL rendering/shaders etc.
 
 let myApp;
 let imgs;
@@ -54,7 +55,7 @@ class App {
   
   make_masterBuf() 
     {
-      this.masterBuf = createGraphics(windowWidth,windowHeight,WEBGL);
+      if(GL_SHADERS) {this.masterBuf = createGraphics(windowWidth,windowHeight,WEBGL);} else {this.masterBuf = createGraphics(windowWidth,windowHeight);}
     }
 
   delete_masterBuf()
@@ -68,7 +69,7 @@ class App {
 class Glitch {
   constructor() {
     /*Cinematic vignette/scratch shader*/
-    this.sCine2 = loadShader(myApp.shadpath + 'cinematic_colour.vert',myApp.shadpath + 'cinematic_colour.frag');    
+    if(GL_SHADERS) {this.sCine2 = loadShader(myApp.shadpath + 'cinematic_colour.vert',myApp.shadpath + 'cinematic_colour.frag');}    
   } 
 
 }
@@ -129,15 +130,15 @@ class Content {
       var ulx,uly;
 
         /*Colour shader*/
-        
-        myApp.masterBuf.shader(glich.sCine2);
-        glich.sCine2.setUniform("iResolution",[myApp.kludge_w,myApp.kludge_h]);
-        glich.sCine2.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
-        glich.sCine2.setUniform("iTime",second());
-		myApp.masterBuf.rect(0,0,imgWidth,imgHeight);
-		
-		//myApp.masterBuf.image(imgshow,-100,-100);
-
+        if(GL_SHADERS) {
+	        myApp.masterBuf.shader(glich.sCine2);
+	        glich.sCine2.setUniform("iResolution",[myApp.kludge_w,myApp.kludge_h]);
+	        glich.sCine2.setUniform("tex0",imgshow); //Explicit binding is good if multiple textures
+	        glich.sCine2.setUniform("iTime",second());
+			myApp.masterBuf.rect(0,0,imgWidth,imgHeight);
+		} else {
+			myApp.masterBuf.image(imgshow,-100,-100);
+		}
 
       
 
