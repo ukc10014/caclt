@@ -1,7 +1,7 @@
 "use strict";
 
 let SLOWGLITCH = true; //Movie pixels based glitching
-let GL_SHADERS = false; //Are we using GL rendering/shaders etc.
+let GL_SHADERS = true; //Are we using GL rendering/shaders etc.
 
 let myApp;
 let imgs;
@@ -200,8 +200,8 @@ function preload() {
     load_Content();
 
 	 /*Load font*/
-    //myApp.fonty = loadFont(myApp.fontpath + 'Inconsolata.otf');
-    myApp.fonty = loadFont(myApp.fontpath + 'MarkaziText-VariableFont_wght.ttf');
+    myApp.fonty = loadFont(myApp.fontpath + 'Inconsolata.otf');
+    //myApp.fonty = loadFont(myApp.fontpath + 'MarkaziText-VariableFont_wght.ttf');
 
 
     /*Create new Glitch object*/
@@ -210,8 +210,8 @@ function preload() {
 }
 
 function setup() {
-	let canvas = createCanvas(windowWidth, windowHeight,WEBGL);
-  	
+	//if(GL_SHADERS) {let canvas = createCanvas(windowWidth, windowHeight,WEBGL);} else {let canvas = createCanvas(windowWidth,windowHeight);}
+  	let canvas = createCanvas(windowWidth, windowHeight,WEBGL);
   	canvas.parent('app');
   	myApp.make_masterBuf();
 
@@ -401,7 +401,7 @@ function movieFrac() {
 
 function setup_glitchColour() {
 	colorMode(HSB);
-	glitchColour = color(359,100,100,1);
+	//glitchColour = color(359,100,100,1);
 }
 
 function incr_glitchColour() {
