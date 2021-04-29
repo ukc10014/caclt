@@ -1,8 +1,8 @@
 "use strict";
 
 let GL_SHADERS; //Are we using GL rendering/shaders etc., this is set in setup based on GALLERY below
-let GALL_WEB = false; //If true then gallery version, else web version
-let DELETE_ID = 2; //int with 3 values: creator (0), collector (1), secondary buyer (2)
+let GALL_WEB ; //If true then gallery version, else web version (to be set in url, but defaults set in setup())
+let DELETE_ID; //int with 3 values: creator (0), collector (1), secondary buyer (2) (Set in URL but defaults in setup())
 let BLEAK_EXIT; //mostly this is false, until in collector (see DELETE_ID) case, we get to specified point when the thing basically shuts down
 let J_TEXT = true; //Display Japanese text in be_boring()
 
@@ -265,6 +265,10 @@ function preload() {
     myApp.mainFont = loadFont(myApp.fontpath + 'NewTegomin-Regular.ttf');
     myApp.creditFont = loadFont(myApp.fontpath + 'CourierPrime-Regular.ttf');
 
+
+    //Parse URL
+    parse_URL();
+
     if(GALL_WEB) {
         GL_SHADERS = true;
         /*Create new Glitch object*/
@@ -275,8 +279,34 @@ function preload() {
 
 }
 
+/*Decodes URL to work out if its online mode 0,1,2 for testing*/
+function GetURLParameter(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) 
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) 
+        {
+            return sParameterName[1];
+        }
+    }
+}
+
+function parse_URL() {
+  let gw = GetURLParameter('GALL_WEB'); //Look for GALL_WEB (Boolean) in URL
+  let di = GetURLParameter('DELETE_ID'); //Look for DELETE_ID (0,1,2) in URL
+
+  //Set values for these things
+  if(gw == "true") {GALL_WEB = true;} else {GALL_WEB = false;}
+  if(di == "0") {DELETE_ID = 0;} else if(di == "1") {DELETE_ID = 1;} else {DELETE_ID = 2;}
+}
+
+
 function setup() {
 	  let canvasw,canvash,renderer; 
+
     //For gallery version, use portrait mode, for web landscape 750x1334
     //NOTE: seems like a conditional declaration of 'canvas', maybe only allowed to have 1 canvas declaration, hence conditionality here is limited to the dimensions
     if(GALL_WEB) {canvasw = 750; canvash = 1334;} else {canvasw = 750 ; canvash = 1334;}
