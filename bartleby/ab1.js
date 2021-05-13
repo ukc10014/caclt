@@ -174,8 +174,6 @@ class Content {
             uly = (-dh / 2 - imgWidth * zoomr / 2 * ((dh - dw) / dh));
             //zoomr = max(dw / imgWidth , dh / imgHeight)*2;
           
-  zoomr = 1;ulx=uly=0;
-
         image(myApp.masterBuf,ulx,uly,imgWidth * zoomr,imgHeight * zoomr);
 
       } else if(dw>dh) { //28/4/21: Even in browser mode this basically will be ignored as canvas is set to be phone type
