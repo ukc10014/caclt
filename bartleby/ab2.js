@@ -204,7 +204,7 @@ function load_Content() {
 
     /*All stuff for UE4 images below this*/
     imgs.img_type = 1; /*Type of img: 0 mosaic; 1 series; 2 none*/
-    imgs.num_ue4img = 78; /*Number of images*/
+    imgs.num_ue4img = 78*0 + 25; /*Number of images*/
     imgs.curr_img = int(random()*imgs.num_ue4img); /*Initialise starting img (in gallery, 0; on web, random)*/
     imgs.sizename_ue4img = 4; //Real bodge, this is size we need to pad to
     imgs.makeimgs(); //Make an array of images
