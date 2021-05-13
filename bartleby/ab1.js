@@ -42,13 +42,7 @@ class App {
     /*Show an image or text*/
     this.showimg = 0; //0: img, 1: text, 2:...
 
-    /*These kludges allow the display width/height to be overriden through URL, to accommodate resolution isues (eg Retina disps)*/
-    this.kludge_w;
-    this.kludge_h;
-
-	 /*Pixel ratio for Retina*/
-    this.dpr;
-
+   
     /*Fonts*/
     this.mainFont; //Main font
     this.creditFont;
@@ -144,7 +138,7 @@ class Content {
       var ulx,uly;
 
       /*Colour shader*/
-       
+       console.log('ab1.js width height ',width,height,imgWidth,imgHeight);
             myApp.masterBuf.image(imgshow,-100,-100,width,height);
          
 		
@@ -180,8 +174,8 @@ class Content {
             uly = (-dh / 2 - imgWidth * zoomr / 2 * ((dh - dw) / dh));
             //zoomr = max(dw / imgWidth , dh / imgHeight)*2;
           
+  zoomr = 1;ulx=uly=0;
 
-        
         image(myApp.masterBuf,ulx,uly,imgWidth * zoomr,imgHeight * zoomr);
 
       } else if(dw>dh) { //28/4/21: Even in browser mode this basically will be ignored as canvas is set to be phone type
@@ -256,10 +250,7 @@ function setup() {
     canvas.parent('app');
   	myApp.make_masterBuf();
 
-  	myApp.dpr = window.devicePixelRatio;  
-	  myApp.kludge_w = windowWidth * myApp.dpr; //Supposedly helps Retina displays
-  	myApp.kludge_h  = windowHeight * myApp.dpr;
- 	
+  
   	textFont(myApp.mainFont);
 	textSize(normalSize);
 

@@ -43,13 +43,7 @@ class App {
     /*Show an image or text*/
     this.showimg = 0; //0: img, 1: text, 2:...
 
-    /*These kludges allow the display width/height to be overriden through URL, to accommodate resolution isues (eg Retina disps)*/
-    this.kludge_w;
-    this.kludge_h;
-
-	 /*Pixel ratio for Retina*/
-    this.dpr;
-
+	
     /*Fonts*/
     this.mainFont; //Main font
     this.creditFont;
@@ -255,9 +249,6 @@ function setup() {
     canvas.parent('app');
   	myApp.make_masterBuf();
 
-  	myApp.dpr = window.devicePixelRatio;  
-	  myApp.kludge_w = windowWidth * myApp.dpr; //Supposedly helps Retina displays
-  	myApp.kludge_h  = windowHeight * myApp.dpr;
  	
   	textFont(myApp.mainFont);
 	textSize(normalSize);
