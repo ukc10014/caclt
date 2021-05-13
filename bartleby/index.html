@@ -1,7 +1,7 @@
 <html>
   <head>
     <!-- <script src="./web3.min.js"></script> -->
-    <!-- -- <script src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js"></script> -->
+     <!-- <script src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js"></script> -->
     <script src="../../eth/node_modules/web3/dist/web3.min.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -19,7 +19,9 @@
       <span id="status">Loading....</span></div> -->
 
       <div>
-        <button class="btn btn-1" id="loadApp">Launch</button>
+        <button class="btn btn-1" id="loadApp1">online</button>
+        <button class="btn btn-1" id="loadApp2">primary</button>
+        <button class="btn btn-1" id="loadApp3">secondary</button>
         <button class="btn btn-1" id="info">About</button>
       </div>
 
@@ -29,13 +31,26 @@
 
 
 <script type="text/javascript">
-    $('#loadApp').on("click", function () {
-      console.log("executing");
-      $.when(
-        $.getScript("https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js"),
-        //$.getScript('appBart_still2.js').done(preload()))});
-        $.getScript('ab2.js').done(preload()))});
+    $('#loadApp1').on("click", function () {
+      console.log("executing 1");
+      $.when($.getScript('https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js').done(console.log("p5js loaded")));
+      $.when($.getScript('ab1.js').done(preload()))});
 </script>
+
+<script type="text/javascript">
+    $('#loadApp2').on("click", function () {
+      console.log("executing 2");
+      $.when($.getScript('https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js').done(console.log("p5js loaded")));
+      $.when($.getScript('ab2.js').done(preload()))});
+</script>
+
+<script type="text/javascript">
+    $('#loadApp3').on("click", function () {
+      console.log("executing 3");
+      $.when($.getScript('https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js').done(console.log("p5js loaded")));
+      $.when($.getScript('ab3.js').done(preload()))});
+</script> 
+
 
 <script>
   document.getElementById('info').addEventListener("click",about);
@@ -72,6 +87,61 @@
 </script>
 
 
+<!-- <script>
+
+async function loadScriptByURL(id, url, callback) {
+    const isScriptExist = document.getElementById(id);
+ 
+    if (!isScriptExist) {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = url;
+      script.id = id;
+      script.onload = function () {
+        if (callback) callback();
+      };
+      document.body.appendChild(script);
+    }
+ 
+    if (isScriptExist && callback) callback();
+}
+
+  /*
+  async function lapp3() {
+    loadScriptByURL("la3",'ab3.js',function() {console.log('Loaded 3');})
+    preload();
+  }
+  */
+
+  /*
+  function lapp3() {
+    const la3 = document.createElement('script');
+    la3.src = 'ab3.js';
+    la3.onload = () => {preload();}
+    document.head.append(la3);
+  }
+  */
+
+  const loadScript = src => {
+      return new Promise((resolve,reject) => {
+        const script = document.createElement('script')
+        script.type = 'text/javascript'
+        script.onload = resolve
+        script.onerror = reject
+        script.src = src
+        document.head.append(script)
+      })
+    }
+  
+
+  function lapp3() {
+    //loadScript('https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js')
+      loadScript('ab3.js')
+      .then(() => preload())
+  }
+
+  document.getElementById('loadApp3').addEventListener("click",lapp3)
+</script> -->
   
   
 </html>
