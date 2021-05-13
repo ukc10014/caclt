@@ -1,0 +1,101 @@
+@font-face {
+  font-family: "NT";
+  src: url(../fonts/NewTegomin-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "CP";
+  src: url(../fonts/CourierPrime-Regular.ttf) format("truetype");
+}
+
+body{
+      font-family: 'Courier',monospace;
+      margin:0;
+      background-color: hsla(100,5%,5%,1);
+      color: hsla(100,25%,100%,1);
+    }
+
+    /*.container {
+      //display: flex;
+      justify-content: top;
+      align-items: center;
+      align-content: center;
+      flex-wrap: wrap;
+      //width: 5vw;
+      margin: 0 auto;
+      //min-height: 100vh;
+    }*/
+
+    .btn {
+      flex: 1 1 auto;
+      margin: 10px;
+      padding: 30px;
+      text-align: center;
+      text-transform: uppercase;
+      transition: 0.5s;
+      background-size: 200% auto;
+      color: black;
+     /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+      box-shadow: 0 0 20px #eee;
+      border-radius: 10px;
+      font-family: "CP";
+     }
+
+    /* Demo Stuff End -> */
+
+    /* <- Magic Stuff Start */
+
+    .btn:hover {
+      background-position: right center; /* change the direction of the change here */
+    }
+
+    .btn-1 {
+      background-image: linear-gradient(to right, hsla(100,50%,50%,1) 0%, hsla(200,100%,50%,1) 51%, hsla(100,100%,50%,1) 100%);
+    }
+
+.app {
+    max-width: 750px;
+  }
+
+h1 {
+    font-size: 3em;
+    margin: .67em 0;
+}
+
+.titlebar {
+  text-align: right;
+  font-family: "CP";
+}
+
+h2 {
+    font-size: 1em;
+    margin: .67em 0
+} 
+
+/*h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: inherit;
+    font-weight: inherit
+}*/ 
+
+blockquote,
+dd,
+dl,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+pre {
+    margin: 0;
+    max-width: 750px;
+}  
+

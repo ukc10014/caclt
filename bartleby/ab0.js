@@ -1,5 +1,13 @@
 "use strict";
 
+/*UKC 13/5/21: This is the version un-refactored into creator, primary, secondary
+ *cases.  So it is closest to the original (appBart_still2.js) version and has
+ *parse_URL (so theoretically can be modified via ? URL), also has legacy
+ *contract/ABI info.  More importantly, it has the shadersGL3 code which
+ *isn't really used in the online/NFT version but could be potentially used in 
+ *a gallery/MP4 version
+ */
+
 let GL_SHADERS; //Are we using GL rendering/shaders etc., this is set in setup based on GALLERY below
 let GALL_WEB ; //If true then gallery version, else web version (to be set in url, but defaults set in setup())
 let DELETE_ID; //int with 3 values: creator (0), collector (1), secondary buyer (2) (Set in URL but defaults in setup())
@@ -12,12 +20,6 @@ let glich;
 
 let playing = true;
 let textCount = 0; let textHold = 200; //Frames to hold text on-screen, and counter
-let movieThresh = 0.1; //Fraction of movie to play before going to text
-let movieEndFraction = 0.2; //fraction of total duration used as upper bound of random() on each play
-let movieEndFloor = 0.05; //so a movie doesn't not appear (ie. two text pieces alongside)
-/*NOTE: movieEndFraction > movieStartFraction*/
-
-let moview, movieh, moviex, moviey; //width, height, coords of movie player
 
 /*Text stuff*/
 let simhypo = []; //Lines of text
@@ -90,7 +92,7 @@ class Glitch {
 class Content {
 
   constructor() {
-    this.ue4img = []; //UE4 images
+    this.ue4img = []; //UE4 image
     this.num_ue4img;
     this.img_type; //Type of image (mosaic, serial, etc.). Initialise in constructor
     this.curr_img; //When showing images serially, where we are in the sequence
@@ -184,6 +186,8 @@ class Content {
       //Some weird shit to accommodate phone portrait, landscape, etc.
      let dw = drawingContext.canvas.width;
      let dh = drawingContext.canvas.height;
+/*     let dw = width;
+     let dh = height;*/
      let zoomr; //zooming ratio
      
      /*Have done 2 principal cases: smartphone portrait & desktop landscape.
@@ -252,8 +256,8 @@ function preload() {
 	/*Placeholder message*/
     //document.getElementById("app").innerHTML = "Testing version 21/4/21: probably won't work on iPhone, but might on landscape mode.  Seems to work on Mac desktop.";
 
-
 	myApp = new App();
+
 
 	 /*Bring in image files*/
     load_Content();
@@ -294,15 +298,40 @@ function GetURLParameter(sParam)
     }
 }
 
-function parse_URL() {
+async function parse_URL() {
   let gw = GetURLParameter('GALL_WEB'); //Look for GALL_WEB (Boolean) in URL
   let di = GetURLParameter('DELETE_ID'); //Look for DELETE_ID (0,1,2) in URL
 
   //Set values for these things
+  /*Logic: if GALL_WEB in URL is true then we're in gallery mode, otherwise web mode.  
+   *If DELETE_ID in URL is 0, then basic online mode; if 3, then check crypt0den on ETH
+   *mainnet to see what state the token is in.  If 2 (or something else), then go to default
+   *case of DELETE_ID 2 (as of 4/5/21, is white screen with scrambled Japanese script)
+   */
   if(gw == "true") {GALL_WEB = true;} else {GALL_WEB = false;}
-  if(di == "0") {DELETE_ID = 0;} else if(di == "1") {DELETE_ID = 1;} else {DELETE_ID = 2;}
+  if(di == "0") {DELETE_ID = 0;} 
+    else if(di == "1") {DELETE_ID = 1;}
+    else if(di == "3") {
+        
+        await check_crypt0den(); 
+        /*.then(result = await getSaleStatus())        
+        .then(console.log("parse_URL>>get result ",result))
+        .then(process_checkresult(result));*/
+        DELETE_ID = 0; //Blockchain check is driven by button since automatic check at startup not working
+    } else {DELETE_ID = 2;}
 }
 
+function process_checkresult(r) {
+  if(r == true) 
+          {
+            DELETE_ID = 1; 
+            console.log('check_crypt0den returned TRUE');
+          } else if(r == false) {
+            DELETE_ID = 0;
+            console.log('check_crypt0den returned FALSE');
+          } else {
+            console.log('check_crypt0den ERROR ==>',r);}
+}
 
 function setup() {
 	  let canvasw,canvash,renderer; 
@@ -312,17 +341,14 @@ function setup() {
     if(GALL_WEB) {canvasw = 750; canvash = 1334;} else {canvasw = 750 ; canvash = 1334;}
     if(GL_SHADERS) {renderer = WEBGL;} else {renderer = P2D;}
   	let canvas = createCanvas(canvasw,canvash,renderer);
+    document.getElementById('app').innerHTML = '';
     canvas.parent('app');
   	myApp.make_masterBuf();
 
   	myApp.dpr = window.devicePixelRatio;  
 	  myApp.kludge_w = windowWidth * myApp.dpr; //Supposedly helps Retina displays
   	myApp.kludge_h  = windowHeight * myApp.dpr;
-
-
- 	moview = width; movieh = height;
- 	moviex = 0 ; moviey = 0;
-  	
+ 	
   	textFont(myApp.mainFont);
 	textSize(normalSize);
 
@@ -582,12 +608,6 @@ function init_simhypo() {
 
 }
 
-function movieFrac() {
-	if(movie != null) {
-		if(movie.time() == 0) {return 0;} 
-		else {return movie.time() / movie.duration();}
-	}
-}
 
 function setup_glitchColour() {
 	colorMode(HSB);
@@ -611,3 +631,491 @@ function padLeadingZeros(num, size) {
     return s;
 }
 
+/*Below are all functions needed to interface with ETH chain (on testnet or mainnet)*/
+
+//let web3;
+/*
+ async function loadWeb3() {
+    if(window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      window.ethereum.enable();
+      return true;
+    }
+    return false;
+  }
+  */
+
+  async function loadWeb3p() {
+    if (typeof web3 !== 'undefined') 
+    {
+      web3 = new Web3(web3.currentProvider);
+    } 
+    else 
+    {
+     // set the provider you want from Web3.providers
+      web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+    //web3.eth.defaultAccount = web3.eth.accounts[0]; 
+     }
+    }
+
+  async function loadWeb3pp() {
+    window.web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");loadWeb3p
+  }  
+
+  async function loadContract() {
+    return await new window.web3.eth.Contract(ABI,address);}
+
+  async function check_crypt0den() {
+    console.log("check_crypt0den STARTED")
+    await loadWeb3pp()
+      //.then(console.log("result!",window.web3));
+      .then(window.contract = await loadContract())
+      .then(console.log("Block info ",(await window.web3.eth.getBlock('latest')).timestamp))
+      .then(updateStatus('Ready!'));
+  }
+
+  /*
+  async function queryBlock() {
+    //Get delta between current UNIX time and block timestamp
+    let block = await window.web3.eth.getBlock('latest');
+    console.log("queryBlock(): Block info ",block.number);
+    return block.timestamp - Date.now();
+  }
+  */
+
+  function updateStatus(status) {
+    const statusEl = document.getElementById('status');
+    statusEl.innerHTML = status;
+}
+
+
+  async function getSaleStatus() {
+    updateStatus('fetching sale status...');
+    let status = await window.contract.methods.deleteOden(0).call();
+    
+    //status = status + await window.web3.eth.getBlock('latest');
+
+    console.log("getSaleStatus()  ",status);
+
+    process_checkresult(status); //assuming status is 'true' or 'false'
+
+    status = status + " /////// " + await window.contract.methods.draw(0).call();
+    updateStatus(status);
+
+  }
+
+
+
+  /*This is where we put in ABI etc.*/
+
+  let address = '0xCeeFD27e0542aFA926B87d23936c79c276A48277';
+
+  let ABI = [
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_approved",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "Approval",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_operator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "_approved",
+        "type": "bool"
+      }
+    ],
+    "name": "ApprovalForAll",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "a",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "value",
+        "type": "string"
+      }
+    ],
+    "name": "Generated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "es",
+        "type": "string"
+      }
+    ],
+    "name": "Hereiam",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "Transfer",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "createOden",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "sellOden",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "CANNOT_TRANSFER_TO_ZERO_ADDRESS",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "deleteOden",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "draw",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getApproved",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getOdenState",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "name",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "NOT_CURRENT_OWNER",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "ownerOf",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes4",
+        "name": "_interfaceID",
+        "type": "bytes4"
+      }
+    ],
+    "name": "supportsInterface",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "symbol",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "_symbol",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "TOKEN_LIMIT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "tokenURI",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+];
