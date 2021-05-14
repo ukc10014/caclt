@@ -63,8 +63,15 @@ h1 {
 }
 
 .titlebar {
+  float: right;
+  width: 100%;
   text-align: right;
   font-family: "CP";
+}
+
+.bouton {
+  float: left;
+  width: 100%; 
 }
 
 h2 {

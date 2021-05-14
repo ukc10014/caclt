@@ -1,7 +1,7 @@
 <html>
   <head>
     <!-- <script src="./web3.min.js"></script> -->
-     <!-- <script src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js"></script> -->
     <script src="../../eth/node_modules/web3/dist/web3.min.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -18,7 +18,7 @@
       <!-- <div class="container"><a class="btn btn-1" onclick="getSaleStatus();">Get sale status</a>
       <span id="status">Loading....</span></div> -->
 
-      <div>
+      <div class="bouton">
         <button class="btn btn-1" id="loadApp1">online</button>
         <button class="btn btn-1" id="loadApp2">primary</button>
         <button class="btn btn-1" id="loadApp3">secondary</button>
@@ -35,16 +35,12 @@
       console.log("executing 1");
       $.when($.getScript('https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js').done(console.log("p5js loaded")));
       $.when($.getScript('ab1.js').done(preload()))});
-</script>
 
-<script type="text/javascript">
     $('#loadApp2').on("click", function () {
       console.log("executing 2");
       $.when($.getScript('https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js').done(console.log("p5js loaded")));
       $.when($.getScript('ab2.js').done(preload()))});
-</script>
 
-<script type="text/javascript">
     $('#loadApp3').on("click", function () {
       console.log("executing 3");
       $.when($.getScript('https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js').done(console.log("p5js loaded")));
@@ -60,27 +56,27 @@
     
     markup += '<p>This website shows images \& text related to the Simulation Argument.  They are, respectively, taken from an Unreal Engine simulation, and a questionnaire sent to various researchers in the field.</p><br>';
     
-    markup += '<p>This website is NFT-wrapped, meaning: when a user enters an URL, the site consults an Ethereum-hosted smart contract.  Depending on the state of the contract, the website renders differently: today (May 2021) it is basically identical to an IRL piece curator Owen Duffy selected for Mana Contemporary.  When/if there occurs a primary sale (as recorded on the blockchain), the site\'s code will cause it to degrade or glitch itself.  Upon a subsequent (secondary) sale, it will degrade again, becoming banal wallpaper.  </p><br>'
+    markup += '<p>This site is NFT-wrapped, meaning: when a user enters an URL, the site consults an ERC721-based smart contract.  Depending on the contract\'s, the website renders differently: today (May 2021) it is basically identical to an IRL piece curator Owen Duffy selected for Mana Contemporary.  When/if there occurs a primary sale (as recorded on the blockchain), the site\'s Javascript code will cause it to degrade or glitch itself.  Upon a subsequent (secondary) sale, it will degrade again, becoming banal wallpaper.  </p><br>'
 
     markup += '<br><br><h2>Why is this interesting?</h2><br>'
 
-    markup += '<p>In an NFT context, it explores certain capacity/cost (and yes, ecological) constraints of smart contracts that owe to their technical structure and their ideological history.  As institutional critique, it distinguishes between art-as-public good (i.e. sitting in a public gallery) and art-as-private consumption good (i.e. bauble, tax-dodge, a less risky way to hodl crypto gains, etc.).  Thirdly, the idea of software agents talking to each other is kind of cool; whilst totally commonplace atm, perhaps some day emulations will be autonomous  - or even indifferent - to us.</p><br>'
+    markup += '<p>In an NFT context, it explores certain capacity/cost (and yes, ecological) issues of smart contracts that owe to their technical constraints and their ideological history.  As institutional critique, it distinguishes between art-as-public good (i.e. sitting in a public gallery) and art-as-private consumption good (i.e. bauble, tax-dodge, a funner way to hodl crypto gains, etc.).  Thirdly, the idea of software agents talking to each other is kind of cool; whilst totally commonplace atm, perhaps some day emulations will be autonomous  - or even indifferent - to us.  Lastly, the (auto-)destruction of an artwork continues to be interesting question for dematerialised, conceptual, and/or digital practices.</p><br>'
 
     markup += '<br><br><h2>What do NFTs have to do with the Simulation Argument?</h2><br>'
 
-    markup += '<p>Elon Musk? Or, read this essay</p><br>'
+    markup += '<p>Elon Musk?</p><br>'
 
     markup += '<br><br><h2>Will this work on my device?</h2><br>'
 
-    markup += '<p>Currently, this seems to work best on Apple or Linux desktops running Chrome.  The awful programmer is trying to fix this.  In any event, only the current state of the software is directly visible, so for an idea of how this might look in the future (once the work is sold), please see these videograbs.</p><br>'
+    markup += '<p>Works best on Apple or Linux desktops running Chrome.  Works fitfully on iPhone running Chrome or Firefox.  Refresh if it freezes.  IT are on it.</p><br>'
 
     markup += '<br><br><h2>Acknowledgements</h2><br>'
 
-    markup += '<p>The code is cobbled together: Solidity/Hardhat/web3.js stuff from contributors online; Alchemy \& OpenZeppelin tutorials; the Autoglyphs project by Larvalabs; Ethereum Foundation tutorials and Whitepaper.  For Javascript, the p5js and Processing.org teams, miscellaneous GL shader contributors, notably Tommy Bazar\'s Mandelbulb raymarcher for Unreal Engine. For the Simulation Argument, Nick Bostrom and his collaborators/correspondents online, as well as Preston Greene at NTU Singapore.  Japanese language help from Bob/Alyssa Levy and Stephen/Yoshino Laughton.  And of course, Sarah Pettitt for her technical expertise.  Lastly, Owen Duffy for making me do this.</p><br>'
+    markup += '<p>The code is cobbled together: Solidity/Hardhat/web3.js stuff from contributors online; Alchemy \& OpenZeppelin tutorials; the Autoglyphs project by Larvalabs; Ethereum Foundation tutorials and Whitepaper.  For Javascript, the p5js and Processing.org teams, miscellaneous GL shader contributors, notably Tommy Bazar\'s Mandelbulb raymarcher for Unreal Engine. For the Simulation Argument, Nick Bostrom and his collaborators/correspondents online, as well as Preston Greene at NTU Singapore.  Language help from Bob/Alyssa Levy and Stephen/Yoshino Laughton.  And of course, Sarah Pettitt for her technical expertise.  Lastly, Owen Duffy for making me do this.</p><br>'
 
     markup += '<h2>Is this on OpenSea? How do I buy it?</h2><br>'
 
-    markup += '<p>It is not on OpenSea or the other exchanges.  Think of this as a unique work, with caveats: while the smart contract itself is immutable and singly instanced (1 token), this website is uneditioned, copy-able, mutable (like many other NFTs).  To buy please contact Kanad Chakrabarti @ukc10014 on IG, Twitter, or Discord.  For a private collector, it will cost USD 61,000 (settled in USD), about 10x price of the MP4 at Mana Contemporary. Institutional discounts available.</p><br>'    
+    markup += '<p>It is not on OpenSea or the other exchanges.  Think of this as a unique work, with caveats: while the smart contract itself is immutable and singly instanced (i.e. one token), this website is uneditioned, copy-able, mutable (like many other NFTs).  To buy please contact Kanad Chakrabarti @ukc10014 on IG, Twitter, or Discord.  For a private collector, it will cost ETH 15 (settled in USD, EUR, GBP or JPY), which at current levels, is about 10x the video at Mana Contemporary. Discounts for Systemically Important Cultural Institutions lol.</p><br>'    
 
     document.getElementById("app").innerHTML = markup;
   }
