@@ -66,7 +66,7 @@ body{
 }
 
 #c0d_out_h {
-  color: green;
+  color: hsla(100,50%,50%,1);
 }  
 
 h1 {
@@ -88,7 +88,7 @@ h1 {
 
 h2 {
     font-size: 1em;
-    margin: .67em 0;
+    margin: 1em 0;
 } 
 
 /*h1,

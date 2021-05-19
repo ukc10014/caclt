@@ -158,13 +158,13 @@
   function about() {
     let markup = '<br><br><h2>What am I looking at?</h2><br>';
     
-    markup += '<p>This website shows images \& text related to the Simulation Argument.  They are, respectively, taken from an Unreal Engine simulation, and a questionnaire sent to various researchers in the field.</p><br>';
+    markup += '<p>This website is rendered on your device (i.e. not a video): it shows images \& text related to the Simulation Argument.  They are, respectively, taken from an Unreal Engine simulation, and a questionnaire sent to various researchers in the field.</p><br>';
     
-    markup += '<p>This site is NFT-wrapped, meaning: when a user enters an URL, the site consults an ERC721-based smart contract.  Depending on the contract state, the website renders differently: today (May 2021) it is basically identical to an IRL piece curator Owen Duffy selected for Mana Contemporary.  When/if there occurs a primary sale (as recorded on the blockchain), the Javascript code will cause it to glitch itself.  Upon a subsequent (secondary) sale, it will degrade further, becoming banal wallpaper.  </p><br>'
+    markup += '<p>This Javascript site is NFT-wrapped, meaning: when a user enters an URL, the site consults an ERC721-compliant smart contract.  Depending on the contract state, the website renders differently: today (May 2021) it is basically identical to an IRL piece curator Owen Duffy selected for Mana Contemporary.  When/if there occurs a primary sale (as recorded on the blockchain), the smart contract will instruct the site to glitch itself.  Upon a subsequent (secondary) sale, it will degrade further, rendering as banal wallpaper.  </p><br>'
 
     markup += '<br><br><h2>Why is this interesting?</h2><br>'
 
-    markup += '<p>In an NFT context, it explores certain capacity/cost (and yes, ecological) issues of smart contracts that owe to their technical constraints and their ideological history.  As institutional critique, it distinguishes between art-as-public good (i.e. sitting in a public gallery) and art-as-private consumption good (i.e. bauble, tax-dodge, a funner way to hodl crypto gains, etc.).  Thirdly, the idea of software agents conversing is kind of cool; whilst totally commonplace atm, perhaps some day digital agents will be incarnated as whole-brain emulations.  They might be autonomous or even indifferent to us, and not share our (arguably parochial) values.  Lastly, the (auto-)destruction of an artwork continues to be interesting question for dematerialised, conceptual, and/or digital practices.</p><br>'
+    markup += '<p>In an NFT context, it explores certain capacity/cost (and yes, ecological) issues of smart contracts that owe to their technical constraints and their ideological history.  As institutional critique, it distinguishes between art-as-public good (i.e. sitting in a public gallery) and art-as-private consumption good (i.e. bauble, tax-dodge, a funner way to hodl crypto gains, etc.).  Thirdly, the idea of software agents conversing is kind of cool; whilst totally commonplace atm, perhaps some day digital agents will be incarnated as whole-brain emulations.  They might be autonomous or even indifferent to us, and not share our (arguably parochial) values.</p><br>'
 
     markup += '<br><br><h2>What do NFTs have to do with the Simulation Argument?</h2><br>'
 
@@ -172,15 +172,15 @@
 
     markup += '<br><br><h2>Will this work on my device?</h2><br>'
 
-    markup += '<p>Works best on Apple or Linux desktops running Chrome.  Works fitfully on iPhone running Chrome or Firefox.  Refresh if frozen.  IT are on it.</p><br>'
+    markup += '<p>Works best on Apple or Linux desktops, fitfully on iPhone (Chrome/Firefox).  Refresh if frozen.  IT are on it.</p><br>'
 
     markup += '<br><br><h2>Acknowledgements</h2><br>'
 
-    markup += '<p>The code is cobbled together from open source contributions: Solidity/Hardhat/web3.js from Alchemy \& OpenZeppelin tutorials; the Autoglyphs project by Larvalabs; Ethereum Foundation tutorials and Whitepaper.  For Javascript, the p5js and Processing.org teams, miscellaneous GL shader contributors, notably Tommy Bazar\'s Mandelbulb raymarcher for Unreal Engine. For the Simulation Argument, Nick Bostrom and his collaborators/correspondents online, as well as Preston Greene at NTU Singapore.  Language help from Bob/Alyssa Levy and Stephen/Yoshino Laughton.  And of course, Sarah Pettitt for her technical expertise.  Lastly, Owen Duffy for making me do this.</p><br>'
+    markup += '<p>The smart contract is written in Solidity & is ERC721-compliant.  Lotsa open source help: Solidity/Hardhat/web3.js from Alchemy \& OpenZeppelin tutorials; the Autoglyphs project by Larvalabs; Ethereum Foundation tutorials and Whitepaper.  P5js and Processing.org as ever, miscellaneous GL shader contributors, notably Tommy Bazar\'s Mandelbulb raymarcher for Unreal Engine. For the Simulation Argument, Nick Bostrom and his collaborators/correspondents online, as well as Preston Greene at NTU Singapore.  Language help from Bob/Alyssa Levy and Stephen/Yoshino Laughton.  And of course, Sarah Pettitt for her technical expertise.  Lastly, Owen Duffy for making me do this.</p><br>'
 
-    markup += '<h2>Is this on OpenSea? How do I buy it?</h2><br>'
+    markup += '<h2>How do I buy it?</h2><br>'
 
-    markup += '<p>Not on OpenSea, currently hosted on Ropsten testnet (i.e. deploy-on-purchase to Ethereum or another mainnet).  To buy please contact Kanad Chakrabarti @ukc10014 on IG, Twitter, or Discord.  Guide price: ETH 15 (fiat-settled lol).</p><br>'    
+    markup += '<p>Currently hosted on Ropsten testnet (i.e. deploy-on-purchase to Ethereum or another mainnet).  To buy please contact Kanad Chakrabarti @ukc10014 on IG, Twitter, or Discord.  Guide price: ETH 15 (fiat-settled lol).</p><br>'    
 
     document.getElementById("app").innerHTML = markup;
   }
