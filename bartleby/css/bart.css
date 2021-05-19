@@ -53,9 +53,21 @@ body{
       background-image: linear-gradient(to right, hsla(100,50%,50%,1) 0%, hsla(200,100%,50%,1) 51%, hsla(100,100%,50%,1) 100%);
     }
 
-.app {
+#app {
     max-width: 750px;
+    float: left;
+    display: inline;
   }
+
+/*Status info for smart contract checking*/
+.c0d_out {
+  float: right;
+  display: inline;
+}
+
+#c0d_out_h {
+  color: green;
+}  
 
 h1 {
     font-size: 3em;
@@ -76,7 +88,7 @@ h1 {
 
 h2 {
     font-size: 1em;
-    margin: .67em 0
+    margin: .67em 0;
 } 
 
 /*h1,
@@ -94,13 +106,11 @@ dd,
 dl,
 figure,
 h1,
-h2,
 h3,
 h4,
 h5,
 h6,
 hr,
-p,
 pre {
     margin: 0;
     max-width: 750px;

@@ -32,13 +32,14 @@
       </div>
 
       <div id="app"></div>
-      <div id="crypt0den_out"></div>
+      <div id="crypt0den_out" class='c0d_out'><h2 id='c0d_out_h' class='c0d_out'>CONTRACT INTERFACE STATUS</h2><br><br></div>
     </main>
   </body>
 
 
 <script type="text/javascript">
-    let e,tokenID,numTokens,ownC,own0,own1,own2,ownContract,TokLimit;
+    let e,tokenID,numTokens,ownC,own0,own1,own2,
+        ownContract,TokLimit,cAddr;
     let runVersion;
 
     /*These handlers go with the online/primary/secondary buttons above, not needed in production*/
@@ -96,21 +97,57 @@
     /*Parses the returned promise/string from the solidity view       *function 'delete_ID()'
     */
     const getState = () => {
-      eticall.then((a) => {
-        tokenID = Number(a.substr(2,64));
-        numTokens = Number(a.substr(66,64));
-        TokLimit = Number(a.substr(130,64));
-        ownC = a.substr(194,64);
-        own0 = a.substr(258,64);
-        own1 = a.substr(322,64);
-        own2 = a.substr(386,64);
-        ownContract = a.substr(450,64)
-        console.log("Contract state ID=> ",tokenID,'\n\n numTokens ',numTokens,'\n\n TokenLim ',TokLimit,'\n\n ownC ',ownC,'\n\n own0 ',own0,'\n\n own1 ',own1,'\n\n own2 ',own2,'\n\n','\n\n ownT ',ownContract);
+      return eticall.then(async function(a) {
+        let b = a[0];
+        let c = await b;
+        //let c = b.then(function(result) {console.log(result);})
+        tokenID = Number(c.substr(2,64));
+        numTokens = Number(c.substr(66,64));
+        TokLimit = Number(c.substr(130,64));
+        ownC = c.substr(218,32);
+        own0 = c.substr(282,32);
+        own1 = c.substr(346,32);
+        own2 = c.substr(378,32);
+        //ownContract = c.substr(474,32); //In etherinterface.js we have replaced the .sol delete_ID() call's response last field with the contract ID
+        
+        cAddr = a[1];        
+
+        console.log("Contract state ID=> ",tokenID,'\n\n numTokens ',numTokens,'\n\n TokenLim ',TokLimit,'\n\n ownC ',ownC,'\n\n own0 ',own0,'\n\n own1 ',own1,'\n\n own2 ',own2,'\n\n','\n\n ownT ',ownContract,'\n\n ContractAddress',cAddr);
       })
     };
 
-    getState();
+    //Update the state
+    getState().then(() => {
+          let s;
 
+          
+          s = `<br><p class=\'c0d_out\'>TOKEN ID => ` + tokenID + `<p><br>`;
+          document.getElementById('c0d_out_h').insertAdjacentHTML('afterend',s);
+
+          s = `<br><p class=\'c0d_out\'>TOKEN LIMIT => ` + TokLimit + `<p><br>`;
+          document.getElementById('c0d_out_h').insertAdjacentHTML('afterend',s);
+
+          s = `<br><p class=\'c0d_out\'>CURRENT OWNER => 0x` + ownC + `<p><br>`;
+          document.getElementById('c0d_out_h').insertAdjacentHTML('afterend',s);
+
+          s = `<br><p class=\'c0d_out\'>SECONDARY BUYER => 0x` + own2 + `<p><br>`;
+          document.getElementById('c0d_out_h').insertAdjacentHTML('afterend',s);
+
+
+          s = `<br><p class=\'c0d_out\'>PRIMARY BUYER => 0x` + own1 + `<p><br>`;
+          document.getElementById('c0d_out_h').insertAdjacentHTML('afterend',s);
+
+          s = `<br><p class=\'c0d_out\'>CREATOR => 0x` + own0 + `<p><br>`;
+          document.getElementById('c0d_out_h').insertAdjacentHTML('afterend',s);
+
+
+
+          s = `<br><p class=\'c0d_out\'>CONTRACT ID => 0x` + cAddr + `<p><br>`;
+          document.getElementById('c0d_out_h').insertAdjacentHTML('afterend',s);
+
+          });
+
+   
   </script>
 
 
@@ -123,11 +160,11 @@
     
     markup += '<p>This website shows images \& text related to the Simulation Argument.  They are, respectively, taken from an Unreal Engine simulation, and a questionnaire sent to various researchers in the field.</p><br>';
     
-    markup += '<p>This site is NFT-wrapped, meaning: when a user enters an URL, the site consults an ERC721-based smart contract.  Depending on the contract state, the website renders differently: today (May 2021) it is basically identical to an IRL piece curator Owen Duffy selected for Mana Contemporary.  When/if there occurs a primary sale (as recorded on the blockchain), the Javascript code will cause it to degrade or glitch itself.  Upon a subsequent (secondary) sale, it will degrade again, becoming banal wallpaper.  </p><br>'
+    markup += '<p>This site is NFT-wrapped, meaning: when a user enters an URL, the site consults an ERC721-based smart contract.  Depending on the contract state, the website renders differently: today (May 2021) it is basically identical to an IRL piece curator Owen Duffy selected for Mana Contemporary.  When/if there occurs a primary sale (as recorded on the blockchain), the Javascript code will cause it to glitch itself.  Upon a subsequent (secondary) sale, it will degrade further, becoming banal wallpaper.  </p><br>'
 
     markup += '<br><br><h2>Why is this interesting?</h2><br>'
 
-    markup += '<p>In an NFT context, it explores certain capacity/cost (and yes, ecological) issues of smart contracts that owe to their technical constraints and their ideological history.  As institutional critique, it distinguishes between art-as-public good (i.e. sitting in a public gallery) and art-as-private consumption good (i.e. bauble, tax-dodge, a funner way to hodl crypto gains, etc.).  Thirdly, the idea of software agents talking to each other is kind of cool; whilst totally commonplace atm, perhaps some day emulations will be autonomous  - or even indifferent - to us.  Lastly, the (auto-)destruction of an artwork continues to be interesting question for dematerialised, conceptual, and/or digital practices.</p><br>'
+    markup += '<p>In an NFT context, it explores certain capacity/cost (and yes, ecological) issues of smart contracts that owe to their technical constraints and their ideological history.  As institutional critique, it distinguishes between art-as-public good (i.e. sitting in a public gallery) and art-as-private consumption good (i.e. bauble, tax-dodge, a funner way to hodl crypto gains, etc.).  Thirdly, the idea of software agents conversing is kind of cool; whilst totally commonplace atm, perhaps some day digital agents will be incarnated as whole-brain emulations.  They might be autonomous or even indifferent to us, and not share our (arguably parochial) values.  Lastly, the (auto-)destruction of an artwork continues to be interesting question for dematerialised, conceptual, and/or digital practices.</p><br>'
 
     markup += '<br><br><h2>What do NFTs have to do with the Simulation Argument?</h2><br>'
 
@@ -135,15 +172,15 @@
 
     markup += '<br><br><h2>Will this work on my device?</h2><br>'
 
-    markup += '<p>Works best on Apple or Linux desktops running Chrome.  Works fitfully on iPhone running Chrome or Firefox.  Refresh if it freezes.  IT are on it.</p><br>'
+    markup += '<p>Works best on Apple or Linux desktops running Chrome.  Works fitfully on iPhone running Chrome or Firefox.  Refresh if frozen.  IT are on it.</p><br>'
 
     markup += '<br><br><h2>Acknowledgements</h2><br>'
 
-    markup += '<p>The code is cobbled together: Solidity/Hardhat/web3.js stuff from contributors online; Alchemy \& OpenZeppelin tutorials; the Autoglyphs project by Larvalabs; Ethereum Foundation tutorials and Whitepaper.  For Javascript, the p5js and Processing.org teams, miscellaneous GL shader contributors, notably Tommy Bazar\'s Mandelbulb raymarcher for Unreal Engine. For the Simulation Argument, Nick Bostrom and his collaborators/correspondents online, as well as Preston Greene at NTU Singapore.  Language help from Bob/Alyssa Levy and Stephen/Yoshino Laughton.  And of course, Sarah Pettitt for her technical expertise.  Lastly, Owen Duffy for making me do this.</p><br>'
+    markup += '<p>The code is cobbled together from open source contributions: Solidity/Hardhat/web3.js from Alchemy \& OpenZeppelin tutorials; the Autoglyphs project by Larvalabs; Ethereum Foundation tutorials and Whitepaper.  For Javascript, the p5js and Processing.org teams, miscellaneous GL shader contributors, notably Tommy Bazar\'s Mandelbulb raymarcher for Unreal Engine. For the Simulation Argument, Nick Bostrom and his collaborators/correspondents online, as well as Preston Greene at NTU Singapore.  Language help from Bob/Alyssa Levy and Stephen/Yoshino Laughton.  And of course, Sarah Pettitt for her technical expertise.  Lastly, Owen Duffy for making me do this.</p><br>'
 
     markup += '<h2>Is this on OpenSea? How do I buy it?</h2><br>'
 
-    markup += '<p>It is not on OpenSea or the other exchanges.  Think of this as a unique work, with caveats: while the smart contract itself is immutable and singly instanced (i.e. one token), this website is uneditioned, copy-able, mutable (like many other NFTs).  To buy please contact Kanad Chakrabarti @ukc10014 on IG, Twitter, or Discord.  For a private collector, it will cost ETH 15 (settled in USD, EUR, GBP or JPY), which at current levels, is about 10x the video at Mana Contemporary. Discounts for Systemically Important Cultural Institutions lol.</p><br>'    
+    markup += '<p>Not on OpenSea, currently hosted on Ropsten testnet (i.e. deploy-on-purchase to Ethereum or another mainnet).  To buy please contact Kanad Chakrabarti @ukc10014 on IG, Twitter, or Discord.  Guide price: ETH 15 (fiat-settled lol).</p><br>'    
 
     document.getElementById("app").innerHTML = markup;
   }

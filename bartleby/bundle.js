@@ -67970,9 +67970,12 @@ module.exports = async function deleteIdentity() {
 
   const txc = web3.eth.call(tx,function(err,result) {
     if(!err) {
-      retval = result;
-      console.log("retval => ",retval);
-      return(retval);
+      /*let r;
+      r = result.substr(0,410);
+      retval = r.concat(contractAddress);
+      result = result + contractAddress;
+      console.log("result => ",result);
+      return(result);*/
     } else {
       console.log("deleteId something went wrong ==> ",err);
     }
@@ -67980,8 +67983,12 @@ module.exports = async function deleteIdentity() {
     console.log("deleteId some other error ==> ",err);
   });
 
-  return(txc);
+  const txc2 = txc.then((resolve) = () => {return [txc,contractAddress]});
+  //const txc2 = async function() {await txc; return [txc,contractAddress];}
+  return(txc2);
   }
+
+  
 },{"../../crypt0den/node_modules/@alch/alchemy-web3":1,"./artifacts/contracts/crypt3den.sol/crypt3den.json":417}],419:[function(require,module,exports){
 
 /**
