@@ -1,3 +1,9 @@
+<!-- 25/5/21: This version adds the chop at the bottom, but doesn't work properly yet, doesn't actually use the Solidity output as I can't
+work out how to decode the incoming string into UTF-8, so the string
+is hardcoded.  There is a shonky UTF-8 conversion function no idea
+if it works for 4-digit UTF-8 -->
+
+
 <html>
   <head>
     <!-- <script src="./web3.min.js"></script> -->
@@ -40,23 +46,9 @@
 <script type="text/javascript">
     let e,tokenID,numTokens,ownC,own0,own1,own2,
         ownContract,TokLimit,cAddr;
+    let jutf; //string of utf-8 from solidity contract for the signing chop    
     let runVersion;
 
-    /*These handlers go with the online/primary/secondary buttons above, not needed in production*/
-    /*$('#loadApp1').on("click", function () {
-      console.log("executing 1");
-      $.when($.getScript('https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js').done(console.log("p5js loaded")));
-      $.when($.getScript('ab1.js').done(preload()))});
-
-    $('#loadApp2').on("click", function () {
-      console.log("executing 2");
-      $.when($.getScript('https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js').done(console.log("p5js loaded")));
-      $.when($.getScript('ab2.js').done(preload()))});
-
-    $('#loadApp3').on("click", function () {
-      console.log("executing 3");
-      $.when($.getScript('https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js').done(console.log("p5js loaded")));
-      $.when($.getScript('ab3.js').done(preload()))});*/
 
       $('#chain').on("click",function () {
           if(ownC == null) {
@@ -79,14 +71,6 @@
 
 
 
-/*    $('#chain').on("click", function () {
-      console.log("executing chain");
-       $.when($.getScript('bundle.js')
-        //.done(console.log("bundle.js eti => ",window.eti()))
-        .done(e = window.eti())
-        .then((response) => {return response;} )
-        )});*/
-
     /*This comes from the 'browserify ethinterface.js --standalone *eti > bundle.js' which converts server side things like 'require'
     *into client side javascript. Somehow the eti() call results
     *from the bundle.js being sourced above; anyway, it avoids *having to explicitly call delete_identity() which wasn't working
@@ -108,19 +92,30 @@
         own0 = c.substr(282,32);
         own1 = c.substr(346,32);
         own2 = c.substr(378,32);
-        //ownContract = c.substr(474,32); //In etherinterface.js we have replaced the .sol delete_ID() call's response last field with the contract ID
+        ownContract = c.substr(474,32);
+        //This discards first 125 '0' in string returned from .sol
+        let jutfstart = 474 + 32 + 125 + 8; //last 8 is fudge factor
+        jutf = toUTF8Array(c.substr(639,c.length-639));
+         //In etherinterface.js we have replaced the .sol delete_ID() call's response last field with the contract ID
         
         cAddr = a[1];        
 
-        console.log("Contract state ID=> ",tokenID,'\n\n numTokens ',numTokens,'\n\n TokenLim ',TokLimit,'\n\n ownC ',ownC,'\n\n own0 ',own0,'\n\n own1 ',own1,'\n\n own2 ',own2,'\n\n','\n\n ownT ',ownContract,'\n\n ContractAddress',cAddr);
+        //console.log("Contract state ",c);
+        console.log("Contract state ID=> ",tokenID,'\n\n numTokens ',numTokens,'\n\n TokenLim ',TokLimit,'\n\n ownC ',ownC,'\n\n own0 ',own0,'\n\n own1 ',own1,'\n\n own2 ',own2,'\n\n ownT ',ownContract,'\n\n unicode',jutf);
       })
     };
 
     //Update the state
     getState().then(() => {
           let s;
-
+          let jstr = '私はしたくない.';
           
+          /*let a = Math.floor(Math.random()*jstr.length);
+          s = `<br><p class=\'c0d_chop\'>` + jstr[a] + `<p><br>`;
+
+          document.getElementById('c0d_out_h').insertAdjacentHTML('afterend',s);*/
+
+
           s = `<br><p class=\'c0d_out\'>TOKEN ID => ` + tokenID + `<p><br>`;
           document.getElementById('c0d_out_h').insertAdjacentHTML('afterend',s);
 
@@ -141,13 +136,39 @@
           document.getElementById('c0d_out_h').insertAdjacentHTML('afterend',s);
 
 
-
           s = `<br><p class=\'c0d_out\'>CONTRACT ID => 0x` + cAddr + `<p><br>`;
           document.getElementById('c0d_out_h').insertAdjacentHTML('afterend',s);
 
           });
 
    
+  function toUTF8Array(str) {
+    var utf8 = [];
+    for (var i=0; i < str.length; i++) {
+        var charcode = str.charCodeAt(i);
+        if (charcode < 0x80) utf8.push(charcode);
+        else if (charcode < 0x800) {
+            utf8.push(0xc0 | (charcode >> 6), 
+                      0x80 | (charcode & 0x3f));
+        }
+        else if (charcode < 0xd800 || charcode >= 0xe000) {
+            utf8.push(0xe0 | (charcode >> 12), 
+                      0x80 | ((charcode>>6) & 0x3f), 
+                      0x80 | (charcode & 0x3f));
+        }
+        // surrogate pair
+        else {
+            i++;
+            charcode = ((charcode&0x3ff)<<10)|(str.charCodeAt(i)&0x3ff)
+            utf8.push(0xf0 | (charcode >>18), 
+                      0x80 | ((charcode>>12) & 0x3f), 
+                      0x80 | ((charcode>>6) & 0x3f), 
+                      0x80 | (charcode & 0x3f));
+        }
+    }
+    return utf8;
+}
+
   </script>
 
 
@@ -180,7 +201,7 @@
 
     markup += '<h2>How do I buy it?</h2><br>'
 
-    markup += '<p>Currently hosted on Ropsten testnet (i.e. deploy-on-purchase to Ethereum or another mainnet).  To buy please contact Kanad Chakrabarti @ukc10014 on IG, Twitter, or Discord.  Guide price: ETH 15 (fiat-settled lol).</p><br>'    
+    markup += '<p>Currently hosted on Ropsten testnet (i.e. deploy-on-purchase to Ethereum or another mainnet).  To buy please contact Kanad Chakrabarti @ukc10014 on IG, Twitter, or Discord.  Guide price: ETH 15 (fiat-settled lol).</p><br><p>Collector receives:<br><br> MP4 (H.264) 1920x1080 60fps video 1m53s; Archival MOV file (Cineform codec, 10-bit) 1920x1080 60fps video 1m53s; High-resolution still as TIFF; Software archive containing Solidity smart contract, Javascript/HTML/CSS client-side files with required libraries; Transaction hash and certificate of authenticity; Installation/conservation instructions.</p><br>'    
 
     document.getElementById("app").innerHTML = markup;
   }
