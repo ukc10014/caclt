@@ -112,7 +112,7 @@ class Content {
 
      //Load oden image
      fn_oden = myApp.medpath+"oden.jpeg";
-     this.oden_img = loadImage(fn_oden); 
+     this.oden_img = loadImage(fn_oden);
   	}	
 
 	makeimgbuf_noisy() {
@@ -269,9 +269,8 @@ function draw() {
     
     //Once at the end, show credits; if gallery mode, then just hold the credits; if web mode, then go on with rest of code (simhypocount should loop based below modulo)
     if(simhypoCount == (simhypo.length - 1)) {
-      show_credits(); 
+      show_credits();      //return; 
     }
-
 
 	myApp.runtime = millis();
 
@@ -292,7 +291,7 @@ function draw() {
         imgs.textcounter = imgs.holdtext * frameRate(); //Reset counter based on realised framerate
         if(simhypoCount == simhypo.length-1) {pass++;}
          
-        simhypoCount = (simhypoCount + 1)%simhypo.length; //Increment line of the text in gallery, increment & loop in web (in creator mode, but not in collector)
+        simhypoCount = (simhypoCount + 1); //Increment line of the text in gallery, increment & loop in web (in creator mode, but not in collector)
          
       } else {
       
@@ -341,7 +340,8 @@ function draw() {
     
     if(amt > 0.5) {
       //imgs.oden_img.filter(BLUR,lerp(0,2,amt/0.2));
-      image(imgs.oden_img,(1-amt)*200,-height/3,imgs.oden_img.width/4,imgs.oden_img.height/4);
+      //image(imgs.oden_img,(1-amt)*200,-height/3,imgs.oden_img.width/4,imgs.oden_img.height/4);
+      image(imgs.oden_img,lhsMargin,-height/3,imgs.oden_img.width/4,imgs.oden_img.height/4);
     }
 
 
